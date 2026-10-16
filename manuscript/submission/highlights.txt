@@ -1,0 +1,7 @@
+Highlights
+
+- Closed-loop cold plasma delivery is limited by sensing, not by control theory.
+- Constrained MPC already regulates CAP thermal dose under safety limits.
+- In-silico: feedback cuts median thermal-dose error from 89% to 17%.
+- Residual closed-loop error is set by sensor bias and lag, not plant variation.
+- We propose six benchmark metrics for reporting closed-loop CAP devices.
