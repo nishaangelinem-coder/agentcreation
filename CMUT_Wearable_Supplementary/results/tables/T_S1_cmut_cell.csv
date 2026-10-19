@@ -1,0 +1,12 @@
+Quantity,Manuscript,Reproduced
+Collapse voltage Vc (V),46.5,51.59251439658597
+Clamped capacitance per cell C0 (pF),0.125,0.12517047609697812
+Vacuum resonance (MHz),n.r.,7.214317298308926
+"Immersed resonance, 0 V (MHz)",n.r.,3.0674908702580463
+"Immersed resonance, 0.8 Vc (MHz)",1.5 (implied),2.6001410165342804
+Radius for 1.5 MHz immersed at 0.8 Vc (um),30.0,37.66513438254171
+Cells per element (assumed 6 mm elevation),n.r.,540.0
+Element C0 (pF),n.r.,67.59205709236818
+-6 dB fractional bandwidth (%),51.8,47.84719974101651
+-3 dB fractional bandwidth (%),n.r.,28.118811881188122
+Surface pressure per volt at 0.8 Vc (Pa/V),n.r.,5428.310579755588

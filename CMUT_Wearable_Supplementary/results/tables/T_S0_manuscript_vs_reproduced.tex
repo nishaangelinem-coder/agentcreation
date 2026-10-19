@@ -1,0 +1,26 @@
+\begin{table}
+\caption{Manuscript values vs independent reproduction vs emulated hardware (digital twin).}
+\label{tab:T_S0_manuscript_vs_reproduced}
+\begin{tabular}{lllll}
+\toprule
+Metric & Manuscript & Reproduced (model) & Emulated hardware & Note \\
+\midrule
+Collapse voltage (V) & 46.5 & 51.6 & 51.6 +/- 3.2 & Within 11 \%; depends on E and insulator (assumed) \\
+Immersed cell resonance (MHz) & 1.5 (implied) & 2.60 & - & MISMATCH: a \textasciitilde \space 37.7 um needed for 1.5 MHz \\
+-6 dB fractional BW (\%) & 51.8 & 47.8 & - & Consistent with Q = 3.5 \\
+Lateral FWHM (mm) & 0.69 & 0.94 (-6 dB) / 0.69 (-3 dB) & 0.938 +/- 0.023 & Manuscript value equals the -3 dB (intensity) width \\
+Axial FWHM (mm) & 3.74 & 5.50 (-6 dB) / 3.95 (-3 dB) & 5.476 +/- 0.020 & Manuscript value close to -3 dB width \\
+Peak focal pressure (kPa) & 12.0 & 12.0 (set) & 12.365 +/- 0.842 & Hardware spread from cal. uncertainty + element errors \\
+Steering loss at +/-20 deg (dB) & -0.33 & -0.28 & - &  \\
+Isppa (mW/cm\textasciicircum 2) & 4.45 & 4.45 & - & rho*c = 1050*1540 \\
+MI & 0.010 & 0.0098 & - & Agrees \\
+Peak dT, 20 \% duty (mC) & 0.37-0.4 & 0.419 & below thermocouple LOD & Same order; 3-D model \\
+Thermal index & 0.0004 (= dT) & TIS 6.58e-04 & - & Manuscript TI equals dT numerically; use IEC 62359 TIS/TIB \\
+Settling time (ms) & 150 & 170 & - & Plant fitted (FOPDT) \\
+Disturbance recovery (ms) & 426 & 181 & - & Depends on disturbance definition (n.r. in manuscript) \\
+Peak with HW errors, flat (kPa) & - & 12.0 & 11.803 +/- 0.224 & Expect \textasciitilde 0.5-1 dB loss on hardware \\
+Pressure at target, curved R=60 mm uncorrected (kPa) & - & 12.0 & 3.344 +/- 0.177 & Focus moves toward skin; shape sensing required \\
+Pressure at target, curved R=60 mm corrected (kPa) & - & 12.0 & 11.365 +/- 0.230 & Restored by correction \\
+\bottomrule
+\end{tabular}
+\end{table}

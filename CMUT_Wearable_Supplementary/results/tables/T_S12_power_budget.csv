@@ -1,0 +1,10 @@
+Block,Power (mW),Basis
+"Low-power FPGA (beamformer, sequencer, PI)",150.0,vendor class
+"64-ch low-voltage TX drivers (linear, quiescent)",192.0,3 mW/ch assumed
+TX dynamic C*V^2*f*duty (computed),0.3432418866985269,"Vac=0.51 V, C0=68 pF"
+"DC bias generator (~41 V, leakage-limited)",40.0,boost + LDO
+"Feedback RX/ADC (8 channels, duty-cycled)",50.0,assumed
+MCU + BLE link,15.0,assumed
+TOTAL,447.34324188669854,
+Energy for 4 h session (Wh),1.7893729675467942,
+"Battery @3.7 V, 80 % usable (mAh)",604.5178944414844,

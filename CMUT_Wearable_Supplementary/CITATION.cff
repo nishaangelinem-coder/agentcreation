@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite the article and this supplementary package."
+title: "Supplementary code and data: A Wearable Phased-Array CMUT Ultrasound Platform for Mechanotransductive Modulation of Tumour Proliferation - an in-silico design and feasibility study"
+authors:
+  - family-names: Angeline
+    given-names: M. Nisha
+    affiliation: "Department of ECE, Velalar College of Engineering and Technology, Erode, India"
+  - family-names: Manikandan
+    given-names: S. K.
+    affiliation: "Department of Medical Electronics, Velalar College of Engineering and Technology, Erode, India"
+version: 1.0.0
+date-released: 2026-10-19
+license: MIT
+keywords: [CMUT, phased array, acoustic radiation force, wearable ultrasound, mechanotransduction, digital twin]

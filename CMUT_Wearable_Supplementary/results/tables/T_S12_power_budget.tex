@@ -1,0 +1,19 @@
+\begin{table}
+\caption{Estimated wearable power budget (assumption-based).}
+\label{tab:T_S12_power_budget}
+\begin{tabular}{lrl}
+\toprule
+Block & Power (mW) & Basis \\
+\midrule
+Low-power FPGA (beamformer, sequencer, PI) & 150 & vendor class \\
+64-ch low-voltage TX drivers (linear, quiescent) & 192 & 3 mW/ch assumed \\
+TX dynamic C*V\textasciicircum 2*f*duty (computed) & 0.3432 & Vac=0.51 V, C0=68 pF \\
+DC bias generator (\textasciitilde 41 V, leakage-limited) & 40 & boost + LDO \\
+Feedback RX/ADC (8 channels, duty-cycled) & 50 & assumed \\
+MCU + BLE link & 15 & assumed \\
+TOTAL & 447.3 &  \\
+Energy for 4 h session (Wh) & 1.789 &  \\
+Battery @3.7 V, 80 \% usable (mAh) & 604.5 &  \\
+\bottomrule
+\end{tabular}
+\end{table}

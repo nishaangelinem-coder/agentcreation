@@ -1,0 +1,20 @@
+\begin{table}
+\caption{Closed-loop focal-pressure regulation.}
+\label{tab:T_S10_control}
+\begin{tabular}{lll}
+\toprule
+Metric & Manuscript & Reproduced \\
+\midrule
+Kp / Ki / Kd & 4 / 55 / 0 & 4 / 55 / 0 \\
+Plant (K, tau, dead time) & FOPDT (n.r.) & 1, 60 ms, 5 ms \\
+Settling time, 2 \% (ms) & 150 & 170 \\
+Overshoot (\%) & 0 & 0 \\
+Steady-state error (Pa) & 0.03 & 0.038 \\
+Recovery after 40 \% coupling loss (ms) & 426 & 181 \\
+Pressure dip during disturbance (kPa) & n.r. & 1.2 \\
+Settling, 5 \% band, with 0.3 kPa sensor noise (ms) & n.r. & 118 \\
+MC +/-50 \% plant: settling median [95th pct] (ms) & n.r. & 173 [244] \\
+MC +/-50 \% plant: overshoot max (\%) & n.r. & 55.89 \\
+\bottomrule
+\end{tabular}
+\end{table}

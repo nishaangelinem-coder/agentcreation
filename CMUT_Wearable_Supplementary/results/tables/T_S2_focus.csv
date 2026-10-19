@@ -1,0 +1,12 @@
+Quantity,Manuscript,Reproduced
+Focal depth of peak (mm),20.0,19.780000000000015
+Peak focal pressure (kPa),12.0,12.0
+"Lateral FWHM, pressure -6 dB (mm)",0.69,0.9414981581064995
+"Lateral FWHM, intensity -3 dB (mm)",-,0.6927902421518101
+"Axial FWHM, pressure -6 dB (mm)",3.74,5.503012834674959
+"Axial FWHM, intensity -3 dB (mm)",-,3.954342778578132
+Isppa (mW/cm^2),4.45,4.452690166975882
+Ispta at 20 % duty (mW/cm^2),0.891,0.8905380333951763
+Required surface pressure (kPa),n.r.,2.7916847984089963
+Required AC drive at 0.8 Vc bias (V),n.r.,0.5142824378583536
+"Acoustic output power, CW (mW)",n.r.,0.4164247042553523
