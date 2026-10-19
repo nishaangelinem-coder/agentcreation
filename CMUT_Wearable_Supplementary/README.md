@@ -1,10 +1,5 @@
 # Supplementary Material — Wearable Phased-Array CMUT Mechanostimulation Platform
 
-Companion code, data and documents for:
-
-> M. Nisha Angeline and S. K. Manikandan, *"A Wearable Phased-Array CMUT
-> Ultrasound Platform for Mechanotransductive Modulation of Tumour
-> Proliferation: An In-Silico Design and Feasibility Study."*
 
 This package does three things:
 
@@ -16,9 +11,7 @@ This package does three things:
    results a fabricated patch would be expected to give, covering fabrication
    spread, electronics errors, body curvature and measurement uncertainty.
    **These are emulated, not measured** (see `supplementary/S3_Emulated_Data_Disclosure.md`).
-3. **Q1 supplementary documents.** It includes extended methods, a
-   manuscript-consistency audit, a Phase II bench protocol with acceptance
-   criteria, and data/code-availability statements.
+
 
 ## Folder layout
 
