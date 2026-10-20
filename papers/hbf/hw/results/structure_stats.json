@@ -1,0 +1,142 @@
+{
+ "array4": {
+  "fa": 9,
+  "ha": 4,
+  "regs": 0,
+  "tree_depth": 5,
+  "depth": 13
+ },
+ "wallace4": {
+  "fa": 9,
+  "ha": 6,
+  "regs": 0,
+  "tree_depth": 5,
+  "depth": 14
+ },
+ "dadda4": {
+  "fa": 9,
+  "ha": 4,
+  "regs": 0,
+  "tree_depth": 5,
+  "depth": 13
+ },
+ "booth4": {
+  "fa": 6,
+  "ha": 6,
+  "regs": 0,
+  "tree_depth": 7,
+  "depth": 18
+ },
+ "array8": {
+  "fa": 49,
+  "ha": 8,
+  "regs": 0,
+  "tree_depth": 13,
+  "depth": 29
+ },
+ "wallace8": {
+  "fa": 47,
+  "ha": 28,
+  "regs": 0,
+  "tree_depth": 9,
+  "depth": 29
+ },
+ "dadda8": {
+  "fa": 49,
+  "ha": 8,
+  "regs": 0,
+  "tree_depth": 9,
+  "depth": 29
+ },
+ "booth8": {
+  "fa": 28,
+  "ha": 12,
+  "regs": 0,
+  "tree_depth": 11,
+  "depth": 34
+ },
+ "array16": {
+  "fa": 225,
+  "ha": 16,
+  "regs": 0,
+  "tree_depth": 29,
+  "depth": 61
+ },
+ "wallace16": {
+  "fa": 221,
+  "ha": 81,
+  "regs": 0,
+  "tree_depth": 13,
+  "depth": 60
+ },
+ "dadda16": {
+  "fa": 225,
+  "ha": 16,
+  "regs": 0,
+  "tree_depth": 13,
+  "depth": 61
+ },
+ "booth16": {
+  "fa": 120,
+  "ha": 24,
+  "regs": 0,
+  "tree_depth": 13,
+  "depth": 66
+ },
+ "dadda+ks8": {
+  "fa": 36,
+  "ha": 6,
+  "regs": 0,
+  "tree_depth": 9,
+  "depth": 19
+ },
+ "booth+ks8": {
+  "fa": 15,
+  "ha": 9,
+  "regs": 0,
+  "tree_depth": 11,
+  "depth": 21
+ },
+ "dadda+ks16": {
+  "fa": 196,
+  "ha": 14,
+  "regs": 0,
+  "tree_depth": 13,
+  "depth": 25
+ },
+ "booth+ks16": {
+  "fa": 91,
+  "ha": 21,
+  "regs": 0,
+  "tree_depth": 13,
+  "depth": 25
+ },
+ "array8_p3": {
+  "fa": 49,
+  "ha": 8,
+  "regs": 95,
+  "tree_depth": 5,
+  "depth": 15
+ },
+ "dadda8_p2": {
+  "fa": 49,
+  "ha": 8,
+  "regs": 72,
+  "tree_depth": 4,
+  "depth": 15
+ },
+ "booth8_p2": {
+  "fa": 28,
+  "ha": 12,
+  "regs": 64,
+  "tree_depth": 4,
+  "depth": 15
+ },
+ "array16_p4": {
+  "fa": 225,
+  "ha": 16,
+  "regs": 263,
+  "tree_depth": 7,
+  "depth": 31
+ }
+}

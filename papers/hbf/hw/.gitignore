@@ -1,0 +1,5 @@
+lib/
+build/
+syn/cells/
+__pycache__/
+results/syn_[b-z].json

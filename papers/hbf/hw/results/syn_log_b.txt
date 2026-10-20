@@ -1,0 +1,2 @@
+systolic_4x8.sky130.area         area= 128222.98 cells= 15073 delay=  7355.6ps E/cyc(u)= 99.9278pJ E/cyc(g)= 97.3555pJ leak=   0.049uW
+systolic_4x8.sky130.delay        area= 129033.75 cells= 15073 delay=  6330.2ps E/cyc(u)=100.0680pJ E/cyc(g)= 97.4438pJ leak=   0.051uW

@@ -1,0 +1,26 @@
+bw_array8 RESULT: 65536 vectors checked, 0 errors -> PASS
+bw_dadda8 RESULT: 65536 vectors checked, 0 errors -> PASS
+u_array4 RESULT: 256 vectors checked, 0 errors -> PASS
+bw_array8_p3 RESULT: 65536 vectors checked, 0 errors -> PASS
+bw_dadda8_p2 RESULT: 65536 vectors checked, 0 errors -> PASS
+bw_wallace8 RESULT: 65536 vectors checked, 0 errors -> PASS
+booth8 RESULT: 65536 vectors checked, 0 errors -> PASS
+booth8_p2 RESULT: 65536 vectors checked, 0 errors -> PASS
+behav_mult8 RESULT: 65536 vectors checked, 0 errors -> PASS
+fp8_mac RESULT: 65536 products + 200 dot products checked, 0 errors -> PASS
+systolic_array RESULT: 50 trials, 1600 outputs checked, 0 errors -> PASS
+bw_array4 RESULT: 256 vectors checked, 0 errors -> PASS
+bw_wallace4 RESULT: 256 vectors checked, 0 errors -> PASS
+bw_dadda4 RESULT: 256 vectors checked, 0 errors -> PASS
+booth4 RESULT: 256 vectors checked, 0 errors -> PASS
+behav_mult4 RESULT: 256 vectors checked, 0 errors -> PASS
+bw_array16 RESULT: 300000 vectors checked, 0 errors -> PASS
+bw_wallace16 RESULT: 300000 vectors checked, 0 errors -> PASS
+bw_dadda16 RESULT: 300000 vectors checked, 0 errors -> PASS
+booth16 RESULT: 300000 vectors checked, 0 errors -> PASS
+behav_mult16 RESULT: 300000 vectors checked, 0 errors -> PASS
+bw_array16_p4 RESULT: 300000 vectors checked, 0 errors -> PASS
+bw_dadda8_ks RESULT: 65536 vectors checked, 0 errors -> PASS
+booth8_ks RESULT: 65536 vectors checked, 0 errors -> PASS
+bw_dadda16_ks RESULT: 300000 vectors checked, 0 errors -> PASS
+booth16_ks RESULT: 300000 vectors checked, 0 errors -> PASS

@@ -7,6 +7,17 @@ const {
 } = require("docx");
 
 const FONT = "Times New Roman";
+const HW = JSON.parse(fs.readFileSync(__dirname + "/hw/results/hw_tables.json", "utf8"));
+const hwf = (x, d = 0) => Number(x).toFixed(d);
+const hwSys = (B, p) => HW.sys_energy.find((r) => r.model === "MoE-1T" && r.B === B && r.scn.startsWith(p));
+const hwCap = (d, lib) => HW.nmc_capacity.find((r) => r.design === d && r.lib === lib);
+const hwThr = (cfg, N, lib, g) => HW.nmc_thr.find((r) => r.cfg === cfg && r.N === N && r.lib === lib && r.gamma === g);
+const HWX = {
+  e1: hwSys(1, "S1").e_mJ, e2: hwSys(1, "S2").e_mJ, e3: hwSys(1, "S3: HBF + near-flash MAC (7").e_mJ,
+  b7: hwCap("bw_array8", "asap7").Bmax, b1: hwCap("bw_array8", "sky130").Bmax,
+  thr4: hwThr("HBM-4/HBF-4", 4, "asap7", 4).thr, thr1: hwThr("HBM-4/HBF-4", 4, "asap7", 1).thr, base4: HW.nmc_thr_base["4"],
+  arrE: HW.mult8_asap7.find((r) => r.design === "bw_array8" && r.mode === "area").e_pj * 1000,
+};
 const TEXT_W = 9026; // A4 width minus 1" margins, DXA
 
 // ---------- inline markup: **bold**, *italic*, _{sub}, ^{sup} ----------
@@ -53,7 +64,8 @@ function FIG(file, caption, widthIn = 6.2) {
     children: [new TextRun({ text: `Fig. ${figN}. `, bold: true, size: 20 }), ...runs(caption, { size: 20 })] }));
 }
 const border = { style: BorderStyle.SINGLE, size: 4, color: "808080" };
-function TBL(caption, header, rows, widths) {
+function TBL(caption, header, rows, widths, opts = {}) {
+  const fsz = opts.size || 18;
   tabN++;
   const total = widths.reduce((a, b) => a + b, 0);
   body.push(new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 160, after: 80 }, keepNext: true,
@@ -64,7 +76,7 @@ function TBL(caption, header, rows, widths) {
     shading: head ? { fill: "D9E2EC", type: ShadingType.CLEAR, color: "auto" } : undefined,
     margins: { top: 50, bottom: 50, left: 90, right: 90 },
     children: [new Paragraph({ alignment: i === 0 ? AlignmentType.LEFT : AlignmentType.CENTER,
-      children: runs(String(t), { size: 18, bold: head || undefined }) })] });
+      children: runs(String(t), { size: fsz, bold: head || undefined }) })] });
   body.push(new Table({ width: { size: total, type: WidthType.DXA }, columnWidths: widths,
     rows: [new TableRow({ tableHeader: true, children: header.map((t, i) => cell(t, i, true)) }),
       ...rows.map((r) => new TableRow({ cantSplit: true, children: r.map((t, i) => cell(t, i, false)) }))] }));
@@ -89,9 +101,9 @@ const front = [
 body.push(...front);
 
 body.push(new Paragraph({ spacing: { after: 80 }, children: [new TextRun({ text: "Abstract", bold: true, size: 24 })] }));
-P("The memory system, not arithmetic, now bounds the cost and latency of large language model (LLM) inference. High Bandwidth Memory (HBM) supplies terabytes per second but only tens of gigabytes per stack, forcing trillion-parameter mixture-of-experts (MoE) models to be sharded across many accelerator packages purely for capacity. High Bandwidth Flash (HBF) — vertically stacked 3D NAND dies joined by through-silicon vias to a logic base die and exposed through an HBM-like wide interface — has been proposed to deliver roughly an order of magnitude more capacity per stack at HBM-class read bandwidth, at the price of microsecond-scale access latency and finite write endurance. This paper develops a first-principles analysis of where HBF helps and where it hurts. We (i) derive the operational-intensity, capacity, and concurrency equations that govern the prefill and decode phases on a tiered HBM–HBF package, including the expert-touch probability that makes MoE decode traffic batch-dependent; (ii) propose a reference integration architecture covering the physical package, a read-optimised flash controller on the base die, a data-placement policy and the serving-runtime changes HBF requires; (iii) evaluate four package configurations on dense 70B and 1T-parameter MoE workloads with an open, parameterised analytical model under a 50 ms time-per-output-token service-level objective; and (iv) structure the ongoing architecture debate among HBM scale-out, on-package flash, CXL-attached pools, processing-near-memory and SRAM-centric dataflow designs. The model shows that HBF never improves per-package throughput for models that already fit in HBM, but for a 1T MoE at 32k context it enables single-package serving that HBM cannot provide and yields 1.75× (0.8 TB/s per HBF stack) to 4.2× (1.6 TB/s) higher per-package throughput at a four-package footprint. Endurance analysis shows that HBF is viable for weights and write-once prefix caches (≥8 years at one full rewrite per day) but not for the mutable KV cache (≈9 days at 1 GB/s on TLC). Sustaining HBM-class bandwidth at 20 µs array latency requires ≈1,000 concurrent 16 KiB reads per stack. We conclude that the most defensible near-term role for HBF is as a weight tier for capacity-constrained MoE deployments and for compute-bound prefill nodes in disaggregated serving, while HBM remains the home of the KV cache.", { noIndent: true });
+P(`The memory system, not arithmetic, now bounds the cost and latency of large language model (LLM) inference. High Bandwidth Memory (HBM) supplies terabytes per second but only tens of gigabytes per stack, forcing trillion-parameter mixture-of-experts (MoE) models to be sharded across many accelerator packages purely for capacity. High Bandwidth Flash (HBF) — vertically stacked 3D NAND dies joined by through-silicon vias to a logic base die and exposed through an HBM-like wide interface — has been proposed to deliver roughly an order of magnitude more capacity per stack at HBM-class read bandwidth, at the price of microsecond-scale access latency and finite write endurance. This paper develops a first-principles analysis of where HBF helps and where it hurts. We (i) derive the operational-intensity, capacity, and concurrency equations that govern the prefill and decode phases on a tiered HBM–HBF package, including the expert-touch probability that makes MoE decode traffic batch-dependent; (ii) propose a reference integration architecture covering the physical package, a read-optimised flash controller on the base die, a data-placement policy and the serving-runtime changes HBF requires; (iii) evaluate four package configurations on dense 70B and 1T-parameter MoE workloads with an open, parameterised analytical model under a 50 ms time-per-output-token service-level objective; and (iv) structure the ongoing architecture debate among HBM scale-out, on-package flash, CXL-attached pools, processing-near-memory and SRAM-centric dataflow designs. The model shows that HBF never improves per-package throughput for models that already fit in HBM, but for a 1T MoE at 32k context it enables single-package serving that HBM cannot provide and yields 1.75× (0.8 TB/s per HBF stack) to 4.2× (1.6 TB/s) higher per-package throughput at a four-package footprint. Endurance analysis shows that HBF is viable for weights and write-once prefix caches (≥8 years at one full rewrite per day) but not for the mutable KV cache (≈9 days at 1 GB/s on TLC). Sustaining HBM-class bandwidth at 20 µs array latency requires ≈1,000 concurrent 16 KiB reads per stack. We further design, exhaustively verify and synthesise (SkyWater 130 nm and ASAP7) array, Wallace, Dadda and radix-4 Booth multipliers of 4–16 bits, an exact-accumulating FP8 MAC and a systolic MAC array for the HBF base die, and compare them on area, delay, energy, leakage, ADP, EDP, GOPS/mm² and TOPS/W with and without HBF. An 8-bit array multiplier costs ${hwf(HWX.arrE, 1)} fJ per operation in ASAP7; near-flash MAC engines cut weight-GEMV energy per token (MoE-1T, batch 1) by ${hwf((1 - HWX.e3 / HWX.e2) * 100)}% relative to HBF with far compute and by ${hwf((1 - HWX.e3 / HWX.e1) * 100)}% relative to a conventional HBM system, but a 5 W, 20 mm² base die sustains a decode batch of only ≈${hwf(HWX.b1, 1)} in 130 nm against ≈${hwf(HWX.b7)} in 7 nm, making the base-die process — not the multiplier topology — the decisive design choice; with 4× internal bandwidth, near-flash engines raise four-package MoE-1T throughput from ${hwf(HWX.thr1)} to ${hwf(HWX.thr4)} tokens/s per package. We conclude that the most defensible near-term role for HBF is as a weight tier for capacity-constrained MoE deployments and for compute-bound prefill nodes in disaggregated serving, while HBM remains the home of the KV cache.`, { noIndent: true });
 body.push(new Paragraph({ spacing: { after: 240 }, alignment: AlignmentType.JUSTIFIED, children: [
-  new TextRun({ text: "Keywords: ", bold: true }), new TextRun({ text: "High Bandwidth Flash (HBF); High Bandwidth Memory (HBM); 3D NAND; large language model inference; prefill and decode; KV cache; mixture of experts; memory hierarchy; heterogeneous integration; through-silicon via; disaggregated serving; roofline model." })] }));
+  new TextRun({ text: "Keywords: ", bold: true }), new TextRun({ text: "High Bandwidth Flash (HBF); High Bandwidth Memory (HBM); 3D NAND; large language model inference; prefill and decode; KV cache; mixture of experts; memory hierarchy; heterogeneous integration; through-silicon via; disaggregated serving; roofline model; array multiplier; Booth multiplier; Dadda tree; near-memory computing; open-source EDA." })] }));
 
 // =====================================================================
 H1("1. Introduction");
@@ -103,14 +115,15 @@ NUM([
   "**Phase-resolved analysis.** We derive closed-form expressions for the operational intensity of prefill and decode on a tiered HBM–HBF package, the minimum prefill chunk that keeps flash-resident weights compute-bound, the expert-touch probability that makes MoE weight traffic grow with batch size, and the Little's-law concurrency that a flash stack must sustain to reach its rated bandwidth (Section 3).",
   "**Reference integration architecture.** We specify a physical, controller-level and software-level integration of HBF, including a data-placement policy for weights, KV cache, prefix caches, adapters and activations, and quantify the endurance budget that rules each placement in or out (Section 4).",
   "**Quantitative evaluation.** Using an open, parameterised analytical model, we compare HBM-only and three HBM/HBF mixes for dense 70B and 1T-parameter MoE models across package counts, context lengths and HBF bandwidth projections under a 50 ms time-per-output-token (TPOT) service-level objective (Sections 5–6).",
-  "**Structured architecture debate.** We contrast five competing visions of the inference memory hierarchy and identify the regimes in which each is preferable, concluding with a heterogeneous \"HBF-for-prefill, HBM-for-decode\" fleet proposal and an agenda of open research problems (Sections 7–8).",
+  "**Structured architecture debate.** We contrast five competing visions of the inference memory hierarchy and identify the regimes in which each is preferable, concluding with a heterogeneous \"HBF-for-prefill, HBM-for-decode\" fleet proposal and an agenda of open research problems (Sections 8–9).",
+  "**Near-flash multiplier engines.** We design, verify and synthesise array, Wallace, Dadda and radix-4 Booth multipliers (4–16 bits, with ripple-carry or Kogge–Stone final adders, combinational and pipelined), an exact-accumulating FP8 MAC and a systolic MAC array for the HBF base die using an open-source flow in SkyWater 130 nm and ASAP7, compare them on every standard figure of merit with and without HBF, and quantify how many MACs a base die can host and what they buy at system level (Section 7).",
 ], "contrib");
 
 // =====================================================================
 H1("2. Background and Related Work");
 H2("2.1 The two phases of autoregressive inference");
 P("A request to an LLM proceeds in two phases. In **prefill**, the entire prompt of *L* tokens is processed in parallel: every linear layer performs a matrix–matrix product between an *L*-row activation matrix and the weight matrix, and the keys and values of every prompt token are written into the KV cache. In **decode**, the model generates output tokens one at a time; each step multiplies a single activation vector per sequence by every active weight matrix and attends over the full KV cache of that sequence. Batching *B* concurrent sequences turns decode's matrix–vector products into thin matrix–matrix products, raising arithmetic intensity proportionally to *B*, but each sequence's attention still reads its own KV cache, which does not amortise across the batch [4], [6].");
-P("The two phases therefore stress hardware differently: prefill is typically compute-bound and determines time-to-first-token (TTFT), whereas decode is memory-bound and determines time-per-output-token (TPOT). Production systems interleave them through iteration-level scheduling [7] and chunked prefill [8], or physically separate them onto different machine pools [9]–[11]. These system choices, as we show in Section 7, interact strongly with the choice of memory technology.");
+P("The two phases therefore stress hardware differently: prefill is typically compute-bound and determines time-to-first-token (TTFT), whereas decode is memory-bound and determines time-per-output-token (TPOT). Production systems interleave them through iteration-level scheduling [7] and chunked prefill [8], or physically separate them onto different machine pools [9]–[11]. These system choices, as we show in Section 8, interact strongly with the choice of memory technology.");
 H2("2.2 High Bandwidth Memory");
 P("HBM stacks DRAM dies on a base logic die, connected by thousands of TSVs and a 1024-bit (HBM3) or 2048-bit (HBM4) wide interface routed through a silicon interposer or bridge [23], [24]. Its key advantage is bandwidth density at the package shoreline; its limitations are capacity per stack, cost per bit, thermal density of the stack, and the limited \"beachfront\" around the accelerator die that caps the number of stacks — typically six to eight. Fine-grained DRAM organisations [25] and processing-in-memory variants [36] have been proposed to improve energy and effective bandwidth, but neither alters the fundamental capacity-per-stack limit of DRAM cells.");
 H2("2.3 NAND flash and High Bandwidth Flash");
@@ -244,7 +257,9 @@ FIG("figures/fig6_littles_law.png", "Concurrent reads in flight per stack needed
 P("Fig. 6 translates the bandwidth target into a parallelism requirement. With 16 KiB pages, a stack must keep 146 reads in flight at *t*_{R} = 3 µs (low-latency SLC-class arrays), 977 at 20 µs and 2,441 at 50 µs; with 4 KiB units these numbers quadruple to 586–9,766. A 16-die stack with four planes per die offers only 64 conventional planes, more than an order of magnitude short of the 20 µs requirement. Hence HBF requires either many more independently sensed sub-arrays per die, larger effective read units through multi-plane reads, lower-latency array designs, or all three — a central VLSI and circuit-design challenge for the technology.");
 
 // =====================================================================
-H1("7. The System Architecture Debate");
+require("./hw_section")({ P, H1, H2, EQ, FIG, TBL, BUL, NUM });
+
+H1("8. The System Architecture Debate");
 P("The inference memory hierarchy is the subject of an active debate between at least five architectural positions. Table 6 summarises them; we then argue where each is strongest, using the results of Section 6.");
 TBL("Competing architectural positions for the LLM inference memory hierarchy.",
   ["Position", "Core idea", "Strengths", "Weaknesses", "Best regime"],
@@ -257,13 +272,13 @@ TBL("Competing architectural positions for the LLM inference memory hierarchy.",
   ], [1500, 1900, 1800, 1900, 1926]);
 P("**Position A versus B.** Our results support neither extreme. For models that fit in HBM, Position A is strictly better (Section 6.2, Dense-70B). For trillion-parameter MoE models at small-to-moderate package counts — the regime of on-premises, sovereign, enterprise and edge-datacentre deployments, where package count is fixed by budget or power — Position B is the only option at *N* ≤ 2 and leads by 1.75–4.2× at *N* = 4 for long contexts. At hyperscale, where operators can deploy as many packages as needed, Position A remains competitive on throughput per package, and the argument for HBF shifts to cost per token, which depends on HBF pricing not yet public.");
 P("**Position C.** CXL-attached memory [33], [34] offers capacity elasticity and sharing across packages but at link bandwidths one to two orders of magnitude below HBM. Our decode analysis implies it cannot hold per-step weight traffic for interactive serving; it is, however, an excellent home for warm prefix caches and preempted KV, and is complementary to HBF.");
-P("**Position D.** Processing-near-memory [35], [36] and in-flash computation [31], [42] would invert the trade-off identified in Section 6.2: if the expert FFN computation for a token were performed in the HBF base die, only activations — kilobytes rather than gigabytes — would cross the interface, removing HBF bandwidth as the binding constraint. The base die that HBF already requires is a natural host for such logic, but thermal limits next to NAND and the need for a programmable, standardised interface are open problems.");
+P("**Position D.** Processing-near-memory [35], [36] and in-flash computation [31], [42] would invert the trade-off identified in Section 6.2: if the expert FFN computation for a token were performed in the HBF base die, only activations — kilobytes rather than gigabytes — would cross the interface, removing HBF bandwidth as the binding constraint. The base die that HBF already requires is a natural host for such logic; Section 7 quantifies this option with synthesised multiplier engines and shows that its viability hinges on the base-die process node and on the NAND read energy, while thermal limits next to NAND and the need for a programmable, standardised interface remain open problems.");
 P("**Position E.** SRAM-centric designs [43] minimise TPOT but require a number of chips proportional to model size; for trillion-parameter models the chip count, and thus capital cost, is prohibitive. They and HBF sit at opposite corners of the capacity–latency plane.");
-H2("7.1 A heterogeneous fleet: HBF for prefill, HBM for decode");
+H2("8.1 A heterogeneous fleet: HBF for prefill, HBM for decode");
 P("Combining Sections 6.2 and 6.4 yields a concrete architectural proposal. Prefill is compute-bound when chunks are large, needs little *persistent* KV capacity (KV is shipped to decode nodes immediately [9]–[11]), and tolerates HBF weight bandwidth once *L* ≥ *L*^{*}. Decode is bandwidth- and KV-capacity-bound and is hurt by moving weight traffic to flash unless capacity, not bandwidth, is the binding constraint. We therefore propose that **prefill pools be built from HBF-heavy packages** (e.g., HBM-2/HBF-6), which can hold an entire trillion-parameter model per package and thus prefill without any model-parallel communication, while **decode pools use HBM-rich packages**, or HBM-4/HBF-4 hybrids when the deployment size is fixed and small. This assignment uses each memory technology where its weaknesses are masked by the phase's characteristics, and it is compatible with KV-centric serving architectures already in production [11].");
 
 // =====================================================================
-H1("8. Open Research Challenges");
+H1("9. Open Research Challenges");
 BUL([
   "**Array-level parallelism (VLSI).** Achieving ≈10^{3} concurrent reads per stack (Section 6.6) at acceptable area, power and peripheral-circuit overhead; low-latency sensing schemes and sub-array partitioning in 3D NAND.",
   "**Thermal co-design.** Retention, bit-error rate and ECC strength of NAND operated next to a kilowatt-class accelerator; interposer floor-planning and thermal isolation.",
@@ -271,19 +286,19 @@ BUL([
   "**Expert-aware scheduling.** Batch formation that minimises *p*_{touch} (Equation (5)) through routing-affinity grouping; hot-expert caching policies between HBM and HBF.",
   "**Speculative expert prefetch.** Predicting next-layer expert selection to hide *t*_{R} in MoE decode without wasting flash bandwidth.",
   "**Reliability under read-heavy stress.** Read-disturb characterisation at billions of reads per block, and the background relocation write budget it implies.",
-  "**Compute in the base die.** Programmable near-flash GEMV/FFN engines that remove weight traffic from the interface (Position D).",
+  "**Compute in the base die.** Moving from the fixed-function engines of Section 7 to programmable near-flash GEMV/FFN engines, with physical design (place-and-route, IR drop, thermal maps) of MAC tiles between TSV fields.",
   "**Validation.** Cycle-accurate and silicon-level validation of the analytical model presented here, including energy per token, which this study does not quantify.",
 ]);
 
 // =====================================================================
-H1("9. Conclusion");
-P("High Bandwidth Flash reframes the LLM inference memory problem from \"how much HBM can be afforded\" to \"which data deserves DRAM\". By deriving and evaluating the governing equations for prefill and decode on a tiered HBM–HBF package, this paper has shown that HBF is not a drop-in substitute for HBM: it lowers per-package decode throughput for models that already fit in HBM, and its value collapses if its read bandwidth falls well below HBM's or if it is used for mutable data. Where it is used for what flash does well — holding enormous, read-mostly weight sets — it changes what is feasible: a trillion-parameter MoE fits in a single package, capacity-constrained deployments gain 1.75–4.2× throughput per package, prefill nodes can be built without model parallelism, and daily model updates consume only a small fraction of endurance. The decisive technical questions are now at the device and circuit level — sub-array parallelism, latency and thermal robustness — and at the system level — expert-aware scheduling and prefill–decode disaggregation. We hope the analytical framework and open model presented here help both communities reason about them quantitatively.");
+H1("10. Conclusion");
+P("High Bandwidth Flash reframes the LLM inference memory problem from \"how much HBM can be afforded\" to \"which data deserves DRAM\". By deriving and evaluating the governing equations for prefill and decode on a tiered HBM–HBF package, this paper has shown that HBF is not a drop-in substitute for HBM: it lowers per-package decode throughput for models that already fit in HBM, and its value collapses if its read bandwidth falls well below HBM's or if it is used for mutable data. Where it is used for what flash does well — holding enormous, read-mostly weight sets — it changes what is feasible: a trillion-parameter MoE fits in a single package, capacity-constrained deployments gain 1.75–4.2× throughput per package, prefill nodes can be built without model parallelism, and daily model updates consume only a small fraction of endurance. The decisive technical questions are now at the device and circuit level — sub-array parallelism, latency and thermal robustness — and at the system level — expert-aware scheduling and prefill–decode disaggregation. At circuit level, the synthesised multiplier engines show that integrating array or Booth multipliers into the HBF base die is technically straightforward and cuts weight-GEMV energy by eliminating interposer traffic, but that the batch such engines can serve is set by the base-die process node and thermal budget far more than by multiplier topology. We hope the analytical framework and open model presented here help both communities reason about them quantitatively.");
 
 // ---------- declarations ----------
 H1("Declarations");
 P("**Funding.** This research received no specific grant from any funding agency in the public, commercial or not-for-profit sectors.", { noIndent: true });
 P("**Conflict of interest.** The author declares no competing interests.", { noIndent: true });
-P("**Data and code availability.** The analytical model (hbf_model.py), figure-generation script (make_figures.py) and raw results (results.json) are available from the author's repository alongside this manuscript.", { noIndent: true });
+P("**Data and code availability.** The analytical models (hbf_model.py, hw/nmc_model.py), the multiplier generator (hw/gen_mult.py), all Verilog RTL and testbenches, the synthesis and power flow (hw/syn_flow.py) and all raw results (results.json, hw/results/) are available from the author's repository alongside this manuscript.", { noIndent: true });
 P("**Author contribution.** M. Nisha Angeline: conceptualisation, methodology, analysis, visualisation, writing — original draft, review and editing.", { noIndent: true });
 
 // ---------- references ----------
@@ -333,6 +348,22 @@ const refs = [
   "J. Park *et al.*, \"Flash-Cosmos: In-flash bulk bitwise operations using inherent computation capability of NAND flash memory,\" in *Proc. IEEE/ACM MICRO*, 2022.",
   "D. Abts *et al.*, \"Think fast: A tensor streaming processor (TSP) for accelerating deep learning workloads,\" in *Proc. ACM/IEEE ISCA*, 2020.",
   "Kimi Team, \"Kimi K2: Open agentic intelligence,\" arXiv preprint, 2025.",
+  "C. R. Baugh and B. A. Wooley, \"A two's complement parallel array multiplication algorithm,\" *IEEE Trans. Comput.*, vol. C-22, no. 12, pp. 1045–1047, 1973.",
+  "C. S. Wallace, \"A suggestion for a fast multiplier,\" *IEEE Trans. Electron. Comput.*, vol. EC-13, no. 1, pp. 14–17, 1964.",
+  "L. Dadda, \"Some schemes for parallel multipliers,\" *Alta Frequenza*, vol. 34, pp. 349–356, 1965.",
+  "A. D. Booth, \"A signed binary multiplication technique,\" *Q. J. Mech. Appl. Math.*, vol. 4, no. 2, pp. 236–240, 1951.",
+  "O. L. MacSorley, \"High-speed arithmetic in binary computers,\" *Proc. IRE*, vol. 49, no. 1, pp. 67–91, 1961.",
+  "P. M. Kogge and H. S. Stone, \"A parallel algorithm for the efficient solution of a general class of recurrence equations,\" *IEEE Trans. Comput.*, vol. C-22, no. 8, pp. 786–793, 1973.",
+  "R. P. Brent and H. T. Kung, \"A regular layout for parallel adders,\" *IEEE Trans. Comput.*, vol. C-31, no. 3, pp. 260–264, 1982.",
+  "C. Wolf, \"Yosys Open SYnthesis Suite,\" [Online]. Available: https://yosyshq.net/yosys/",
+  "R. Brayton and A. Mishchenko, \"ABC: An academic industrial-strength verification tool,\" in *Proc. Int. Conf. Computer Aided Verification (CAV)*, 2010, pp. 24–40.",
+  "L. T. Clark *et al.*, \"ASAP7: A 7-nm finFET predictive process design kit,\" *Microelectron. J.*, vol. 53, pp. 105–115, 2016.",
+  "SkyWater Technology and Google, \"SkyWater SKY130 open-source process design kit,\" 2020. [Online]. Available: https://github.com/google/skywater-pdk",
+  "S. Williams, \"Icarus Verilog,\" [Online]. Available: https://steveicarus.github.io/iverilog/",
+  "P. Micikevicius *et al.*, \"FP8 formats for deep learning,\" arXiv:2209.05433, 2022.",
+  "U. Kulisch, *Computer Arithmetic and Validity: Theory, Implementation, and Applications*, 2nd ed. Berlin, Germany: De Gruyter, 2013.",
+  "M. Horowitz, \"Computing's energy problem (and what we can do about it),\" in *IEEE Int. Solid-State Circuits Conf. (ISSCC) Dig. Tech. Papers*, 2014, pp. 10–14.",
+  "B. Parhami, *Computer Arithmetic: Algorithms and Hardware Designs*, 2nd ed. New York, NY, USA: Oxford Univ. Press, 2010.",
 ];
 refs.forEach((r, i) => body.push(new Paragraph({ alignment: AlignmentType.JUSTIFIED, spacing: { after: 60 },
   indent: { left: 480, hanging: 480 }, children: [new TextRun({ text: `[${i + 1}]\t`, size: 19 }), ...runs(r, { size: 19 })],
@@ -355,6 +386,8 @@ const doc = new Document({
   numbering: { config: [
     { reference: "bul", levels: [{ level: 0, format: LevelFormat.BULLET, text: "•", alignment: AlignmentType.LEFT,
       style: { paragraph: { indent: { left: 720, hanging: 360 } } } }] },
+    { reference: "guide", levels: [{ level: 0, format: LevelFormat.DECIMAL, text: "G%1.", alignment: AlignmentType.LEFT,
+      style: { paragraph: { indent: { left: 720, hanging: 400 } } } }] },
     { reference: "contrib", levels: [{ level: 0, format: LevelFormat.DECIMAL, text: "(%1)", alignment: AlignmentType.LEFT,
       style: { paragraph: { indent: { left: 720, hanging: 400 } } } }] },
   ] },

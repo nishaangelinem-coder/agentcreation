@@ -1,0 +1,16 @@
+bw_array16_p4.sky130.area        area=  12137.89 cells=  1412 delay=  5572.8ps E/cyc(u)= 17.8958pJ E/cyc(g)= 17.8765pJ leak=   0.005uW
+bw_array16_p4.sky130.delay       area=  12150.40 cells=  1412 delay=  4951.4ps E/cyc(u)= 17.8936pJ E/cyc(g)= 17.8741pJ leak=   0.005uW
+bw_array16_p4.asap7.area         area=    180.27 cells=  1448 delay=   342.6ps E/cyc(u)=  0.2929pJ E/cyc(g)=  0.2917pJ leak=   0.078uW
+bw_array16_p4.asap7.delay        area=    180.43 cells=  1448 delay=   304.6ps E/cyc(u)=  0.2918pJ E/cyc(g)=  0.2905pJ leak=   0.077uW
+u_array4.sky130.area             area=    352.84 cells=    48 delay=  1926.7ps E/cyc(u)=  0.1318pJ E/cyc(g)=  0.1318pJ leak=   0.000uW
+u_array4.sky130.delay            area=    369.10 cells=    48 delay=  1731.2ps E/cyc(u)=  0.1418pJ E/cyc(g)=  0.1418pJ leak=   0.000uW
+u_array4.asap7.area              area=      4.94 cells=    56 delay=   224.9ps E/cyc(u)=  0.0040pJ E/cyc(g)=  0.0040pJ leak=   0.002uW
+u_array4.asap7.delay             area=      6.09 cells=    56 delay=   188.2ps E/cyc(u)=  0.0059pJ E/cyc(g)=  0.0059pJ leak=   0.003uW
+int8_pe.sky130.area              area=   4086.42 cells=   475 delay=  7350.6ps E/cyc(u)=  4.1668pJ E/cyc(g)=  4.1083pJ leak=   0.002uW
+int8_pe.sky130.delay             area=   4118.95 cells=   475 delay=  6298.2ps E/cyc(u)=  4.1766pJ E/cyc(g)=  4.1166pJ leak=   0.002uW
+int8_pe.asap7.area               area=     61.18 cells=   544 delay=   609.6ps E/cyc(u)=  0.0645pJ E/cyc(g)=  0.0643pJ leak=   0.028uW
+int8_pe.asap7.delay              area=     62.37 cells=   545 delay=   549.5ps E/cyc(u)=  0.0647pJ E/cyc(g)=  0.0646pJ leak=   0.028uW
+fp8_mac.sky130.area              area=   6070.82 cells=   754 delay= 14900.1ps E/cyc(u)=  6.1878pJ E/cyc(g)=  6.1417pJ leak=   0.002uW
+fp8_mac.sky130.delay             area=   6160.91 cells=   760 delay= 12545.1ps E/cyc(u)=  6.2037pJ E/cyc(g)=  6.1586pJ leak=   0.002uW
+fp8_mac.asap7.area               area=     89.27 cells=   841 delay=  1104.6ps E/cyc(u)=  0.0882pJ E/cyc(g)=  0.0879pJ leak=   0.037uW
+fp8_mac.asap7.delay              area=     90.22 cells=   854 delay=  1074.8ps E/cyc(u)=  0.0877pJ E/cyc(g)=  0.0873pJ leak=   0.035uW

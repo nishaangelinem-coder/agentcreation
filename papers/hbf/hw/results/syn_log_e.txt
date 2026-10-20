@@ -1,0 +1,2 @@
+systolic_4x8.asap7.area          area=   1911.47 cells= 17232 delay=  1129.3ps E/cyc(u)=  1.5902pJ E/cyc(g)=  1.5757pJ leak=   0.846uW
+systolic_4x8.asap7.delay         area=   1935.13 cells= 17302 delay=   571.9ps E/cyc(u)=  1.5867pJ E/cyc(g)=  1.5744pJ leak=   0.823uW
