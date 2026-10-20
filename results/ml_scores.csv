@@ -1,0 +1,169 @@
+SMILES,polymer,chemical_name,endpoint,prob
+Cc1cc(C(C)(C)C)c(O)c(C(C)(C)C)c1,PE,Butylated hydroxytoluene (BHT),NR-AhR,0.0133
+CCCCCCCCCCCCCCCCCCOC(=O)CCc1cc(C(C)(C)C)c(O)c(C(C)(C)C)c1,PE,Irganox 1076,NR-AhR,0.1791
+CC(C)(C)c1ccc(OP(Oc2ccc(C(C)(C)C)cc2C(C)(C)C)Oc2ccc(C(C)(C)C)cc2C(C)(C)C)c(C(C)(C)C)c1,PE,Irgafos 168,NR-AhR,0.21
+CC(C)(C)c1ccc(O)c(C(C)(C)C)c1,PE,"2,4-di-tert-butylphenol",NR-AhR,0.3167
+CCCCCCCC/C=C\CCCCCCCCCCCCC(N)=O,PE,Erucamide,NR-AhR,0.0067
+CCCCCCCC/C=C\CCCCCCCCC(N)=O,PE,Oleamide,NR-AhR,0.0067
+CCCCCCCCCCCCCCCCCC(=O)O,PE,Stearic acid,NR-AhR,0.0
+O=C(c1ccccc1)c1ccccc1,PE,Benzophenone,NR-AhR,0.0633
+CC1(C)CC(OC(=O)CCCCCCCCC(=O)OC2CC(C)(C)NC(C)(C)C2)CC(C)(C)N1,PE,Tinuvin 770,NR-AhR,0.02
+C=C,PE,Ethylene,NR-AhR,0.11
+CCCCCCCCCc1ccc(O)cc1,PE,4-Nonylphenol,NR-AhR,0.0067
+CC(C)(C)CC(C)(C)c1ccc(O)cc1,PE,4-tert-Octylphenol,NR-AhR,0.0467
+Cc1cc(C(C)(C)C)c(O)c(C(C)(C)C)c1,PP,Butylated hydroxytoluene (BHT),NR-AhR,0.0133
+CC(C)(C)c1cc(CCC(=O)OCC(COC(=O)CCc2cc(C(C)(C)C)c(O)c(C(C)(C)C)c2)(COC(=O)CCc2cc(C(C)(C)C)c(O)c(C(C)(C)C)c2)COC(=O)CCc2cc(C(C)(C)C)c(O)c(C(C)(C)C)c2)cc(C(C)(C)C)c1O,PP,Irganox 1010,NR-AhR,0.08
+CC(C)(C)c1ccc(OP(Oc2ccc(C(C)(C)C)cc2C(C)(C)C)Oc2ccc(C(C)(C)C)cc2C(C)(C)C)c(C(C)(C)C)c1,PP,Irgafos 168,NR-AhR,0.21
+CC(C)(C)c1ccc(O)c(C(C)(C)C)c1,PP,"2,4-di-tert-butylphenol",NR-AhR,0.3167
+CCCCCCCC/C=C\CCCCCCCCCCCCC(N)=O,PP,Erucamide,NR-AhR,0.0067
+CCCCCCCC/C=C\CCCCCCCCC(N)=O,PP,Oleamide,NR-AhR,0.0067
+CCOC(=O)c1ccccc1C(=O)OCC,PP,Diethyl phthalate,NR-AhR,0.0115
+O=C(c1ccccc1)c1ccccc1,PP,Benzophenone,NR-AhR,0.0633
+C=CC,PP,Propylene,NR-AhR,0.02
+CCCCCCCCCc1ccc(O)cc1,PP,4-Nonylphenol,NR-AhR,0.0067
+CCCCCCCCCCCCCCCCCC(=O)O,PP,Stearic acid,NR-AhR,0.0
+C=Cc1ccccc1,PS,Styrene,NR-AhR,0.1349
+CCc1ccccc1,PS,Ethylbenzene,NR-AhR,0.0133
+c1ccccc1,PS,Benzene,NR-AhR,0.0225
+CC(C)(C)c1ccc(O)cc1,PS,4-tert-Butylphenol,NR-AhR,0.1133
+O=Cc1ccccc1,PS,Benzaldehyde,NR-AhR,0.0533
+CC(=O)c1ccccc1,PS,Acetophenone,NR-AhR,0.0133
+BrC1CCC(Br)C(Br)CCC(Br)C(Br)CCC1Br,PS,Hexabromocyclododecane (HBCD),NR-AhR,0.0067
+O=C(c1ccccc1)c1ccccc1,PS,Benzophenone,NR-AhR,0.0633
+Cc1cc(C(C)(C)C)c(O)c(C(C)(C)C)c1,PS,Butylated hydroxytoluene (BHT),NR-AhR,0.0133
+CCCCCCCCCc1ccc(O)cc1,PS,4-Nonylphenol,NR-AhR,0.0067
+Cc1ccccc1,PS,Toluene,NR-AhR,0.0467
+CCCCC(CC)COC(=O)c1ccccc1C(=O)OCC(CC)CCCC,PVC,Di(2-ethylhexyl) phthalate (DEHP),NR-AhR,0.0454
+CCCCOC(=O)c1ccccc1C(=O)OCCCC,PVC,Dibutyl phthalate (DBP),NR-AhR,0.1338
+CCCCOC(=O)c1ccccc1C(=O)OCc1ccccc1,PVC,Benzyl butyl phthalate (BBP),NR-AhR,0.0823
+COC(=O)c1ccccc1C(=O)OC,PVC,Dimethyl phthalate (DMP),NR-AhR,0.02
+CCOC(=O)c1ccccc1C(=O)OCC,PVC,Diethyl phthalate (DEP),NR-AhR,0.0115
+CCCCC(CC)COC(=O)CCCCC(=O)OCC(CC)CCCC,PVC,Bis(2-ethylhexyl) adipate (DEHA),NR-AhR,0.0
+CCCCCCCCCCCC(=O)[O][Sn]([CH2]CCC)([CH2]CCC)[O]C(=O)CCCCCCCCCCC,PVC,Dibutyltin dilaurate,NR-AhR,0.0033
+C=CCl,PVC,Vinyl chloride,NR-AhR,0.0333
+CC(C)(c1ccc(O)cc1)c1ccc(O)cc1,PVC,Bisphenol A (BPA),NR-AhR,0.1433
+CCCCCCCCCc1ccc(O)cc1,PVC,Nonylphenol,NR-AhR,0.0067
+CC(CCl)OP(=O)(OC(C)CCl)OC(C)CCl,PVC,Tris(1-chloro-2-propyl) phosphate (TCPP),NR-AhR,0.03
+Cc1ccc(N=C=O)cc1N=C=O,PU,"Toluene 2,4-diisocyanate (TDI)",NR-AhR,0.9933
+O=C=Nc1ccc(Cc2ccc(N=C=O)cc2)cc1,PU,"4,4'-Methylenediphenyl diisocyanate (MDI)",NR-AhR,0.2767
+Cc1ccc(N)cc1N,PU,"2,4-Toluenediamine (TDA)",NR-AhR,1.0
+Nc1ccc(Cc2ccc(N)cc2)cc1,PU,"4,4'-Methylenedianiline (MDA)",NR-AhR,0.9933
+CC(CCl)OP(=O)(OC(C)CCl)OC(C)CCl,PU,Tris(1-chloro-2-propyl) phosphate (TCPP),NR-AhR,0.03
+O=P(OC(CCl)CCl)(OC(CCl)CCl)OC(CCl)CCl,PU,"Tris(1,3-dichloro-2-propyl) phosphate (TDCPP)",NR-AhR,0.05
+C1CN2CCN1CC2,PU,"1,4-Diazabicyclo[2.2.2]octane (DABCO)",NR-AhR,0.0267
+CCCCCCCCCCCC(=O)[O][Sn]([CH2]CCC)([CH2]CCC)[O]C(=O)CCCCCCCCCCC,PU,Dibutyltin dilaurate,NR-AhR,0.0033
+CC(C)(c1ccc(O)cc1)c1ccc(O)cc1,PU,Bisphenol A (BPA),NR-AhR,0.1433
+O=C(c1ccccc1)c1ccccc1,PU,Benzophenone,NR-AhR,0.0633
+CCOP(=O)(OCC)OCC,PU,Triethyl phosphate,NR-AhR,0.9967
+Cc1cc(C(C)(C)C)c(O)c(C(C)(C)C)c1,PE,Butylated hydroxytoluene (BHT),SR-ARE,0.19
+CCCCCCCCCCCCCCCCCCOC(=O)CCc1cc(C(C)(C)C)c(O)c(C(C)(C)C)c1,PE,Irganox 1076,SR-ARE,0.24
+CC(C)(C)c1ccc(OP(Oc2ccc(C(C)(C)C)cc2C(C)(C)C)Oc2ccc(C(C)(C)C)cc2C(C)(C)C)c(C(C)(C)C)c1,PE,Irgafos 168,SR-ARE,0.1967
+CC(C)(C)c1ccc(O)c(C(C)(C)C)c1,PE,"2,4-di-tert-butylphenol",SR-ARE,0.3933
+CCCCCCCC/C=C\CCCCCCCCCCCCC(N)=O,PE,Erucamide,SR-ARE,0.0211
+CCCCCCCC/C=C\CCCCCCCCC(N)=O,PE,Oleamide,SR-ARE,0.0211
+CCCCCCCCCCCCCCCCCC(=O)O,PE,Stearic acid,SR-ARE,0.0
+O=C(c1ccccc1)c1ccccc1,PE,Benzophenone,SR-ARE,0.0427
+CC1(C)CC(OC(=O)CCCCCCCCC(=O)OC2CC(C)(C)NC(C)(C)C2)CC(C)(C)N1,PE,Tinuvin 770,SR-ARE,0.0667
+C=C,PE,Ethylene,SR-ARE,0.1867
+CCCCCCCCCc1ccc(O)cc1,PE,4-Nonylphenol,SR-ARE,0.2733
+CC(C)(C)CC(C)(C)c1ccc(O)cc1,PE,4-tert-Octylphenol,SR-ARE,0.63
+Cc1cc(C(C)(C)C)c(O)c(C(C)(C)C)c1,PP,Butylated hydroxytoluene (BHT),SR-ARE,0.19
+CC(C)(C)c1cc(CCC(=O)OCC(COC(=O)CCc2cc(C(C)(C)C)c(O)c(C(C)(C)C)c2)(COC(=O)CCc2cc(C(C)(C)C)c(O)c(C(C)(C)C)c2)COC(=O)CCc2cc(C(C)(C)C)c(O)c(C(C)(C)C)c2)cc(C(C)(C)C)c1O,PP,Irganox 1010,SR-ARE,0.18
+CC(C)(C)c1ccc(OP(Oc2ccc(C(C)(C)C)cc2C(C)(C)C)Oc2ccc(C(C)(C)C)cc2C(C)(C)C)c(C(C)(C)C)c1,PP,Irgafos 168,SR-ARE,0.1967
+CC(C)(C)c1ccc(O)c(C(C)(C)C)c1,PP,"2,4-di-tert-butylphenol",SR-ARE,0.3933
+CCCCCCCC/C=C\CCCCCCCCCCCCC(N)=O,PP,Erucamide,SR-ARE,0.0211
+CCCCCCCC/C=C\CCCCCCCCC(N)=O,PP,Oleamide,SR-ARE,0.0211
+CCOC(=O)c1ccccc1C(=O)OCC,PP,Diethyl phthalate,SR-ARE,0.0
+O=C(c1ccccc1)c1ccccc1,PP,Benzophenone,SR-ARE,0.0427
+C=CC,PP,Propylene,SR-ARE,0.0767
+CCCCCCCCCc1ccc(O)cc1,PP,4-Nonylphenol,SR-ARE,0.2733
+CCCCCCCCCCCCCCCCCC(=O)O,PP,Stearic acid,SR-ARE,0.0
+C=Cc1ccccc1,PS,Styrene,SR-ARE,0.1767
+CCc1ccccc1,PS,Ethylbenzene,SR-ARE,0.0733
+c1ccccc1,PS,Benzene,SR-ARE,0.1067
+CC(C)(C)c1ccc(O)cc1,PS,4-tert-Butylphenol,SR-ARE,0.4467
+O=Cc1ccccc1,PS,Benzaldehyde,SR-ARE,0.1267
+CC(=O)c1ccccc1,PS,Acetophenone,SR-ARE,0.0033
+BrC1CCC(Br)C(Br)CCC(Br)C(Br)CCC1Br,PS,Hexabromocyclododecane (HBCD),SR-ARE,0.96
+O=C(c1ccccc1)c1ccccc1,PS,Benzophenone,SR-ARE,0.0427
+Cc1cc(C(C)(C)C)c(O)c(C(C)(C)C)c1,PS,Butylated hydroxytoluene (BHT),SR-ARE,0.19
+CCCCCCCCCc1ccc(O)cc1,PS,4-Nonylphenol,SR-ARE,0.2733
+Cc1ccccc1,PS,Toluene,SR-ARE,0.0067
+CCCCC(CC)COC(=O)c1ccccc1C(=O)OCC(CC)CCCC,PVC,Di(2-ethylhexyl) phthalate (DEHP),SR-ARE,0.02
+CCCCOC(=O)c1ccccc1C(=O)OCCCC,PVC,Dibutyl phthalate (DBP),SR-ARE,0.0033
+CCCCOC(=O)c1ccccc1C(=O)OCc1ccccc1,PVC,Benzyl butyl phthalate (BBP),SR-ARE,0.0367
+COC(=O)c1ccccc1C(=O)OC,PVC,Dimethyl phthalate (DMP),SR-ARE,0.0
+CCOC(=O)c1ccccc1C(=O)OCC,PVC,Diethyl phthalate (DEP),SR-ARE,0.0
+CCCCC(CC)COC(=O)CCCCC(=O)OCC(CC)CCCC,PVC,Bis(2-ethylhexyl) adipate (DEHA),SR-ARE,0.01
+CCCCCCCCCCCC(=O)[O][Sn]([CH2]CCC)([CH2]CCC)[O]C(=O)CCCCCCCCCCC,PVC,Dibutyltin dilaurate,SR-ARE,0.9867
+C=CCl,PVC,Vinyl chloride,SR-ARE,0.1067
+CC(C)(c1ccc(O)cc1)c1ccc(O)cc1,PVC,Bisphenol A (BPA),SR-ARE,0.99
+CCCCCCCCCc1ccc(O)cc1,PVC,Nonylphenol,SR-ARE,0.2733
+CC(CCl)OP(=O)(OC(C)CCl)OC(C)CCl,PVC,Tris(1-chloro-2-propyl) phosphate (TCPP),SR-ARE,0.04
+Cc1ccc(N=C=O)cc1N=C=O,PU,"Toluene 2,4-diisocyanate (TDI)",SR-ARE,0.97
+O=C=Nc1ccc(Cc2ccc(N=C=O)cc2)cc1,PU,"4,4'-Methylenediphenyl diisocyanate (MDI)",SR-ARE,0.33
+Cc1ccc(N)cc1N,PU,"2,4-Toluenediamine (TDA)",SR-ARE,0.3633
+Nc1ccc(Cc2ccc(N)cc2)cc1,PU,"4,4'-Methylenedianiline (MDA)",SR-ARE,0.3367
+CC(CCl)OP(=O)(OC(C)CCl)OC(C)CCl,PU,Tris(1-chloro-2-propyl) phosphate (TCPP),SR-ARE,0.04
+O=P(OC(CCl)CCl)(OC(CCl)CCl)OC(CCl)CCl,PU,"Tris(1,3-dichloro-2-propyl) phosphate (TDCPP)",SR-ARE,0.0767
+C1CN2CCN1CC2,PU,"1,4-Diazabicyclo[2.2.2]octane (DABCO)",SR-ARE,0.0333
+CCCCCCCCCCCC(=O)[O][Sn]([CH2]CCC)([CH2]CCC)[O]C(=O)CCCCCCCCCCC,PU,Dibutyltin dilaurate,SR-ARE,0.9867
+CC(C)(c1ccc(O)cc1)c1ccc(O)cc1,PU,Bisphenol A (BPA),SR-ARE,0.99
+O=C(c1ccccc1)c1ccccc1,PU,Benzophenone,SR-ARE,0.0427
+CCOP(=O)(OCC)OCC,PU,Triethyl phosphate,SR-ARE,0.0333
+Cc1cc(C(C)(C)C)c(O)c(C(C)(C)C)c1,PE,Butylated hydroxytoluene (BHT),SR-p53,0.0667
+CCCCCCCCCCCCCCCCCCOC(=O)CCc1cc(C(C)(C)C)c(O)c(C(C)(C)C)c1,PE,Irganox 1076,SR-p53,0.12
+CC(C)(C)c1ccc(OP(Oc2ccc(C(C)(C)C)cc2C(C)(C)C)Oc2ccc(C(C)(C)C)cc2C(C)(C)C)c(C(C)(C)C)c1,PE,Irgafos 168,SR-p53,0.1133
+CC(C)(C)c1ccc(O)c(C(C)(C)C)c1,PE,"2,4-di-tert-butylphenol",SR-p53,0.24
+CCCCCCCC/C=C\CCCCCCCCCCCCC(N)=O,PE,Erucamide,SR-p53,0.0
+CCCCCCCC/C=C\CCCCCCCCC(N)=O,PE,Oleamide,SR-p53,0.0
+CCCCCCCCCCCCCCCCCC(=O)O,PE,Stearic acid,SR-p53,0.0
+O=C(c1ccccc1)c1ccccc1,PE,Benzophenone,SR-p53,0.0233
+CC1(C)CC(OC(=O)CCCCCCCCC(=O)OC2CC(C)(C)NC(C)(C)C2)CC(C)(C)N1,PE,Tinuvin 770,SR-p53,0.05
+C=C,PE,Ethylene,SR-p53,0.0433
+CCCCCCCCCc1ccc(O)cc1,PE,4-Nonylphenol,SR-p53,0.0267
+CC(C)(C)CC(C)(C)c1ccc(O)cc1,PE,4-tert-Octylphenol,SR-p53,0.3833
+Cc1cc(C(C)(C)C)c(O)c(C(C)(C)C)c1,PP,Butylated hydroxytoluene (BHT),SR-p53,0.0667
+CC(C)(C)c1cc(CCC(=O)OCC(COC(=O)CCc2cc(C(C)(C)C)c(O)c(C(C)(C)C)c2)(COC(=O)CCc2cc(C(C)(C)C)c(O)c(C(C)(C)C)c2)COC(=O)CCc2cc(C(C)(C)C)c(O)c(C(C)(C)C)c2)cc(C(C)(C)C)c1O,PP,Irganox 1010,SR-p53,0.0733
+CC(C)(C)c1ccc(OP(Oc2ccc(C(C)(C)C)cc2C(C)(C)C)Oc2ccc(C(C)(C)C)cc2C(C)(C)C)c(C(C)(C)C)c1,PP,Irgafos 168,SR-p53,0.1133
+CC(C)(C)c1ccc(O)c(C(C)(C)C)c1,PP,"2,4-di-tert-butylphenol",SR-p53,0.24
+CCCCCCCC/C=C\CCCCCCCCCCCCC(N)=O,PP,Erucamide,SR-p53,0.0
+CCCCCCCC/C=C\CCCCCCCCC(N)=O,PP,Oleamide,SR-p53,0.0
+CCOC(=O)c1ccccc1C(=O)OCC,PP,Diethyl phthalate,SR-p53,0.0033
+O=C(c1ccccc1)c1ccccc1,PP,Benzophenone,SR-p53,0.0233
+C=CC,PP,Propylene,SR-p53,0.0067
+CCCCCCCCCc1ccc(O)cc1,PP,4-Nonylphenol,SR-p53,0.0267
+CCCCCCCCCCCCCCCCCC(=O)O,PP,Stearic acid,SR-p53,0.0
+C=Cc1ccccc1,PS,Styrene,SR-p53,0.0167
+CCc1ccccc1,PS,Ethylbenzene,SR-p53,0.0
+c1ccccc1,PS,Benzene,SR-p53,0.0233
+CC(C)(C)c1ccc(O)cc1,PS,4-tert-Butylphenol,SR-p53,0.4167
+O=Cc1ccccc1,PS,Benzaldehyde,SR-p53,0.0333
+CC(=O)c1ccccc1,PS,Acetophenone,SR-p53,0.01
+BrC1CCC(Br)C(Br)CCC(Br)C(Br)CCC1Br,PS,Hexabromocyclododecane (HBCD),SR-p53,0.0833
+O=C(c1ccccc1)c1ccccc1,PS,Benzophenone,SR-p53,0.0233
+Cc1cc(C(C)(C)C)c(O)c(C(C)(C)C)c1,PS,Butylated hydroxytoluene (BHT),SR-p53,0.0667
+CCCCCCCCCc1ccc(O)cc1,PS,4-Nonylphenol,SR-p53,0.0267
+Cc1ccccc1,PS,Toluene,SR-p53,0.0
+CCCCC(CC)COC(=O)c1ccccc1C(=O)OCC(CC)CCCC,PVC,Di(2-ethylhexyl) phthalate (DEHP),SR-p53,0.0
+CCCCOC(=O)c1ccccc1C(=O)OCCCC,PVC,Dibutyl phthalate (DBP),SR-p53,0.0
+CCCCOC(=O)c1ccccc1C(=O)OCc1ccccc1,PVC,Benzyl butyl phthalate (BBP),SR-p53,0.0133
+COC(=O)c1ccccc1C(=O)OC,PVC,Dimethyl phthalate (DMP),SR-p53,0.0
+CCOC(=O)c1ccccc1C(=O)OCC,PVC,Diethyl phthalate (DEP),SR-p53,0.0033
+CCCCC(CC)COC(=O)CCCCC(=O)OCC(CC)CCCC,PVC,Bis(2-ethylhexyl) adipate (DEHA),SR-p53,0.0
+CCCCCCCCCCCC(=O)[O][Sn]([CH2]CCC)([CH2]CCC)[O]C(=O)CCCCCCCCCCC,PVC,Dibutyltin dilaurate,SR-p53,0.2967
+C=CCl,PVC,Vinyl chloride,SR-p53,0.0167
+CC(C)(c1ccc(O)cc1)c1ccc(O)cc1,PVC,Bisphenol A (BPA),SR-p53,0.42
+CCCCCCCCCc1ccc(O)cc1,PVC,Nonylphenol,SR-p53,0.0267
+CC(CCl)OP(=O)(OC(C)CCl)OC(C)CCl,PVC,Tris(1-chloro-2-propyl) phosphate (TCPP),SR-p53,0.02
+Cc1ccc(N=C=O)cc1N=C=O,PU,"Toluene 2,4-diisocyanate (TDI)",SR-p53,0.0967
+O=C=Nc1ccc(Cc2ccc(N=C=O)cc2)cc1,PU,"4,4'-Methylenediphenyl diisocyanate (MDI)",SR-p53,0.1467
+Cc1ccc(N)cc1N,PU,"2,4-Toluenediamine (TDA)",SR-p53,0.0767
+Nc1ccc(Cc2ccc(N)cc2)cc1,PU,"4,4'-Methylenedianiline (MDA)",SR-p53,0.0733
+CC(CCl)OP(=O)(OC(C)CCl)OC(C)CCl,PU,Tris(1-chloro-2-propyl) phosphate (TCPP),SR-p53,0.02
+O=P(OC(CCl)CCl)(OC(CCl)CCl)OC(CCl)CCl,PU,"Tris(1,3-dichloro-2-propyl) phosphate (TDCPP)",SR-p53,0.0567
+C1CN2CCN1CC2,PU,"1,4-Diazabicyclo[2.2.2]octane (DABCO)",SR-p53,0.0267
+CCCCCCCCCCCC(=O)[O][Sn]([CH2]CCC)([CH2]CCC)[O]C(=O)CCCCCCCCCCC,PU,Dibutyltin dilaurate,SR-p53,0.2967
+CC(C)(c1ccc(O)cc1)c1ccc(O)cc1,PU,Bisphenol A (BPA),SR-p53,0.42
+O=C(c1ccccc1)c1ccccc1,PU,Benzophenone,SR-p53,0.0233
+CCOP(=O)(OCC)OCC,PU,Triethyl phosphate,SR-p53,0.0033

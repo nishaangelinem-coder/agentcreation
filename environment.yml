@@ -1,0 +1,24 @@
+# environment.yml — reference conda environment for the full pipeline.
+# NOTE: the results committed to this repo were produced with the pip stack
+# in requirements.txt (Python 3.13, no conda) because the execution sandbox
+# had no conda. This file documents the *intended* reproducible environment,
+# including the docking tools that could not be exercised in the sandbox
+# (RCSB PDB / AlphaFold / UniProt egress was blocked — see results/summary.md).
+name: mp-neuro
+channels: [conda-forge, bioconda]
+dependencies:
+  - python=3.11
+  - rdkit
+  - numpy
+  - pandas
+  - scikit-learn
+  - scipy
+  - matplotlib
+  - openmm            # optional, for MD refinement of top docking poses
+  - pip
+  - pip:
+    - vina            # AutoDock Vina Python bindings (Stage 3)
+    - meeko           # ligand/receptor PDBQT preparation (Stage 3)
+    - tellurium       # optional alternative ODE/SBML engine for the virtual cell
+    - pubchempy       # SMILES lookup by CAS/name (Stage 1 fallback)
+    - deepchem        # optional: GraphConv / AttentiveFP alternative to the sklearn triage
