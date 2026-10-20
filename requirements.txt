@@ -1,0 +1,8 @@
+# Pip stack actually used to produce the committed results (Python 3.13).
+numpy
+pandas
+scipy
+scikit-learn
+matplotlib
+rdkit
+requests

@@ -1,0 +1,6 @@
+polymer,index,receptor_activation_u,dominant_receptor,dominant_leachate,NR-AhR_top3,SR-ARE_top3,SR-p53_top3,used_docking
+PU,0.976,0.8506,NR-AhR,"2,4-Toluenediamine (TDA)",0.9967,0.9822,0.2878,False
+PVC,0.7415,0.3345,SR-ARE,Bisphenol A (BPA),0.1198,0.75,0.2478,False
+PE,0.6981,0.2968,SR-ARE,4-tert-Octylphenol,0.2353,0.4322,0.2478,False
+PS,0.6432,0.2577,SR-ARE,Hexabromocyclododecane (HBCD),0.1038,0.56,0.1889,False
+PP,0.5706,0.2159,NR-AhR,"2,4-di-tert-butylphenol",0.2022,0.2878,0.1422,False
