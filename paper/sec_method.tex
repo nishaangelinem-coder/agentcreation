@@ -1,0 +1,75 @@
+\section{Introduction}
+Modern power systems depend on a cyber layer of remote terminal units, phasor measurement units, and wide-area networks. That layer feeds the energy management system (EMS). Weighted-least-squares (WLS) state estimation (SE) turns raw telemetry into the operating state used by contingency analysis, optimal power flow and markets~\cite{abur2004se}. The classical bad-data detector (BDD) tests the SE residual with a $\chi^2$ test. Liu \textit{et al.}~\cite{liu2009fdia} showed that an adversary who knows the network model can craft a \emph{stealthy} false data injection attack (FDIA). Such an attack moves the estimated state while leaving the residual unchanged. Hug and Giampapa~\cite{hug2012ac} extended this to the full nonlinear AC model. The 2015 Ukrainian incident made coordinated cyber intrusions into grid control systems a practical concern~\cite{liang2017ukraine}.
+
+Data-driven detectors, including support vector machines~\cite{esmalifalak2017svm,ozay2016ml}, deep networks~\cite{he2017deep}, and graph neural networks (GNNs)~\cite{boyaci2022gnn,boyaci2022joint}, can flag stealthy FDIAs. Most of them learn directly from raw telemetry, where the attack signature is buried under large load and renewable variability~\cite{musleh2020survey}. Meanwhile, the \emph{digital twin} (DT) has become a central concept for next-generation control centers~\cite{tao2019dt,he2019dtpower}. A DT is a continuously synchronized, physics-based replica of the grid. It can supply an \emph{independent} expectation of the operating state from forecasts and schedules that never pass through the compromised telemetry channel. This is related in spirit to forecasting-aided SE~\cite{zhao2019dse}.
+
+This paper combines the two ideas. Its contributions are:
+\begin{enumerate}
+\item A DT-assisted detection architecture. A physics-based twin runs AC power flow on very-short-term injection forecasts. Its outputs are converted into six physically meaningful, bus-level \emph{twin-residual} features that whiten normal operating variability.
+\item A dual-head graph convolutional network (DT-GCN) that consumes these features on the grid topology. It jointly \emph{detects} an attack (graph level) and \emph{localizes} the compromised buses (node level).
+\item A reproducible open-source benchmark on the IEEE 14- and 118-bus systems. It includes AC power flow, a nonlinear WLS estimator, realistic 15-min load/PV profiles, and AC-stealthy attacks. The benchmark compares eight detectors, ablations, and sensitivity to twin fidelity.
+\end{enumerate}
+
+\section{System Model}
+\subsection{AC Measurement Model and State Estimation}
+For an $n$-bus, $m$-branch network with state $\mathbf{x}=[\boldsymbol{\theta}^{\top},\mathbf{V}^{\top}]^{\top}$ (the reference angle is excluded), the telemetry is
+\begin{equation}
+\mathbf{z}=\mathbf{h}(\mathbf{x})+\mathbf{e},\quad \mathbf{e}\sim\mathcal{N}(\mathbf{0},\mathbf{R}),
+\end{equation}
+where $\mathbf{z}\in\mathbb{R}^{3n+2m}$ stacks bus voltage magnitudes, active/reactive injections and from-end active/reactive branch flows. $\mathbf{h}(\cdot)$ is built from the bus and branch admittance matrices. WLS SE solves $\hat{\mathbf{x}}=\arg\min_{\mathbf{x}} J(\mathbf{x})=(\mathbf{z}-\mathbf{h}(\mathbf{x}))^{\top}\mathbf{R}^{-1}(\mathbf{z}-\mathbf{h}(\mathbf{x}))$ by Gauss--Newton iterations with the analytic Jacobian $\mathbf{H}(\mathbf{x})$. The BDD raises an alarm when $J(\hat{\mathbf{x}})>\chi^2_{p-q,\,0.99}$, where $p$ and $q=2n-1$ are the numbers of measurements and states.
+
+\subsection{AC-Stealthy FDIA}
+An attacker with model knowledge and an estimate $\hat{\mathbf{x}}$ selects a connected set $\mathcal{S}$ of $k\in\{1,2,3\}$ non-reference buses and a state bias $\mathbf{c}$ supported on $\mathcal{S}$. It then injects
+\begin{equation}
+\mathbf{a}=\mathbf{h}(\hat{\mathbf{x}}+\mathbf{c})-\mathbf{h}(\hat{\mathbf{x}}).\label{eq:attack}
+\end{equation}
+Because $\mathbf{z}+\mathbf{a}$ is consistent with $\hat{\mathbf{x}}+\mathbf{c}$, the SE converges to the biased state and $J$ is unchanged, so the attack is invisible to the BDD~\cite{liu2009fdia,hug2012ac}. Only measurements incident to $\mathcal{S}$ are modified. Angle biases are drawn as $|c_{\theta}|\sim\mathcal{U}(0.001,0.02)$~rad ($0.06^\circ$--$1.15^\circ$) with a common sign. In half of the attacks a voltage bias $|c_V|=(0.2$--$0.5)|c_\theta|$ is added. For completeness, \emph{naive} attacks that add $5$--$15\sigma$ biases to 3--7 random meters are also included.
+
+\section{Proposed DT-GCN Framework}
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[font=\scriptsize, node distance=3mm and 4mm,
+  box/.style={draw, rounded corners=2pt, align=center, minimum height=6.5mm, inner sep=2pt, fill=#1},
+  box/.default=white, ar/.style={-{Stealth[length=2mm]}, thick}]
+\node[box=blue!8] (grid) {Physical grid\\(AC network)};
+\node[box=red!8, right=of grid] (scada) {SCADA telemetry\\$\mathbf{z}+\mathbf{a}$};
+\node[box, right=of scada] (se) {WLS SE\\+ $\chi^2$ BDD};
+\node[box=green!8, below=6mm of grid] (fc) {Forecasts \&\\schedules};
+\node[box=green!8, right=of fc] (dt) {Digital twin\\AC power flow};
+\node[box, right=of dt] (feat) {Twin-residual\\features $\mathbf{F}$};
+\node[box=orange!12, below=6mm of feat] (gcn) {DT-GCN\\(3 graph layers)};
+\node[box, left=of gcn] (det) {Detection\\$p(\text{attack})$};
+\node[box, left=of det] (loc) {Localization\\$p_i(\text{bus } i\in\mathcal{S})$};
+\draw[ar] (grid) -- (scada); \draw[ar] (scada) -- (se);
+\draw[ar] (fc) -- (dt); \draw[ar] (dt) -- node[below]{$\mathbf{x}^{\mathrm{DT}}$} (feat);
+\draw[ar] (se) -- node[right]{$\hat{\mathbf{x}}$} (feat);
+\draw[ar] (scada.south) |- ([yshift=2mm]feat.west);
+\draw[ar] (feat) -- (gcn); \draw[ar] (gcn) -- (det); \draw[ar] (det) -- (loc);
+\end{tikzpicture}
+\caption{DT-assisted detection and localization pipeline. The twin path (green) never consumes field telemetry, so it is unaffected by the injection.}
+\label{fig:framework}
+\end{figure}
+
+\subsection{Physics-Based Digital Twin}
+Fig.~\ref{fig:framework} shows the architecture. At each 15-min SE cycle the twin receives very-short-term bus-level injection forecasts $\tilde{P}_{d,i}=P_{d,i}(1+\epsilon_i)$, $\epsilon_i\sim\mathcal{N}(0,\sigma_f^2)$, and the generation schedule. It then solves a full Newton--Raphson AC power flow to obtain $\mathbf{x}^{\mathrm{DT}}$ and the expected telemetry $\mathbf{z}^{\mathrm{DT}}=\mathbf{h}(\mathbf{x}^{\mathrm{DT}})$. The default fidelity is $\sigma_f=2\%$, which is typical of 15-min-ahead nodal forecasts; Section~\ref{sec:sens} varies it from 1\% to 8\%. Because the twin is driven by forecasts and dispatch rather than field meters, an injection that biases $\hat{\mathbf{x}}$ by $\mathbf{c}$ produces a discrepancy $\hat{\mathbf{x}}-\mathbf{x}^{\mathrm{DT}}\approx\mathbf{c}+\boldsymbol{\delta}_f$, where $\boldsymbol{\delta}_f$ is the small twin error.
+
+\subsection{Twin-Residual Graph Features}
+For every bus $i$ we form the feature vector $\mathbf{f}_i\in\mathbb{R}^6$:
+\begin{equation}
+\mathbf{f}_i=\big[\Delta\theta_i,\ \Delta\theta_i-\tfrac{1}{|\mathcal{N}_i|}\textstyle\sum_{j\in\mathcal{N}_i}\Delta\theta_j,\ \Delta V_i,\ r^{P}_i,\ r^{Q}_i,\ \textstyle\sum_{\ell\ni i}|r^{F}_\ell|\big],
+\end{equation}
+where $\Delta(\cdot)=\hat{(\cdot)}-(\cdot)^{\mathrm{DT}}$, $r^{P}_i,r^{Q}_i$ are injection residuals $\mathbf{z}-\mathbf{z}^{\mathrm{DT}}$, and $r^F_\ell$ are flow residuals on incident branches. The neighbour-relative angle term cancels the angle drift that accumulates away from the slack bus. Each feature is z-scored per bus using \emph{attack-free} training samples only.
+
+\subsection{Dual-Head Graph Convolutional Network}
+Let $\hat{\mathbf{A}}=\mathbf{D}^{-1/2}(\mathbf{A}+\mathbf{I})\mathbf{D}^{-1/2}$ be the normalized adjacency of the network graph~\cite{kipf2017gcn}. Each of the $L=3$ layers computes
+\begin{equation}
+\mathbf{H}^{(l+1)}=\mathrm{GELU}\big(\hat{\mathbf{A}}\mathbf{H}^{(l)}\mathbf{W}^{(l)}+\mathbf{H}^{(l)}\mathbf{U}^{(l)}\big),
+\end{equation}
+with 64 hidden units, a residual projection $\mathbf{U}^{(l)}$ and dropout 0.1. A node head (linear $+$ sigmoid) outputs $p_i$, the probability that bus $i\in\mathcal{S}$. A graph head (MLP on concatenated mean- and max-pooled embeddings) outputs the detection probability $p_g$. The loss is $\mathcal{L}=\mathrm{BCE}(p_g,y)+\lambda\,\mathrm{BCE}_{w}(\mathbf{p},\mathbf{y}^{\text{node}})$ with $\lambda=1$ and a positive-class weight that compensates for the sparsity of compromised buses. Training uses AdamW (learning rate $2\times10^{-3}$, weight decay $10^{-4}$, cosine schedule, 60 epochs, batch 128), and the epoch with the lowest validation loss is kept.
+
+\section{Experimental Setup}
+\subsection{Environment and Data}
+All code is written in Python using pandapower~\cite{thurner2018pandapower}, which supplies the MATPOWER-format~\cite{zimmerman2011matpower} test cases and admittance builders. Detectors use PyTorch~\cite{paszke2019pytorch} and scikit-learn~\cite{pedregosa2011sklearn}. Every experiment runs on a 4-core CPU, and the full pipeline is reproduced by one script. For each of the IEEE 14- and 118-bus systems, 6000 consecutive 15-min snapshots (62.5 days) are generated. The system load has a double-peak daily shape, a weekend reduction and AR(1) drift. Bus-level loads carry an extra AR(1) variation with 3\% standard deviation. Photovoltaic plants with clear-sky profiles and day-to-day cloudiness sit at 30\% of load buses (25\% of peak load). Generators follow net load, and the slack bus balances losses. Measurement noise standard deviations are 0.004~pu (voltage), 0.01~pu (injections) and 0.008~pu (flows) on a 100~MVA base. Each snapshot is attack-free with probability 0.4, carries a stealthy FDIA with probability 0.5, or carries a naive attack with probability 0.1. The data are split \emph{chronologically} into 70\% training, 15\% validation and 15\% test, so test days are never seen during training.
+
+\subsection{Compared Detectors}
+We compare: (i) the $\chi^2$ BDD; (ii) \emph{DT-Threshold}, a learning-free rule that flags the largest standardized twin residual with its threshold set at 1\% false-positive rate (FPR) on validation; (iii) SVM-RBF~\cite{esmalifalak2017svm} and (iv) random forest (RF, 300 trees) on standardized raw telemetry; (v) MLP and (vi) GCN on raw per-bus telemetry, representative of~\cite{he2017deep} and~\cite{boyaci2022joint}; (vii) DT-MLP, an ablation without the graph; and (viii) the proposed DT-GCN. Models (v)--(viii) share the same dual-head loss. Learning-based results are mean$\pm$std over five seeds (SVM: one seed, because it is deterministic). Localization is scored on stealthy test samples with micro-averaged bus-level precision, recall and F1, and with exact-match accuracy, meaning the predicted bus set equals $\mathcal{S}$.

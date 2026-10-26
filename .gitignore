@@ -1,0 +1,11 @@
+.venv/
+data/*.pkl
+results/store_*.pkl
+__pycache__/
+*.aux
+*.log.tex
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.out
+paper/*.log
