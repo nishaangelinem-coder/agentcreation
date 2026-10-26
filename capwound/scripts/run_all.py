@@ -393,6 +393,38 @@ def write_tables(df, an, pls, wb, lod, sp):
     (RES / "table_anova.tex").write_text("\n".join(alines) + "\n")
 
 
+def fig_graphical_abstract(df):
+    """Single-panel graphical abstract: phantom + jet, channels, two headline results."""
+    fig = plt.figure(figsize=(W2, 2.6))
+    gs = fig.add_gridspec(1, 3, width_ratios=[1.25, 1, 1], wspace=0.45)
+    ax = fig.add_subplot(gs[0]); ax.axis("off"); ax.set_xlim(0, 5); ax.set_ylim(0, 4)
+    ax.add_patch(plt.Rectangle((0.2, 0.6), 4.6, 1.1, fc="#cde2fb", ec="#256abf", lw=0.8))
+    ax.add_patch(plt.Rectangle((0.2, 1.7), 4.6, 0.35, fc="#f6d3a8", ec="#c98500", lw=0.8))
+    rng = np.random.default_rng(1)
+    ax.scatter(rng.uniform(0.3, 4.7, 140), rng.uniform(1.73, 2.02, 140), s=3, c="#8a5a00", lw=0)
+    ax.add_patch(plt.Polygon([[2.2, 3.8], [2.8, 3.8], [2.65, 3.0], [2.35, 3.0]], fc="#d9d8d3", ec="#52514e", lw=0.8))
+    ax.add_patch(plt.Polygon([[2.38, 3.0], [2.62, 3.0], [2.75, 2.1], [2.25, 2.1]], fc="#b9a6f0", ec="none"))
+    ax.text(2.95, 3.4, "Ar CAP jet\nH$_2$O$_2$, NO$_2^-$, NO$_3^-$", fontsize=6.3, va="center")
+    ax.text(2.5, 1.15, "Buffered agarose wound bed", ha="center", fontsize=6.3)
+    ax.text(0.25, 2.35, "S. aureus biofilm", fontsize=6.3)
+    ax.text(2.5, 0.2, "IDE 10 Hz–100 MHz  |  SPCE: EIS, CV, H$_2$O$_2$", ha="center", fontsize=6.3,
+            fontweight="bold")
+    ax.set_title("In silico infected wound phantom", fontsize=7.5)
+    t = np.array(TIMES)
+    ax2 = fig.add_subplot(gs[1])
+    m, s = msd(df, "log_reduction", INFECTED[:6])
+    ax2.errorbar(t, m, s, fmt="o-", color="#0b0b0b", ms=3.5, capsize=2)
+    ax2.set_xlabel("CAP exposure (s)"); ax2.set_ylabel("log$_{10}$ reduction")
+    ax2.set_title("Biofilm inactivation", fontsize=7.5)
+    ax3 = fig.add_subplot(gs[2])
+    m, s = msd(df, "f_c", INFECTED[:6])
+    ax3.errorbar(t, m * 1e-6, s * 1e-6, fmt="o-", color="#2a78d6", ms=3.5, capsize=2)
+    ax3.set_xlabel("CAP exposure (s)"); ax3.set_ylabel("β-dispersion f$_c$ (MHz)")
+    ax3.set_title("Label-free impedance marker", fontsize=7.5)
+    ax3.text(0.04, 0.95, "η² = 0.97\nρ = −0.95 vs CFU", transform=ax3.transAxes, va="top", fontsize=6)
+    save(fig, "graphical_abstract")
+
+
 def main():
     global TRACES, N_REP, PLS_Y, PLS_GROUPS, PERM300
     ap = argparse.ArgumentParser()
@@ -443,6 +475,7 @@ def main():
     fig_electrochem(df, eis_freqs)
     fig_ml(df, freqs, pls, fstat, vip)
     fig_kk_sens(df, freqs, sens)
+    fig_graphical_abstract(df)
     write_tables(df, an, pls, wb, lod, sp)
 
     imax = int(np.argmax(fstat["F_mag"]))

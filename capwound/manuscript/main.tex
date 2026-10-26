@@ -34,14 +34,20 @@
 
 \affil*[1]{\orgdiv{Department of Electronics and Communication Engineering}, \orgname{Velalar College of Engineering and Technology}, \orgaddress{\street{Thindal}, \city{Erode}, \postcode{638012}, \state{Tamil Nadu}, \country{India}}}
 
-\abstract{\textbf{Purpose:} Cold atmospheric plasma (CAP) is a non-antibiotic option for infected chronic wounds, but its antimicrobial dose is still verified by destructive colony counting. We asked whether wideband bioimpedance and electrochemical read-outs can report CAP efficacy label-free, and which spectral features carry the information.
-\textbf{Methods:} We built an open, reproducible multiphysics framework for a layered wound phantom (\SI{100}{\micro\metre} \textit{Staphylococcus aureus} biofilm on a \SI{3}{\milli\metre} phosphate-buffered agarose wound bed). It couples (i) depth-resolved diffusion--reaction of plasma-derived H$_2$O$_2$, NO$_2^-$, NO$_3^-$ and H$^+$ with bacterial catalase scavenging, (ii) Weibull inactivation and membrane permeabilisation, (iii) single-shell/Maxwell--Garnett dielectric modelling of the biofilm read by an interdigitated electrode from \SI{10}{\hertz} to \SI{100}{\mega\hertz}, and (iv) screen-printed-electrode electrochemistry (Faradaic impedance, finite-difference cyclic voltammetry, Prussian-blue H$_2$O$_2$ amperometry and IrO$_x$ pH sensing). Fifty-four virtual phantoms (nine groups, $n=6$, including Ar-gas-only and sterile controls) with realistic phantom-to-phantom variability and instrument noise were analysed by complex non-linear least squares, Lin-KK validation, ANOVA/Tukey tests and nested partial-least-squares regression.
-\textbf{Results:} All spectra passed the Kramers--Kronig test (RMS residual 0.28\%). CAP exposure of 30--300\,s produced 0.31--2.11 log$_{10}$ reductions. The biofilm $\beta$-dispersion decreased from $\Delta\varepsilon = 182\pm10$ to $78\pm2$ and its characteristic frequency rose from 16.6 to 27.1\,MHz; $f_c$ was the most discriminating feature ($\eta^2=0.973$, Spearman $\rho=-0.95$ against viable count) and kept separating 180 from 300\,s after $\Delta\varepsilon$ saturated. Charge-transfer resistance fell by 40\% as the biofilm blocked less of the electrode. Ar gas alone changed no read-out, whereas sterile phantoms showed a 5\% ionic/evaporative conductivity artefact and a 16-fold higher H$_2$O$_2$ load than infected ones. A nested-cross-validated PLS model predicted viable counts from raw spectra with RMSECV = 0.52 log.
-\textbf{Conclusion:} Within the model, the high-MHz $\beta$-dispersion is a label-free marker of CAP-induced membrane damage, and an electrochemical channel adds a direct reading of the delivered H$_2$O$_2$. The framework sets out the frequencies, controls and sensitivity bounds for planned wet-laboratory validation. All results here are simulated.}
+\abstract{Cold atmospheric plasma (CAP) is a promising non-antibiotic therapy for infected wounds, but its efficacy is still verified by destructive colony counting. This study asked whether wideband bioimpedance and electrochemical read-outs can report CAP efficacy without labels. A multiphysics in silico framework was built for a \textit{Staphylococcus aureus} biofilm on a buffered agarose wound phantom. It couples the transport of plasma-derived reactive species, Weibull inactivation, single-shell dielectric modelling read by an interdigitated electrode (10\,Hz--100\,MHz) and screen-printed-electrode impedance, voltammetry and H$_2$O$_2$ amperometry. Fifty-four virtual phantoms in nine groups, including gas-only and sterile controls, were analysed by complex non-linear least squares, Kramers--Kronig validation, ANOVA and partial least squares regression. CAP for 30--300\,s gave 0.31--2.11 log$_{10}$ reductions. The biofilm $\beta$-dispersion strength fell from 182 to 78 and its characteristic frequency rose from 16.6 to 27.1\,MHz. This frequency was the best single marker ($\eta^2=0.973$) and responded before colony counts did. Charge-transfer resistance fell by 40\%. Sterile phantoms showed a 5\% ionic conductivity artefact, which the dispersion parameters avoid. Within the model, the MHz $\beta$-dispersion is a label-free marker of CAP-induced membrane damage. All results are simulated and require experimental validation.}
 
-\keywords{Cold atmospheric plasma, Bioimpedance spectroscopy, Electrochemical impedance spectroscopy, Wound phantom, Biofilm, Maxwell--Wagner dispersion, Reactive oxygen and nitrogen species}
+\keywords{Plasma gases, Electric impedance, Dielectric spectroscopy, Biofilms, Wound infection}
 
 \maketitle
+
+\noindent\textbf{Article type:} Original Article.\quad
+\textbf{Word count:} manuscript \input{tables/wordcount_main.txt}\unskip{} words (main text); abstract \input{tables/wordcount_abstract.txt}\unskip{} words.\quad
+\textbf{Figures:} 8 (plus graphical abstract).\quad \textbf{Tables:} 2.
+
+\begin{center}
+\includegraphics[width=\textwidth]{graphical_abstract}\\[2pt]
+\parbox{\textwidth}{\small\textbf{Graphical abstract.} In silico CAP treatment of an infected wound phantom read by wideband bioimpedance and electrochemistry. The biofilm $\beta$-dispersion frequency tracks inactivation without labels (simulated data).}
+\end{center}
 
 %% ===================================================================
 \section{Introduction}\label{sec:intro}
@@ -250,7 +256,7 @@ For the main bioimpedance contrast, the relative loss of $\Delta\varepsilon$ bet
 \paragraph{Limitations.} This is a computational study. All quantitative results depend on assumed parameters, and the model needs experimental calibration before its numbers can be compared with any device. Specifically: (i) plasma fluxes are constant, and short-lived species (OH, O$_3$, ONOO$^-$), UV and electric-field effects are lumped into the long-lived H$_2$O$_2$/HNO$_2$ dose; (ii) the IDE is modelled by an exponential-sensitivity, parallel-path approximation rather than a full field solution; (iii) the bacteria are single-shell spheres, without explicit cell-wall or EPS charge relaxation (the $\alpha$-dispersion) and without host cells; (iv) H$_2$O$_2$ consumption does not feed back on the evolving viable density; and (v) temperature is assumed to be equilibrated at measurement. Noise and variability levels were chosen to be representative, not measured. The code nevertheless analyses measured spectra in a standard CSV format without modification, so the same CNLS, Lin-KK and statistical pipeline can be applied directly to experimental data.
 
 %% ===================================================================
-\section{Conclusions}\label{sec:conclusion}
+\section{Conclusion}\label{sec:conclusion}
 
 We presented an open multiphysics framework that links CAP chemistry, depth-resolved biofilm inactivation and two electrical read-out channels in an infected wound phantom. Within the model, three findings stand out. First, the high-MHz $\beta$-dispersion ($\Delta\varepsilon$ and especially $f_c$) is a Kramers--Kronig-consistent, label-free marker of CAP-induced membrane damage that responds earlier than colony counts. Second, gas-only and sterile controls are necessary to separate biological effects from ionic and evaporative artefacts. Third, an in situ H$_2$O$_2$ sensor together with faradaic EIS adds direct dosimetry and biofilm-coverage information. These results provide testable hypotheses, target frequency bands and sensitivity bounds for the experimental validation that must follow.
 
@@ -258,6 +264,10 @@ We presented an open multiphysics framework that links CAP chemistry, depth-reso
 
 \bmhead{Acknowledgements}
 The author thanks the management and the Department of Electronics and Communication Engineering, Velalar College of Engineering and Technology, for support.
+
+\bmhead{Author biography}
+\noindent\textbf{M. Nisha Angeline} is Professor and Head of ECE, Velalar College of Engineering and Technology, Erode, India, working on plasma technology, biomedical devices and VLSI design.
+% [Insert author photograph here if requested at acceptance.]
 
 \section*{Declarations}
 

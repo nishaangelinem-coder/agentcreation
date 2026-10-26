@@ -5,4 +5,6 @@ cd "$(dirname "$0")"
 mkdir -p figures tables
 cp ../figures/fig*.pdf figures/
 cp ../results/table_groups.tex ../results/table_anova.tex tables/
+cp ../figures/graphical_abstract.pdf ../figures/graphical_abstract.png figures/
+python3 wordcount.py
 latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
