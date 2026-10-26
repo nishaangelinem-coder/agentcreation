@@ -41,7 +41,7 @@ def table_localisation():
     means = {c: pd.read_csv(f"results/mean_{c}.csv", index_col=0) for c, _ in CASES}
     stds = {c: pd.read_csv(f"results/std_{c}.csv", index_col=0) for c, _ in CASES}
     methods = [m for m in means["ieee14"].index if not np.isnan(means["ieee14"].loc[m, "loc_f1"])]
-    cols = ["loc_prec", "loc_rec", "loc_f1", "loc_exact"]
+    cols = ["loc_rec", "loc_f1", "loc_exact"]
     for mt in methods:
         cells = [mt.replace("(proposed)", "(prop.)")]
         for c, _ in CASES:

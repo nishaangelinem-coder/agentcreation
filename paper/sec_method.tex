@@ -55,9 +55,10 @@ Fig.~\ref{fig:framework} shows the architecture. At each 15-min SE cycle the twi
 
 \subsection{Twin-Residual Graph Features}
 For every bus $i$ we form the feature vector $\mathbf{f}_i\in\mathbb{R}^6$:
-\begin{equation}
-\mathbf{f}_i=\big[\Delta\theta_i,\ \Delta\theta_i-\tfrac{1}{|\mathcal{N}_i|}\textstyle\sum_{j\in\mathcal{N}_i}\Delta\theta_j,\ \Delta V_i,\ r^{P}_i,\ r^{Q}_i,\ \textstyle\sum_{\ell\ni i}|r^{F}_\ell|\big],
-\end{equation}
+\begin{multline}
+\mathbf{f}_i=\big[\Delta\theta_i,\ \Delta\theta_i-\tfrac{1}{|\mathcal{N}_i|}\textstyle\sum_{j\in\mathcal{N}_i}\Delta\theta_j,\ \Delta V_i,\\
+ r^{P}_i,\ r^{Q}_i,\ \textstyle\sum_{\ell\ni i}|r^{F}_\ell|\big],
+\end{multline}
 where $\Delta(\cdot)=\hat{(\cdot)}-(\cdot)^{\mathrm{DT}}$, $r^{P}_i,r^{Q}_i$ are injection residuals $\mathbf{z}-\mathbf{z}^{\mathrm{DT}}$, and $r^F_\ell$ are flow residuals on incident branches. The neighbour-relative angle term cancels the angle drift that accumulates away from the slack bus. Each feature is z-scored per bus using \emph{attack-free} training samples only.
 
 \subsection{Dual-Head Graph Convolutional Network}

@@ -1,0 +1,85 @@
+case,method,bin_deg,recall
+ieee14,BDD (chi-square),0.086,0.0
+ieee14,BDD (chi-square),0.143,0.0
+ieee14,BDD (chi-square),0.201,0.0
+ieee14,BDD (chi-square),0.286,0.0
+ieee14,BDD (chi-square),0.43,0.012987012987012988
+ieee14,BDD (chi-square),0.659,0.010869565217391304
+ieee14,BDD (chi-square),0.974,0.0
+ieee14,DT-Threshold,0.086,0.17391304347826086
+ieee14,DT-Threshold,0.143,0.6923076923076923
+ieee14,DT-Threshold,0.201,0.8064516129032258
+ieee14,DT-Threshold,0.286,1.0
+ieee14,DT-Threshold,0.43,1.0
+ieee14,DT-Threshold,0.659,1.0
+ieee14,DT-Threshold,0.974,1.0
+ieee14,RandomForest (raw),0.086,0.43478260869565216
+ieee14,RandomForest (raw),0.143,0.7307692307692307
+ieee14,RandomForest (raw),0.201,0.7419354838709677
+ieee14,RandomForest (raw),0.286,1.0
+ieee14,RandomForest (raw),0.43,0.961038961038961
+ieee14,RandomForest (raw),0.659,0.9891304347826086
+ieee14,RandomForest (raw),0.974,0.9937106918238994
+ieee14,GCN (raw),0.086,0.21739130434782608
+ieee14,GCN (raw),0.143,0.6923076923076923
+ieee14,GCN (raw),0.201,0.6774193548387096
+ieee14,GCN (raw),0.286,0.9333333333333333
+ieee14,GCN (raw),0.43,0.974025974025974
+ieee14,GCN (raw),0.659,0.9782608695652174
+ieee14,GCN (raw),0.974,0.9937106918238994
+ieee14,DT-MLP,0.086,0.43478260869565216
+ieee14,DT-MLP,0.143,0.8846153846153846
+ieee14,DT-MLP,0.201,0.8709677419354839
+ieee14,DT-MLP,0.286,1.0
+ieee14,DT-MLP,0.43,1.0
+ieee14,DT-MLP,0.659,1.0
+ieee14,DT-MLP,0.974,1.0
+ieee14,DT-GCN (proposed),0.086,0.43478260869565216
+ieee14,DT-GCN (proposed),0.143,0.8846153846153846
+ieee14,DT-GCN (proposed),0.201,0.9032258064516129
+ieee14,DT-GCN (proposed),0.286,1.0
+ieee14,DT-GCN (proposed),0.43,1.0
+ieee14,DT-GCN (proposed),0.659,1.0
+ieee14,DT-GCN (proposed),0.974,1.0
+ieee118,BDD (chi-square),0.086,0.0
+ieee118,BDD (chi-square),0.143,0.0
+ieee118,BDD (chi-square),0.201,0.0
+ieee118,BDD (chi-square),0.286,0.0
+ieee118,BDD (chi-square),0.43,0.025
+ieee118,BDD (chi-square),0.659,0.0
+ieee118,BDD (chi-square),0.974,0.013333333333333334
+ieee118,DT-Threshold,0.086,0.2777777777777778
+ieee118,DT-Threshold,0.143,0.72
+ieee118,DT-Threshold,0.201,0.8148148148148148
+ieee118,DT-Threshold,0.286,1.0
+ieee118,DT-Threshold,0.43,1.0
+ieee118,DT-Threshold,0.659,1.0
+ieee118,DT-Threshold,0.974,1.0
+ieee118,RandomForest (raw),0.086,0.5555555555555556
+ieee118,RandomForest (raw),0.143,0.76
+ieee118,RandomForest (raw),0.201,0.6296296296296297
+ieee118,RandomForest (raw),0.286,0.975609756097561
+ieee118,RandomForest (raw),0.43,0.8625
+ieee118,RandomForest (raw),0.659,0.9090909090909091
+ieee118,RandomForest (raw),0.974,0.94
+ieee118,GCN (raw),0.086,0.2777777777777778
+ieee118,GCN (raw),0.143,0.56
+ieee118,GCN (raw),0.201,0.5925925925925926
+ieee118,GCN (raw),0.286,0.9024390243902439
+ieee118,GCN (raw),0.43,0.925
+ieee118,GCN (raw),0.659,0.9727272727272728
+ieee118,GCN (raw),0.974,0.9933333333333333
+ieee118,DT-MLP,0.086,0.3888888888888889
+ieee118,DT-MLP,0.143,0.64
+ieee118,DT-MLP,0.201,0.7777777777777778
+ieee118,DT-MLP,0.286,0.8780487804878049
+ieee118,DT-MLP,0.43,1.0
+ieee118,DT-MLP,0.659,0.9727272727272728
+ieee118,DT-MLP,0.974,1.0
+ieee118,DT-GCN (proposed),0.086,0.4444444444444444
+ieee118,DT-GCN (proposed),0.143,0.88
+ieee118,DT-GCN (proposed),0.201,1.0
+ieee118,DT-GCN (proposed),0.286,1.0
+ieee118,DT-GCN (proposed),0.43,1.0
+ieee118,DT-GCN (proposed),0.659,1.0
+ieee118,DT-GCN (proposed),0.974,1.0

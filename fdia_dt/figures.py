@@ -5,6 +5,7 @@ import pandas as pd
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import matplotlib.ticker
 import networkx as nx
 from sklearn.metrics import roc_curve
 
@@ -24,7 +25,7 @@ S = {c: pickle.load(open(f"results/store_{c}.pkl", "rb")) for c, _ in CASES}
 
 
 def roc():
-    fig, ax = plt.subplots(1, 2, figsize=(W * 2, 2.3))
+    fig, ax = plt.subplots(1, 2, figsize=(W * 2, 2.5))
     for a, (c, title) in zip(ax, CASES):
         s = S[c]
         yt = s["y"][s["te"]]
@@ -33,13 +34,14 @@ def roc():
             a.plot(fpr, tpr, color=col, ls=LS[m], lw=1.4 if "proposed" in m else 1.0, label=m)
         a.set_xscale("log"); a.set_xlim(1e-3, 1); a.set_ylim(0, 1.01)
         a.set_xlabel("False-positive rate (log)"); a.set_ylabel("True-positive rate"); a.set_title(title)
-    ax[1].legend(loc="lower right")
-    fig.tight_layout(); fig.savefig("figures/roc.pdf"); fig.savefig("figures/roc.png")
+    h, l = ax[0].get_legend_handles_labels()
+    fig.legend(h, l, loc="lower center", ncol=6, bbox_to_anchor=(0.5, -0.01))
+    fig.tight_layout(rect=(0, 0.07, 1, 1)); fig.savefig("figures/roc.pdf"); fig.savefig("figures/roc.png")
 
 
 def recall_vs_mag():
-    fig, ax = plt.subplots(1, 2, figsize=(W * 2, 2.2), sharey=True)
-    bins = np.array([0.001, 0.004, 0.007, 0.010, 0.014, 0.020])
+    fig, ax = plt.subplots(1, 2, figsize=(W * 2, 2.4), sharey=True)
+    bins = np.array([0.001, 0.002, 0.003, 0.004, 0.006, 0.009, 0.014, 0.020])
     rows = []
     for a, (c, title) in zip(ax, CASES):
         s = S[c]; te = s["te"]; kt = s["kind"][te]; mg = s["mag"][te]
@@ -58,13 +60,14 @@ def recall_vs_mag():
             a.plot(cen, r, color=col, ls=LS[m], marker="o", ms=3, lw=1.4 if "proposed" in m else 1.0, label=m)
         a.set_xlabel(r"Attack magnitude $|c_\theta|$ (deg)"); a.set_title(title)
     ax[0].set_ylabel("Detection rate (stealthy FDIA)")
-    ax[1].legend(loc="lower right")
-    fig.tight_layout(); fig.savefig("figures/recall_mag.pdf"); fig.savefig("figures/recall_mag.png")
+    h, l = ax[0].get_legend_handles_labels()
+    fig.legend(h, l, loc="lower center", ncol=6, bbox_to_anchor=(0.5, -0.01))
+    fig.tight_layout(rect=(0, 0.07, 1, 1)); fig.savefig("figures/recall_mag.pdf"); fig.savefig("figures/recall_mag.png")
     pd.DataFrame(rows).to_csv("results/recall_vs_magnitude.csv", index=False)
 
 
 def sensitivity():
-    fig, ax = plt.subplots(1, 2, figsize=(W * 2, 2.1))
+    fig, ax = plt.subplots(2, 1, figsize=(W, 3.3), sharex=True)
     for c, title in CASES:
         try:
             df = pd.read_csv(f"results/sens_{c}.csv")
@@ -78,10 +81,10 @@ def sensitivity():
                            ls="-" if c == "ieee14" else "--", marker="o" if c == "ieee14" else "s",
                            ms=3, lw=1.0, capsize=2, label=f"{m}, {title}")
     ax[0].set_ylabel("Detection F1"); ax[1].set_ylabel("Localisation F1")
-    for a in ax:
-        a.set_xlabel(r"Twin forecast error $\sigma_f$ (%)")
-    ax[1].legend(loc="lower left", fontsize=5.5)
-    fig.tight_layout(); fig.savefig("figures/sensitivity.pdf"); fig.savefig("figures/sensitivity.png")
+    ax[1].set_xlabel(r"Twin forecast error $\sigma_f$ (%)")
+    h, l = ax[0].get_legend_handles_labels()
+    fig.legend(h, l, loc="lower center", ncol=2, bbox_to_anchor=(0.5, -0.01), fontsize=5.5)
+    fig.tight_layout(rect=(0, 0.15, 1, 1)); fig.savefig("figures/sensitivity.pdf"); fig.savefig("figures/sensitivity.png")
 
 
 def timeline():
@@ -94,6 +97,8 @@ def timeline():
     ax[0].plot(t, J, color=PAL["BDD (chi-square)"], lw=0.9)
     ax[0].axhline(s["thr"], color="#e34948", lw=0.8, ls="--")
     ax[0].set_ylabel(r"BDD $J(\hat x)$"); ax[0].set_yscale("log")
+    ax[0].yaxis.set_major_formatter(matplotlib.ticker.ScalarFormatter()); ax[0].yaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
+    ax[0].set_yticks([30, 100, 300, 1000])
     p = s["scores"]["DT-GCN (proposed)"][sl]
     ax[1].plot(t, p, color=PAL["DT-GCN (proposed)"], lw=0.9)
     ax[1].axhline(0.5, color="#e34948", lw=0.8, ls="--")
@@ -103,7 +108,6 @@ def timeline():
             a.axvspan(t[i] - 0.125, t[i] + 0.125, color="#e87ba4", alpha=0.25, lw=0)
         for i in np.where(k[sl] == 2)[0]:
             a.axvspan(t[i] - 0.125, t[i] + 0.125, color="#eda100", alpha=0.35, lw=0)
-    ax[0].text(0.01, 0.9, "shaded: stealthy (pink) / naive (amber) attacks", transform=ax[0].transAxes, fontsize=6)
     fig.tight_layout(); fig.savefig("figures/timeline.pdf"); fig.savefig("figures/timeline.png")
 
 
@@ -111,7 +115,7 @@ def localisation_example():
     g = Grid("ieee14"); s = S["ieee14"]; te = s["te"]
     k = s["kind"][te]; N = s["N"][te]; P = s["locs"]["DT-GCN (proposed)"]
     idx = [i for i in np.where(k == 1)[0] if N[i].sum() == 3][0]
-    G = nx.Graph(); G.add_edges_from(zip(g.f, g.t))
+    G = nx.Graph(); G.add_nodes_from(range(g.n)); G.add_edges_from(zip(g.f, g.t))
     pos = nx.kamada_kawai_layout(G)
     fig, ax = plt.subplots(1, 2, figsize=(W, 1.8))
     for a, val, title in [(ax[0], N[idx], "Ground truth"), (ax[1], P[idx], "DT-GCN probability")]:

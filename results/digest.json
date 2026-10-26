@@ -1,0 +1,568 @@
+{
+ "ieee14": {
+  "BDD (chi-square)": {
+   "acc": 49.56,
+   "prec": 97.14,
+   "rec": 18.44,
+   "f1": 31.0,
+   "fpr": 0.86,
+   "auc": 58.54
+  },
+  "DT-Threshold": {
+   "acc": 95.67,
+   "prec": 98.86,
+   "rec": 94.03,
+   "f1": 96.39,
+   "fpr": 1.73,
+   "auc": 98.34,
+   "loc_prec": 38.68,
+   "loc_rec": 82.34,
+   "loc_f1": 52.63,
+   "loc_exact": 2.65
+  },
+  "SVM-RBF (raw)": {
+   "acc": 94.78,
+   "prec": 98.65,
+   "rec": 92.77,
+   "f1": 95.62,
+   "fpr": 2.02,
+   "auc": 97.71
+  },
+  "RandomForest (raw)": {
+   "acc": 93.24,
+   "prec": 95.9,
+   "rec": 92.98,
+   "f1": 94.42,
+   "fpr": 6.34,
+   "auc": 97.38
+  },
+  "MLP (raw)": {
+   "acc": 93.89,
+   "prec": 96.64,
+   "rec": 93.31,
+   "f1": 94.94,
+   "fpr": 5.19,
+   "auc": 97.65,
+   "loc_prec": 70.19,
+   "loc_rec": 90.99,
+   "loc_f1": 79.21,
+   "loc_exact": 34.97
+  },
+  "GCN (raw)": {
+   "acc": 93.09,
+   "prec": 98.35,
+   "rec": 90.27,
+   "f1": 94.13,
+   "fpr": 2.42,
+   "auc": 96.81,
+   "loc_prec": 45.88,
+   "loc_rec": 87.61,
+   "loc_f1": 60.22,
+   "loc_exact": 13.95
+  },
+  "DT-MLP": {
+   "acc": 95.58,
+   "prec": 97.6,
+   "rec": 95.15,
+   "f1": 96.36,
+   "fpr": 3.75,
+   "auc": 98.61,
+   "loc_prec": 84.92,
+   "loc_rec": 94.13,
+   "loc_f1": 89.26,
+   "loc_exact": 66.18
+  },
+  "DT-GCN (proposed)": {
+   "acc": 97.27,
+   "prec": 98.75,
+   "rec": 96.78,
+   "f1": 97.75,
+   "fpr": 1.96,
+   "auc": 99.23,
+   "loc_prec": 83.39,
+   "loc_rec": 95.93,
+   "loc_f1": 89.22,
+   "loc_exact": 77.53
+  }
+ },
+ "ieee14_std": {
+  "BDD (chi-square)": {
+   "acc": 0.0,
+   "prec": 0.0,
+   "rec": 0.0,
+   "f1": 0.0,
+   "fpr": 0.0,
+   "auc": 0.0,
+   "loc_prec": 0.0,
+   "loc_rec": 0.0,
+   "loc_f1": 0.0,
+   "loc_exact": 0.0
+  },
+  "DT-Threshold": {
+   "acc": 0.0,
+   "prec": 0.0,
+   "rec": 0.0,
+   "f1": 0.0,
+   "fpr": 0.0,
+   "auc": 0.0,
+   "loc_prec": 0.0,
+   "loc_rec": 0.0,
+   "loc_f1": 0.0,
+   "loc_exact": 0.0
+  },
+  "SVM-RBF (raw)": {
+   "acc": 0.0,
+   "prec": 0.0,
+   "rec": 0.0,
+   "f1": 0.0,
+   "fpr": 0.0,
+   "auc": 0.0,
+   "loc_prec": 0.0,
+   "loc_rec": 0.0,
+   "loc_f1": 0.0,
+   "loc_exact": 0.0
+  },
+  "RandomForest (raw)": {
+   "acc": 0.12,
+   "prec": 0.17,
+   "rec": 0.27,
+   "f1": 0.11,
+   "fpr": 0.29,
+   "auc": 0.04,
+   "loc_prec": 0.0,
+   "loc_rec": 0.0,
+   "loc_f1": 0.0,
+   "loc_exact": 0.0
+  },
+  "MLP (raw)": {
+   "acc": 0.46,
+   "prec": 0.92,
+   "rec": 0.42,
+   "f1": 0.36,
+   "fpr": 1.48,
+   "auc": 0.14,
+   "loc_prec": 3.37,
+   "loc_rec": 0.54,
+   "loc_f1": 2.02,
+   "loc_exact": 7.32
+  },
+  "GCN (raw)": {
+   "acc": 0.14,
+   "prec": 0.56,
+   "rec": 0.63,
+   "f1": 0.14,
+   "fpr": 0.85,
+   "auc": 0.15,
+   "loc_prec": 1.09,
+   "loc_rec": 0.41,
+   "loc_f1": 0.97,
+   "loc_exact": 1.89
+  },
+  "DT-MLP": {
+   "acc": 0.43,
+   "prec": 0.84,
+   "rec": 0.41,
+   "f1": 0.34,
+   "fpr": 1.37,
+   "auc": 0.07,
+   "loc_prec": 3.14,
+   "loc_rec": 0.33,
+   "loc_f1": 1.8,
+   "loc_exact": 6.38
+  },
+  "DT-GCN (proposed)": {
+   "acc": 0.24,
+   "prec": 0.43,
+   "rec": 0.15,
+   "f1": 0.19,
+   "fpr": 0.69,
+   "auc": 0.06,
+   "loc_prec": 1.55,
+   "loc_rec": 0.2,
+   "loc_f1": 0.92,
+   "loc_exact": 1.78
+  }
+ },
+ "ieee118": {
+  "BDD (chi-square)": {
+   "acc": 49.67,
+   "prec": 96.39,
+   "rec": 15.09,
+   "f1": 26.1,
+   "fpr": 0.81,
+   "auc": 57.79
+  },
+  "DT-Threshold": {
+   "acc": 96.0,
+   "prec": 99.6,
+   "rec": 93.58,
+   "f1": 96.5,
+   "fpr": 0.54,
+   "auc": 98.74,
+   "loc_prec": 34.72,
+   "loc_rec": 84.02,
+   "loc_f1": 49.13,
+   "loc_exact": 2.88
+  },
+  "SVM-RBF (raw)": {
+   "acc": 85.78,
+   "prec": 91.88,
+   "rec": 83.21,
+   "f1": 87.33,
+   "fpr": 10.54,
+   "auc": 92.58
+  },
+  "RandomForest (raw)": {
+   "acc": 81.27,
+   "prec": 86.28,
+   "rec": 81.09,
+   "f1": 83.61,
+   "fpr": 18.49,
+   "auc": 89.51
+  },
+  "MLP (raw)": {
+   "acc": 78.62,
+   "prec": 84.41,
+   "rec": 78.3,
+   "f1": 81.19,
+   "fpr": 20.92,
+   "auc": 87.27,
+   "loc_prec": 26.21,
+   "loc_rec": 43.2,
+   "loc_f1": 32.58,
+   "loc_exact": 0.62
+  },
+  "GCN (raw)": {
+   "acc": 91.84,
+   "prec": 98.56,
+   "rec": 87.43,
+   "f1": 92.66,
+   "fpr": 1.84,
+   "auc": 94.86,
+   "loc_prec": 25.99,
+   "loc_rec": 84.18,
+   "loc_f1": 39.71,
+   "loc_exact": 2.0
+  },
+  "DT-MLP": {
+   "acc": 85.29,
+   "prec": 90.5,
+   "rec": 84.0,
+   "f1": 87.05,
+   "fpr": 12.86,
+   "auc": 92.96,
+   "loc_prec": 32.85,
+   "loc_rec": 74.48,
+   "loc_f1": 45.58,
+   "loc_exact": 1.86
+  },
+  "DT-GCN (proposed)": {
+   "acc": 97.04,
+   "prec": 99.03,
+   "rec": 95.92,
+   "f1": 97.45,
+   "fpr": 1.35,
+   "auc": 99.0,
+   "loc_prec": 68.54,
+   "loc_rec": 94.46,
+   "loc_f1": 79.35,
+   "loc_exact": 50.78
+  }
+ },
+ "ieee118_std": {
+  "BDD (chi-square)": {
+   "acc": 0.0,
+   "prec": 0.0,
+   "rec": 0.0,
+   "f1": 0.0,
+   "fpr": 0.0,
+   "auc": 0.0,
+   "loc_prec": 0.0,
+   "loc_rec": 0.0,
+   "loc_f1": 0.0,
+   "loc_exact": 0.0
+  },
+  "DT-Threshold": {
+   "acc": 0.0,
+   "prec": 0.0,
+   "rec": 0.0,
+   "f1": 0.0,
+   "fpr": 0.0,
+   "auc": 0.0,
+   "loc_prec": 0.0,
+   "loc_rec": 0.0,
+   "loc_f1": 0.0,
+   "loc_exact": 0.0
+  },
+  "SVM-RBF (raw)": {
+   "acc": 0.0,
+   "prec": 0.0,
+   "rec": 0.0,
+   "f1": 0.0,
+   "fpr": 0.0,
+   "auc": 0.0,
+   "loc_prec": 0.0,
+   "loc_rec": 0.0,
+   "loc_f1": 0.0,
+   "loc_exact": 0.0
+  },
+  "RandomForest (raw)": {
+   "acc": 0.8,
+   "prec": 1.21,
+   "rec": 0.28,
+   "f1": 0.61,
+   "fpr": 1.85,
+   "auc": 0.37,
+   "loc_prec": 0.0,
+   "loc_rec": 0.0,
+   "loc_f1": 0.0,
+   "loc_exact": 0.0
+  },
+  "MLP (raw)": {
+   "acc": 1.34,
+   "prec": 2.95,
+   "rec": 2.1,
+   "f1": 0.89,
+   "fpr": 5.16,
+   "auc": 1.1,
+   "loc_prec": 0.55,
+   "loc_rec": 3.67,
+   "loc_f1": 1.3,
+   "loc_exact": 0.62
+  },
+  "GCN (raw)": {
+   "acc": 0.1,
+   "prec": 0.45,
+   "rec": 0.43,
+   "f1": 0.1,
+   "fpr": 0.59,
+   "auc": 0.22,
+   "loc_prec": 0.89,
+   "loc_rec": 0.5,
+   "loc_f1": 1.03,
+   "loc_exact": 0.41
+  },
+  "DT-MLP": {
+   "acc": 0.9,
+   "prec": 3.1,
+   "rec": 2.89,
+   "f1": 0.78,
+   "fpr": 4.84,
+   "auc": 0.37,
+   "loc_prec": 0.69,
+   "loc_rec": 2.96,
+   "loc_f1": 0.98,
+   "loc_exact": 0.6
+  },
+  "DT-GCN (proposed)": {
+   "acc": 0.36,
+   "prec": 0.31,
+   "rec": 0.34,
+   "f1": 0.31,
+   "fpr": 0.43,
+   "auc": 0.05,
+   "loc_prec": 5.2,
+   "loc_rec": 0.66,
+   "loc_f1": 3.55,
+   "loc_exact": 5.92
+  }
+ },
+ "ieee14_by_k": {
+  "RandomForest (raw)": [
+   89.86,
+   94.38,
+   93.55
+  ],
+  "GCN (raw)": [
+   86.23,
+   91.25,
+   92.9
+  ],
+  "DT-MLP": [
+   93.48,
+   95.0,
+   98.06
+  ],
+  "DT-GCN (proposed)": [
+   95.65,
+   94.38,
+   97.42
+  ]
+ },
+ "ieee14_naive_recall": {
+  "RandomForest (raw)": 96.0,
+  "GCN (raw)": 88.0,
+  "DT-MLP": 96.0,
+  "DT-GCN (proposed)": 100.0,
+  "BDD (chi-square)": 100.0
+ },
+ "ieee14_bdd_stealthy_recall": 0.44,
+ "ieee14_infer_ms": {
+  "SVM-RBF (raw)": 0.0611,
+  "RandomForest (raw)": 0.1339,
+  "MLP (raw)": 0.001,
+  "GCN (raw)": 0.0117,
+  "DT-MLP": 0.0014,
+  "DT-GCN (proposed)": 0.0091
+ },
+ "ieee14_test_counts": {
+  "normal": 347,
+  "stealthy": 453,
+  "naive": 100
+ },
+ "ieee118_by_k": {
+  "RandomForest (raw)": [
+   78.0,
+   90.51,
+   95.1
+  ],
+  "GCN (raw)": [
+   86.0,
+   87.97,
+   93.71
+  ],
+  "DT-MLP": [
+   90.67,
+   91.77,
+   95.1
+  ],
+  "DT-GCN (proposed)": [
+   98.0,
+   96.84,
+   96.5
+  ]
+ },
+ "ieee118_naive_recall": {
+  "RandomForest (raw)": 43.04,
+  "GCN (raw)": 78.48,
+  "DT-MLP": 51.9,
+  "DT-GCN (proposed)": 88.61,
+  "BDD (chi-square)": 96.2
+ },
+ "ieee118_bdd_stealthy_recall": 0.89,
+ "ieee118_infer_ms": {
+  "SVM-RBF (raw)": 0.732,
+  "RandomForest (raw)": 0.0975,
+  "MLP (raw)": 0.0021,
+  "GCN (raw)": 0.082,
+  "DT-MLP": 0.0024,
+  "DT-GCN (proposed)": 0.0781
+ },
+ "ieee118_test_counts": {
+  "normal": 370,
+  "stealthy": 451,
+  "naive": 79
+ },
+ "ieee14_sens": {
+  "DT-GCN (proposed)@0.01": {
+   "f1": 97.87,
+   "loc_f1": 90.8
+  },
+  "DT-GCN (proposed)@0.02": {
+   "f1": 97.26,
+   "loc_f1": 89.1
+  },
+  "DT-GCN (proposed)@0.04": {
+   "f1": 96.73,
+   "loc_f1": 86.22999999999999
+  },
+  "DT-GCN (proposed)@0.06": {
+   "f1": 96.17999999999999,
+   "loc_f1": 80.64
+  },
+  "DT-GCN (proposed)@0.08": {
+   "f1": 95.71,
+   "loc_f1": 77.06
+  },
+  "DT-MLP@0.01": {
+   "f1": 96.99,
+   "loc_f1": 90.4
+  },
+  "DT-MLP@0.02": {
+   "f1": 96.54,
+   "loc_f1": 89.16
+  },
+  "DT-MLP@0.04": {
+   "f1": 95.89999999999999,
+   "loc_f1": 86.61999999999999
+  },
+  "DT-MLP@0.06": {
+   "f1": 95.5,
+   "loc_f1": 85.11
+  },
+  "DT-MLP@0.08": {
+   "f1": 95.06,
+   "loc_f1": 83.98
+  },
+  "DT-Threshold@0.01": {
+   "f1": 96.85000000000001,
+   "loc_f1": 52.52
+  },
+  "DT-Threshold@0.02": {
+   "f1": 96.0,
+   "loc_f1": 52.5
+  },
+  "DT-Threshold@0.04": {
+   "f1": 95.89,
+   "loc_f1": 52.53
+  },
+  "DT-Threshold@0.06": {
+   "f1": 95.19999999999999,
+   "loc_f1": 52.82
+  },
+  "DT-Threshold@0.08": {
+   "f1": 94.69,
+   "loc_f1": 52.64
+  }
+ },
+ "ieee118_sens": {
+  "DT-GCN (proposed)@0.01": {
+   "f1": 98.32,
+   "loc_f1": 89.49000000000001
+  },
+  "DT-GCN (proposed)@0.02": {
+   "f1": 97.7,
+   "loc_f1": 82.02000000000001
+  },
+  "DT-GCN (proposed)@0.04": {
+   "f1": 96.22,
+   "loc_f1": 64.57000000000001
+  },
+  "DT-GCN (proposed)@0.08": {
+   "f1": 94.43,
+   "loc_f1": 54.43
+  },
+  "DT-MLP@0.01": {
+   "f1": 88.34,
+   "loc_f1": 47.86
+  },
+  "DT-MLP@0.02": {
+   "f1": 87.79,
+   "loc_f1": 45.540000000000006
+  },
+  "DT-MLP@0.04": {
+   "f1": 84.02,
+   "loc_f1": 42.480000000000004
+  },
+  "DT-MLP@0.08": {
+   "f1": 79.71000000000001,
+   "loc_f1": 36.91
+  },
+  "DT-Threshold@0.01": {
+   "f1": 97.89999999999999,
+   "loc_f1": 48.3
+  },
+  "DT-Threshold@0.02": {
+   "f1": 97.13000000000001,
+   "loc_f1": 48.88
+  },
+  "DT-Threshold@0.04": {
+   "f1": 94.84,
+   "loc_f1": 50.6
+  },
+  "DT-Threshold@0.08": {
+   "f1": 90.89,
+   "loc_f1": 51.85999999999999
+  }
+ }
+}

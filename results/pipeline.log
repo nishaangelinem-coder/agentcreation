@@ -28,3 +28,44 @@ MLP (raw)           0.9389  0.9664  0.9331  0.9494  0.0519  0.9765    0.7019   0
 GCN (raw)           0.9309  0.9835  0.9027  0.9413  0.0242  0.9681    0.4588   0.8761  0.6022     0.1395
 DT-MLP              0.9558  0.9760  0.9515  0.9636  0.0375  0.9861    0.8492   0.9413  0.8926     0.6618
 DT-GCN (proposed)   0.9727  0.9875  0.9678  0.9775  0.0196  0.9923    0.8339   0.9593  0.8922     0.7753
+  ieee118 MLP (raw) seed 0 f1=0.8254
+  ieee118 MLP (raw) seed 1 f1=0.8015
+  ieee118 MLP (raw) seed 2 f1=0.8116
+  ieee118 MLP (raw) seed 3 f1=0.8138
+  ieee118 MLP (raw) seed 4 f1=0.8071
+  ieee118 GCN (raw) seed 0 f1=0.9261
+  ieee118 GCN (raw) seed 1 f1=0.9257
+  ieee118 GCN (raw) seed 2 f1=0.9279
+  ieee118 GCN (raw) seed 3 f1=0.9259
+  ieee118 GCN (raw) seed 4 f1=0.9275
+  ieee118 DT-MLP seed 0 f1=0.8666
+  ieee118 DT-MLP seed 1 f1=0.8621
+  ieee118 DT-MLP seed 2 f1=0.8688
+  ieee118 DT-MLP seed 3 f1=0.8828
+  ieee118 DT-MLP seed 4 f1=0.8722
+  ieee118 DT-GCN (proposed) seed 0 f1=0.9750
+  ieee118 DT-GCN (proposed) seed 1 f1=0.9789
+  ieee118 DT-GCN (proposed) seed 2 f1=0.9703
+  ieee118 DT-GCN (proposed) seed 3 f1=0.9742
+  ieee118 DT-GCN (proposed) seed 4 f1=0.9741
+                       acc    prec     rec      f1     fpr     auc  loc_prec  loc_rec  loc_f1  loc_exact
+method                                                                                                  
+BDD (chi-square)    0.4967  0.9639  0.1509  0.2610  0.0081  0.5779       NaN      NaN     NaN        NaN
+DT-Threshold        0.9600  0.9960  0.9358  0.9650  0.0054  0.9874    0.3472   0.8402  0.4913     0.0288
+SVM-RBF (raw)       0.8578  0.9188  0.8321  0.8733  0.1054  0.9258       NaN      NaN     NaN        NaN
+RandomForest (raw)  0.8127  0.8628  0.8109  0.8361  0.1849  0.8951       NaN      NaN     NaN        NaN
+MLP (raw)           0.7862  0.8441  0.7830  0.8119  0.2092  0.8727    0.2621   0.4320  0.3258     0.0062
+GCN (raw)           0.9184  0.9856  0.8743  0.9266  0.0184  0.9486    0.2599   0.8418  0.3971     0.0200
+DT-MLP              0.8529  0.9050  0.8400  0.8705  0.1286  0.9296    0.3285   0.7448  0.4558     0.0186
+DT-GCN (proposed)   0.9704  0.9903  0.9592  0.9745  0.0135  0.9900    0.6854   0.9446  0.7935     0.5078
+0.01 done
+0.02 done
+0.04 done
+0.06 done
+0.08 done
+0.01 done
+0.02 done
+0.04 done
+0.08 done
+figures done
+ALL_DONE

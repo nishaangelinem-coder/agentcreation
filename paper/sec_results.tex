@@ -1,0 +1,94 @@
+\section{Results and Discussion}
+\begin{table*}[t]
+\centering
+\caption{Attack detection on the chronological test set (\%, mean$\pm$std over five seeds; best in bold). The test sets contain 347/453/100 (14-bus) and 370/451/79 (118-bus) normal/stealthy/naive snapshots.}
+\label{tab:det}
+\footnotesize
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{l cccc cccc}
+\toprule
+& \multicolumn{4}{c}{IEEE 14-bus} & \multicolumn{4}{c}{IEEE 118-bus}\\
+\cmidrule(lr){2-5}\cmidrule(lr){6-9}
+Method & Acc. & F1 & FPR $\downarrow$ & AUC & Acc. & F1 & FPR $\downarrow$ & AUC\\
+\midrule
+\input{tab_detection.tex}
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\caption{Localization of compromised buses on stealthy test attacks (\%, mean$\pm$std over five seeds).}
+\label{tab:loc}
+\footnotesize
+\begin{tabular}{l ccc ccc}
+\toprule
+& \multicolumn{3}{c}{IEEE 14-bus} & \multicolumn{3}{c}{IEEE 118-bus}\\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Method & Recall & F1 & Exact match & Recall & F1 & Exact match\\
+\midrule
+\input{tab_localisation.tex}
+\bottomrule
+\end{tabular}
+\end{table*}
+
+\subsection{Detection Performance}
+Table~\ref{tab:det} and Fig.~\ref{fig:roc} summarize detection. The $\chi^2$ BDD catches %%BDDNAIVE14%%\% and %%BDDNAIVE118%%\% of naive attacks. It detects only %%BDDST14%%\% and %%BDDST118%%\% of stealthy FDIAs, which is no better than its 1\% nominal false-alarm rate. This confirms that the generated attacks are AC-stealthy. On the 14-bus system all learning-based detectors exceed 94\% F1. Because the model is small, raw-telemetry classifiers can still learn the narrow normal range of each bus injection. The proposed DT-GCN reaches the highest F1 (%%F14%%\%) and AUC (%%AUC14%%\%).
+
+The advantage widens on the 118-bus system. There, 726 measurements and strongly varying PV and load make the raw-data decision surface much harder. SVM, RF and MLP on raw telemetry fall to 81--87\% F1 with FPR above 10\%. The GCN on raw telemetry reaches %%GCNRAW118%%\% F1. DT-GCN keeps %%F118%%\% F1 at %%FPR118%%\% FPR, with AUC %%AUC118%%\%. Fig.~\ref{fig:roc} shows that DT-GCN holds about 95\% true-positive rate even at $10^{-3}$ FPR, which matters for operators who must keep alarm fatigue low.
+
+The ablations separate the two ingredients. The learning-free DT-Threshold is already strong (F1 %%DTTH118%%\% on 118-bus), so the twin residuals themselves carry most of the detection signal. Removing the graph (DT-MLP) \emph{hurts} on the large system (%%DTMLP118%%\% F1). A flattened 708-dimensional input overfits the 4200 training snapshots, while the topology-shared GCN weights scale to large networks.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.92\textwidth]{../figures/roc.pdf}
+\caption{ROC curves (log-scaled FPR) on the test set.}
+\label{fig:roc}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.92\textwidth]{../figures/recall_mag.pdf}
+\caption{Detection rate of stealthy FDIAs versus angle-bias magnitude.}
+\label{fig:mag}
+\end{figure*}
+
+\subsection{Sensitivity to Attack Strength and Size}
+Fig.~\ref{fig:mag} breaks the detection rate down by the injected angle bias. The twin-based detectors find essentially all attacks above about $0.3^\circ$. The raw-telemetry RF still misses 6--14\% of them on the 118-bus system. In the hardest bin ($0.06^\circ$--$0.11^\circ$, comparable to the twin's own angle error) no detector exceeds 56\%, which marks the detectability floor set by twin fidelity and noise. The proposed method gains most between $0.11^\circ$ and $0.23^\circ$ on the 118-bus system. There, DT-GCN detects 88\% and 100\% of attacks in the two bins, while the best competitor detects 76\% and 82\%. On the 14-bus system, DT-GCN and DT-MLP perform similarly in this range (87--90\%). For attacks spanning $k=1,2,3$ buses on the 118-bus system, DT-GCN detects %%K118%%\%, compared with %%K118RF%%\% for RF on raw telemetry. Single-bus attacks are therefore not harder for the proposed method, whereas raw-data methods lose up to 17 percentage points on them.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{../figures/sensitivity.pdf}
+\caption{Effect of twin forecast error $\sigma_f$ on detection and localization (solid: 14-bus, 3 seeds; dashed: 118-bus, 2 seeds).}
+\label{fig:sens}
+\end{figure}
+
+\subsection{Localization}
+Table~\ref{tab:loc} reports bus-level localization, where DT-GCN gives the clearest gain. On the 118-bus system it achieves %%LOCF118%%\% F1 and identifies the \emph{exact} compromised bus set in %%LOCEX118%%\% of attacks. The best alternative reaches %%LOCF118NEXT%%\% F1 and below 3\% exact match. The threshold detector has high recall but poor precision: an attack on bus $i$ also perturbs residuals at its neighbors. Message passing over the topology lets the GCN learn which bus of a disturbed neighborhood is the \emph{source}. On the 14-bus system, DT-GCN and DT-MLP have similar F1 (%%LOCF14%%\% vs %%LOCF14MLP%%\%), but DT-GCN's exact-match rate is 11 points higher (%%LOCEX14%%\%). Fig.~\ref{fig:loc} shows a correctly localized three-bus attack (buses 5, 6 and 13).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\columnwidth]{../figures/localisation.pdf}
+\caption{Localization of a three-bus stealthy FDIA on the IEEE 14-bus system.}
+\label{fig:loc}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{../figures/timeline.pdf}
+\caption{One test day on the IEEE 14-bus system. Pink: stealthy FDIA intervals; amber: naive attacks; dashed: alarm thresholds. The BDD (top) responds only to naive attacks. DT-GCN (bottom) flags both.}
+\label{fig:time}
+\end{figure}
+
+\subsection{Sensitivity to Digital-Twin Fidelity}\label{sec:sens}
+
+The method depends on the twin being accurate. Fig.~\ref{fig:sens} retrains the DT-based detectors with the twin's forecast error swept from 1\% to 8\%. %%SENS%%
+
+\subsection{Computational Cost and Deployment}
+The twin power flow, WLS estimation and feature extraction take about 30~ms per snapshot on the 118-bus system in our pure-Python implementation. Batched DT-GCN inference takes %%INF118%%~ms per snapshot. The whole chain is therefore far inside a 15-min (or even a 1-s PMU) SE cycle. The model has 25.7k parameters and runs on a commodity CPU. In practice it would run in parallel with the existing BDD, as a second line of defense that needs no change to the SE. The bus-level output can trigger targeted measures, such as re-authenticating the remote terminal units at the flagged buses or temporarily replacing their measurements with twin pseudo-measurements.
+
+\subsection{Limitations}
+This study uses simulated data on standard test systems. Load, PV and forecast errors follow parametric models. The attacker is assumed not to compromise the forecast and scheduling channels that feed the twin; an adversary who can also bias the twin inputs is outside this threat model. Topology changes and parameter errors in the twin were not modeled. Detectors were trained with labeled attacks, so robustness to attack strategies unseen in training should be checked with semi-supervised or one-class variants. These are planned extensions toward field validation on utility data.
+
+\section{Conclusion}
+This paper presented DT-GCN, a digital-twin-assisted graph learning framework for detecting and localizing stealthy AC false data injection attacks. A forecast-driven physics twin supplies an attack-independent reference state. Its bus-level residuals turn a hard anomaly-detection problem in raw telemetry into a well-conditioned graph problem. On the IEEE 14- and 118-bus systems with realistic load/PV variability, a nonlinear WLS estimator and AC-stealthy attacks invisible to the $\chi^2$ test, DT-GCN achieved %%F14%%\% and %%F118%%\% detection F1. On the 118-bus system it localized the exact compromised buses in %%LOCEX118%%\% of attacks, outperforming SVM, random forest, MLP and GCN detectors on raw telemetry and the learning-free twin threshold. Future work will cover twin-input integrity, topology attacks, PMU-rate operation, and hardware-in-the-loop validation.
