@@ -33,7 +33,9 @@ python scripts/run_all.py          # ~1 min: results/ + figures/ (PDF + 600-dpi 
 cd manuscript && ./build.sh        # compiles main.pdf (needs a TeX Live with latexmk)
 ```
 
-## Manuscript (Springer Nature `sn-jnl`)
+## Manuscript (Springer Nature `sn-jnl`, formatted for *Medical & Biological Engineering & Computing*)
+
+See `manuscript/MBEC_submission_checklist.md` for the journal-specific items.
 
 `manuscript/main.tex` is written for the official Springer Nature LaTeX template
 (`\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}`). The class file is not
