@@ -1,0 +1,44 @@
+{
+ "pobs_DB-search": [
+  1.0,
+  1.0,
+  0.998,
+  0.996
+ ],
+ "pobs_SpectrumGraph-DP": [
+  0.542,
+  0.486,
+  0.359,
+  0.182
+ ],
+ "pobs_SpecNovo": [
+  0.621,
+  0.407,
+  0.217,
+  0.092
+ ],
+ "noise_DB-search": [
+  1.0,
+  1.0,
+  1.0,
+  0.996
+ ],
+ "noise_SpectrumGraph-DP": [
+  0.471,
+  0.479,
+  0.474,
+  0.392
+ ],
+ "noise_SpecNovo": [
+  0.438,
+  0.421,
+  0.313,
+  0.248
+ ],
+ "retrieval_top1_encoder": 0.9083333333333333,
+ "retrieval_top1_binned": 0.9958333333333333,
+ "silhouette_encoder": 0.27284589409828186,
+ "silhouette_binned": 0.2223171442747116,
+ "saliency_on_fragments_mean": 0.7997561693191528,
+ "intensity_on_fragments_mean": 0.4217240512371063
+}

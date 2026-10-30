@@ -1,0 +1,17 @@
+/home/user/agentcreation/spectrum_native_proteomics/src/models.py:46: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.encoder = nn.TransformerEncoder(el, enc_layers)
+_IncompatibleKeys(missing_keys=['ev_mlp.0.weight', 'ev_mlp.0.bias', 'ev_mlp.2.weight', 'ev_mlp.2.bias'], unexpected_keys=[])
+{'step': 1, 'train_loss': 1.7093369960784912, 'val_loss': 1.400235652923584, 'val_tok_acc': 0.5772603273577552, 'seen': 128, 'time': 5.235194683074951}
+{'step': 100, 'train_loss': 1.6003248691558838, 'val_loss': 1.3826507329940796, 'val_tok_acc': 0.5832034294621979, 'seen': 12800, 'time': 107.60540914535522}
+{'step': 200, 'train_loss': 1.623227834701538, 'val_loss': 1.346110224723816, 'val_tok_acc': 0.5940179267342167, 'seen': 25600, 'time': 213.6838080883026}
+{'step': 300, 'train_loss': 1.4986019134521484, 'val_loss': 1.2581427097320557, 'val_tok_acc': 0.6281176929072486, 'seen': 38400, 'time': 324.06311535835266}
+{'step': 400, 'train_loss': 1.4002782106399536, 'val_loss': 1.1571071147918701, 'val_tok_acc': 0.6740062353858145, 'seen': 51200, 'time': 430.8315329551697}
+{'step': 500, 'train_loss': 1.3252562284469604, 'val_loss': 1.044455885887146, 'val_tok_acc': 0.713269680436477, 'seen': 64000, 'time': 612.8123154640198}
+{'step': 600, 'train_loss': 1.246287226676941, 'val_loss': 0.9458025693893433, 'val_tok_acc': 0.7660756040530008, 'seen': 76800, 'time': 719.0130724906921}
+{'step': 700, 'train_loss': 1.1586425304412842, 'val_loss': 0.8716790080070496, 'val_tok_acc': 0.81858924395947, 'seen': 89600, 'time': 825.9098875522614}
+{'step': 800, 'train_loss': 1.1195766925811768, 'val_loss': 0.814163327217102, 'val_tok_acc': 0.8487918939984411, 'seen': 102400, 'time': 1248.8016936779022}
+{'step': 900, 'train_loss': 1.121137261390686, 'val_loss': 0.7819200158119202, 'val_tok_acc': 0.8527864380358535, 'seen': 115200, 'time': 1653.4420893192291}
+{'step': 1000, 'train_loss': 1.0722026824951172, 'val_loss': 0.7659024596214294, 'val_tok_acc': 0.8613600935307872, 'seen': 128000, 'time': 2057.3388760089874}
+{'step': 1100, 'train_loss': 1.067336082458496, 'val_loss': 0.7587109208106995, 'val_tok_acc': 0.8632112236944661, 'seen': 140800, 'time': 2709.990987062454}
+{'step': 1200, 'train_loss': 1.0956575870513916, 'val_loss': 0.7576918601989746, 'val_tok_acc': 0.8636983632112237, 'seen': 153600, 'time': 3481.27019739151}
+done 3481.2938385009766

@@ -1,0 +1,33 @@
+frac 0.5 prep+ssl 662.3473980426788 ssl (0, 1.194070816040039) (249, 0.8045727014541626)
+{'auroc': 0.5150675275156603, 'bacc': 0.5152838078149282, 'method': 'ID-first-LR', 'n': 24, 'setting': 'iid', 'secs': 5.7925145626068115}
+{'auroc': 0.5650683285538057, 'bacc': 0.5273874941924734, 'method': 'ID-first+MBR-LR', 'n': 24, 'setting': 'iid', 'secs': 6.353889226913452}
+{'auroc': 0.87854659638892, 'bacc': 0.7938928851791922, 'method': 'ID-free-LR', 'n': 24, 'setting': 'iid', 'secs': 7.098606109619141}
+{'auroc': 0.6945000720934331, 'bacc': 0.6444031464778353, 'method': 'FeatureFormer', 'n': 24, 'setting': 'iid', 'secs': 138.50855469703674}
+{'auroc': 0.5701308896329643, 'bacc': 0.5432881013793877, 'method': 'FeatureFormer+SSL', 'n': 24, 'setting': 'iid', 'secs': 138.94535207748413}
+{'auroc': 0.5548951441067624, 'bacc': 0.5203543792755411, 'method': 'ID-first-LR', 'n': 48, 'setting': 'iid', 'secs': 2.7591145038604736}
+{'auroc': 0.7740271391723673, 'bacc': 0.6930982553389192, 'method': 'ID-first+MBR-LR', 'n': 48, 'setting': 'iid', 'secs': 3.587383985519409}
+{'auroc': 0.8998061487688044, 'bacc': 0.8043224018327753, 'method': 'ID-free-LR', 'n': 48, 'setting': 'iid', 'secs': 3.332782030105591}
+{'auroc': 0.6989858857078775, 'bacc': 0.6386997548823274, 'method': 'FeatureFormer', 'n': 48, 'setting': 'iid', 'secs': 184.2706687450409}
+{'auroc': 0.7053140870568255, 'bacc': 0.6423524888255179, 'method': 'FeatureFormer+SSL', 'n': 48, 'setting': 'iid', 'secs': 184.10446166992188}
+{'auroc': 0.6060494400743364, 'bacc': 0.5718771527900158, 'method': 'ID-first-LR', 'n': 96, 'setting': 'iid', 'secs': 4.821426153182983}
+{'auroc': 0.868773931014595, 'bacc': 0.777639821208286, 'method': 'ID-first+MBR-LR', 'n': 96, 'setting': 'iid', 'secs': 3.9467368125915527}
+{'auroc': 0.9595956359441836, 'bacc': 0.8962976016917925, 'method': 'ID-free-LR', 'n': 96, 'setting': 'iid', 'secs': 5.046376943588257}
+{'auroc': 0.731604158990051, 'bacc': 0.6452121950047262, 'method': 'FeatureFormer', 'n': 96, 'setting': 'iid', 'secs': 280.9711751937866}
+{'auroc': 0.6918566462134925, 'bacc': 0.6113202710713084, 'method': 'FeatureFormer+SSL', 'n': 96, 'setting': 'iid', 'secs': 297.7478413581848}
+{'auroc': 0.6307214149537802, 'bacc': 0.5871769813678527, 'method': 'ID-first-LR', 'n': 192, 'setting': 'iid', 'secs': 5.384658098220825}
+{'auroc': 0.9321680898444384, 'bacc': 0.8460164373027443, 'method': 'ID-first+MBR-LR', 'n': 192, 'setting': 'iid', 'secs': 6.2376158237457275}
+{'auroc': 0.9788525929604768, 'bacc': 0.9218266873868534, 'method': 'ID-free-LR', 'n': 192, 'setting': 'iid', 'secs': 5.31204891204834}
+{'auroc': 0.7773434370944743, 'bacc': 0.6930982553389192, 'method': 'FeatureFormer', 'n': 192, 'setting': 'iid', 'secs': 271.1705141067505}
+{'auroc': 0.6974318717057306, 'bacc': 0.6285826431054646, 'method': 'FeatureFormer+SSL', 'n': 192, 'setting': 'iid', 'secs': 291.85355734825134}
+{'auroc': 0.6147487143337765, 'bacc': 0.5337397266857847, 'method': 'ID-first-LR', 'n': 378, 'setting': 'iid', 'secs': 10.115339756011963}
+{'auroc': 0.960765151636521, 'bacc': 0.9011679136160464, 'method': 'ID-first+MBR-LR', 'n': 378, 'setting': 'iid', 'secs': 6.715407848358154}
+{'auroc': 0.9900030439449526, 'bacc': 0.9485092680113427, 'method': 'ID-free-LR', 'n': 378, 'setting': 'iid', 'secs': 5.961273908615112}
+{'auroc': 0.7991476954132556, 'bacc': 0.7128037937166567, 'method': 'FeatureFormer', 'n': 378, 'setting': 'iid', 'secs': 267.3095188140869}
+{'auroc': 0.7625883144555343, 'bacc': 0.6943959371345263, 'method': 'FeatureFormer+SSL', 'n': 378, 'setting': 'iid', 'secs': 179.54554414749146}
+{'auroc': 0.590599876314162, 'bacc': 0.5689548546691403, 'method': 'ID-first-LR', 'n': 281, 'setting': 'LOSO', 'secs': 3.1478545665740967}
+{'auroc': 0.9656771799628941, 'bacc': 0.847247990105133, 'method': 'ID-first+MBR-LR', 'n': 281, 'setting': 'LOSO', 'secs': 3.744762897491455}
+{'auroc': 0.9956709956709957, 'bacc': 0.931199752628324, 'method': 'ID-free-LR', 'n': 281, 'setting': 'LOSO', 'secs': 3.860485792160034}
+{'auroc': 0.66573902288188, 'bacc': 0.6100803957946815, 'method': 'FeatureFormer', 'n': 281, 'setting': 'LOSO', 'secs': 159.63561630249023}
+{'auroc': 0.6635745207173779, 'bacc': 0.5675633889919605, 'method': 'FeatureFormer+SSL', 'n': 281, 'setting': 'LOSO', 'secs': 154.00571489334106}
+attr AUROC 0.6025
+done
