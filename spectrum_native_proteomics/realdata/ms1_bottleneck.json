@@ -1,0 +1,77 @@
+{
+ "runs": {
+  "BSA1_F1": {
+   "ms1_scans": 286,
+   "features": 3790,
+   "with_ms2": 314,
+   "identified": 10,
+   "ms2": 481,
+   "psms": 15
+  },
+  "BSA1_F2": {
+   "ms1_scans": 278,
+   "features": 3776,
+   "with_ms2": 368,
+   "identified": 8,
+   "ms2": 639,
+   "psms": 16
+  },
+  "BSA2_F1": {
+   "ms1_scans": 257,
+   "features": 4172,
+   "with_ms2": 477,
+   "identified": 9,
+   "ms2": 557,
+   "psms": 9
+  },
+  "BSA2_F2": {
+   "ms1_scans": 267,
+   "features": 4211,
+   "with_ms2": 431,
+   "identified": 8,
+   "ms2": 609,
+   "psms": 11
+  },
+  "BSA3_F1": {
+   "ms1_scans": 290,
+   "features": 4690,
+   "with_ms2": 363,
+   "identified": 8,
+   "ms2": 383,
+   "psms": 7
+  },
+  "BSA3_F2": {
+   "ms1_scans": 298,
+   "features": 4974,
+   "with_ms2": 402,
+   "identified": 5,
+   "ms2": 466,
+   "psms": 6
+  }
+ },
+ "alignment": {
+  "consensus_features": 18636,
+  "samples": [
+   "BSA1",
+   "BSA2",
+   "BSA3"
+  ],
+  "idfree_missing": 0.5418723617371396,
+  "idfree_complete": 1342,
+  "idfirst_features": 36,
+  "idfirst_missing_within_identified": 0.5555555555555556,
+  "idfirst_complete": 1,
+  "idfree_pairwise_pearson": [
+   0.6370176071369434,
+   0.43908809934005344,
+   0.48494127516087715
+  ]
+ },
+ "total": {
+  "features": 25613,
+  "with_ms2": 2355,
+  "identified": 48,
+  "ms2": 3135,
+  "psms": 64
+ }
+}

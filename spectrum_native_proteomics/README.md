@@ -7,7 +7,7 @@ Code, results, figures and manuscript for:
 
 Everything runs on a CPU (PyTorch, NumPy, SciPy, scikit-learn, matplotlib).
 
-**Note:** all data are simulated by the included *virtual instrument*. The absolute numbers measure the paradigms under controlled ground truth. Do not compare them directly with real-data benchmarks.
+**Note:** the main benchmark is simulated by the included *virtual instrument*. It is validated on real data: PRIDE-derived BSA LC-MS/MS runs (bigbio/quantms CI data) and MassIVE-KB annotated spectra (Casanovo sample data). The PRIDE archive itself was not reachable from the compute environment.
 
 ## Layout
 
@@ -22,8 +22,10 @@ Everything runs on a CPU (PyTorch, NumPy, SciPy, scikit-learn, matplotlib).
 | `src/train_denovo.py`, `src/eval_denovo.py` | SpecNovo training / full evaluation |
 | `src/pheno2.py`, `src/run_pheno2.py` | spectrum-to-phenotype benchmark (main + dark-proteome sweep) |
 | `src/fig_*.py`, `src/make_tables.py`, `src/build_paper.py`, `src/style_docx.py` | figures, tables, manuscript build |
+| `src/real_*.py`, `src/data_gen_calibrated.py`, `src/fig_real.py` | real-data validation: search, calibration, de novo transfer, MS1 bottleneck, Fig. 7 |
+| `realdata/` | real-data results (JSON, PSMs, features) |
 | `results/` | JSON metrics, training logs, model checkpoints (`*.pt`), analysis pickles |
-| `figures/` | Fig. 1–6 (300 dpi PNG) |
+| `figures/` | Fig. 1–7 (300 dpi PNG) |
 | `paper/` | `manuscript.pdf`, `manuscript.docx`, `manuscript.tex`, `manuscript.md`, `tables.md` |
 
 ## Reproduce
@@ -78,6 +80,59 @@ Run each command from this directory.
    ```bash
    PYTHONPATH=src python3 src/make_tables.py && PYTHONPATH=src python3 src/build_paper.py && python3 src/style_docx.py
    ```
+
+## Real-data validation
+
+All commands run from this directory.
+
+1. Get the real data:
+   ```bash
+   git clone --depth 1 https://github.com/bigbio/quantms-test-datasets /home/user/bigbio/quantms-test-datasets
+   ```
+   ```bash
+   git clone --depth 1 https://github.com/Noble-Lab/casanovo /home/user/bigbio/casanovo
+   ```
+2. Install the mzML parsing dependencies:
+   ```bash
+   pip install psims lxml
+   ```
+3. Run the target–decoy search of the PRIDE BSA runs:
+   ```bash
+   PYTHONPATH=src python3 src/real_search.py
+   ```
+4. Calibrate the simulator against the real spectra:
+   ```bash
+   PYTHONPATH=src python3 src/real_calib.py
+   ```
+5. Run the zero-shot de novo test on real spectra:
+   ```bash
+   PYTHONPATH=src python3 src/real_denovo.py --tag zeroshot
+   ```
+6. Generate the calibrated simulation corpus:
+   ```bash
+   PYTHONPATH=src python3 src/data_gen_calibrated.py
+   ```
+7. Fine-tune SpecNovo on the calibrated corpus:
+   ```bash
+   PYTHONPATH=src python3 src/train_denovo.py --steps 800 --save_at 400 --mass_aware 1 --evidence 1 --init results/specnovo_ev.pt --lr 1e-4 --warmup 50 --corpus data/ms2_calibrated.pkl --n_train 80000 --tag cal
+   ```
+8. Re-test the fine-tuned model on real spectra:
+   ```bash
+   PYTHONPATH=src python3 src/real_denovo.py --ckpt results/specnovo_cal.pt --tag calibrated
+   ```
+9. Compute bootstrap confidence intervals, the MS1 bottleneck and Fig. 7:
+   ```bash
+   PYTHONPATH=src python3 src/real_bootstrap.py && PYTHONPATH=src python3 src/real_ms1.py && PYTHONPATH=src python3 src/fig_real.py
+   ```
+
+| Real-data measurement | Value |
+|---|---|
+| PRIDE BSA: PSMs at 1 % FDR / MS2 spectra | 64 / 3,135 |
+| MS1 features identified | 48 / 25,613 (0.19 %) |
+| Complete profiles, ID-free vs ID-first | 1,342 vs 1 |
+| Real HCD de novo peptide recall (n = 119): spectrum graph | 0.218 |
+| SpecNovo zero-shot | 0.076 |
+| SpecNovo calibrated | 0.151 |
 
 ## Headline measurements
 

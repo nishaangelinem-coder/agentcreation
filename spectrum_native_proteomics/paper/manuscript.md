@@ -1,5 +1,5 @@
 ---
-title: "From identification-first to spectrum-native proteomics: a controlled benchmark of transformer models that learn directly from MS1 and MS2 signal"
+title: "From identification-first to spectrum-native proteomics: a controlled benchmark, with real-data validation, of transformer models that learn directly from MS1 and MS2 signal"
 author:
   - "M. Nisha Angeline^1,\\*^"
 date: ""
@@ -21,7 +21,9 @@ Database search was near-perfect on canonical peptides (recall 0.999) but recove
 
 For phenotype prediction, removing the identification bottleneck was the largest single effect. With 50 % of biomarkers unidentifiable and 192 labelled runs, identification-free features gave AUROC 0.975 ± 0.015 versus 0.648 ± 0.013 for identification-first quantification. On an unseen acquisition site the figures were 0.986 vs 0.627. A ProFormer-style FeatureFormer beat identification-first statistics (0.767 vs 0.648) but not identification-free linear models at these cohort sizes. Masked-intensity pretraining improved site transfer (0.728 vs 0.651) but not in-distribution accuracy.
 
-**Conclusions.** Spectrum-native learning recovers information that identification-first pipelines lose, especially for variant, novel and dark-proteome signal. At realistic data scales, though, its benefits depend strongly on physics-informed inductive biases and on corpus size. The benchmark, code and all measurements are released to support "proteomics GPT" development under controlled ground truth.
+We validated the benchmark on real data: PRIDE-derived LC-MS/MS runs (3,135 MS2 spectra) and 119 annotated MassIVE-KB spectra. Real HCD spectra were more y-dominated than the default simulator (b-ion observation 0.29 vs 0.78). On real runs only 0.19 % of 25,613 MS1 features were identified at 1 % FDR, and 1,342 features had complete identification-free profiles against one with identification-first quantification. Applied zero-shot to real spectra, SpecNovo recalled 7.6 % of peptides. After fine-tuning on simulation calibrated to the measured fragmentation statistics it recalled 15.1 % (95 % CI 9.2–21.8 %), with precision–coverage AUC equal to the spectrum-graph baseline (0.352 vs 0.346).
+
+**Conclusions.** Spectrum-native learning recovers information that identification-first pipelines lose, especially for variant, novel and dark-proteome signal. At realistic data scales, though, its benefits depend strongly on physics-informed inductive biases and on corpus size. Real-data validation confirms the identification bottleneck and shows that simulator calibration is necessary for learned models to transfer. The benchmark, code and all measurements are released to support "proteomics GPT" development under controlled ground truth.
 
 **Keywords:** de novo peptide sequencing; transformer; spectrum-to-phenotype; self-supervised learning; mass spectrometry; benchmark; explainable AI
 
@@ -30,6 +32,7 @@ For phenotype prediction, removing the identification bottleneck was the largest
 - An open virtual instrument with exact ground truth quantifies, for the first time in a single framework, what identification-first proteomics loses relative to spectrum-native learning on both MS2 (sequencing) and MS1 (phenotype) tasks.
 - Physics-informed inductive biases — above all a differentiable fragment-ion-evidence term — turn an under-trained sequence-to-sequence transformer (0.5 % peptide recall) into a database-free sequencer (41.6 %) with the best-calibrated confidence among tested methods.
 - Identification-free MS1 features raise phenotype AUROC from 0.65 to 0.98 when half of the biomarkers are unidentifiable and remain stable from 0 % to 75 % "dark" biomarkers, whereas identification-first performance falls from 0.81 to 0.58.
+- Real PRIDE and MassIVE-KB data confirm the bottleneck (0.19 % of MS1 features identified). They also show that calibrating the simulator to measured b/y statistics doubles real-spectrum de novo recall of the learned model.
 - At cohort sizes of 24–384 samples, linear models on identification-free features outperform ProFormer-style transformers; self-supervised pretraining chiefly improves cross-site robustness — a quantitative argument for corpus-scale (MassNet-style) pretraining.
 
 
@@ -47,6 +50,8 @@ Here we address these questions with a fully controlled, open-source *virtual in
 2. **SpecNovo**, an encoder–decoder transformer for database-free sequencing with three inductive biases — complementary-ion peak encoding, prefix-mass-conditioned decoding and a differentiable ion-evidence term — whose contributions are quantified in an ablation study.
 3. **FeatureFormer**, a ProFormer-style transformer over identification-free MS1 feature tokens, pretrained with masked-intensity modelling on unlabeled runs, benchmarked against identification-first, match-between-runs (MBR) and identification-free linear pipelines across label budgets, unseen acquisition sites and a "dark-proteome" sweep.
 4. **Quantitative interpretability**: peak-level gradient × input attribution for de novo sequencing and feature-level attribution for biomarker recovery, together with replicate-retrieval analysis of learned spectrum embeddings.
+
+5. **Real-data validation** on PRIDE-derived LC-MS/MS runs and MassIVE-KB annotated spectra. It comprises simulator calibration against measured fragmentation statistics, a sim-to-real transfer test of de novo sequencing with calibrated fine-tuning, and a measurement of the identification bottleneck on real MS1 features.
 
 We report all results — including those in which classical baselines remain competitive — to give an honest map of where spectrum-native learning helps today.
 
@@ -81,6 +86,31 @@ We report all results — including those in which classical baselines remain co
 ## Training and evaluation
 
 SpecNovo was trained with AdamW (lr 5 × 10⁻⁴, weight decay 10⁻⁴, 200 warm-up steps, cosine decay), batch 128, label smoothing 0.05 and gradient clipping at 1.0 on four CPU cores. The *base* model was trained for 3,500 steps (448k spectra); the *mass-aware* model for 2,000 steps; the *ion-evidence* model was initialised from the mass-aware checkpoint and trained for a further 1,200 steps (lr 3 × 10⁻⁴). Amino-acid precision/recall used mass-aligned matching (cumulative-mass tolerance 0.5 Da, residue tolerance 0.1 Da); peptide recall required a full-length match [9,15]. Precision–coverage curves ranked predictions by mean beam log-probability, with mass-inconsistent beams ranked last. Phenotype models were evaluated by AUROC and balanced accuracy on 500 held-out runs, for five label budgets (24–384, class-balanced) and three seeds; leave-one-site-out (LOSO) training used sites 1–3 and testing on site 4. Attribution used gradient × input [27]; t-SNE [28] visualised embeddings. All code uses PyTorch [29] and scikit-learn [30] and runs on a commodity CPU.
+
+
+## Validation on real data
+
+Direct access to the PRIDE archive servers was not available from the compute environment, so real data were obtained from public mirrors of PRIDE- and MassIVE-derived files.
+
+**PRIDE-derived LC-MS/MS runs.** We used the BSA quality-control runs that the PRIDE/bigbio team distributes as continuous-integration data for the quantms reanalysis pipeline [31] (github.com/bigbio/quantms-test-datasets, `testdata/lfq_ci/BSA`). The set comprises three BSA samples acquired on an LTQ Orbitrap Velos in data-dependent mode, with Orbitrap MS1 and ion-trap CID MS2. Each sample is split in retention time into two mzML files, giving 3,135 MS2 and 1,676 MS1 spectra in total. Sample metadata are provided in SDRF format [32]. They were searched against the supplied 9,439-protein database (18 target proteins, a *Sorangium cellulosum* background proteome and contaminants): tryptic, ≤ 2 missed cleavages, 7–30 residues, fixed carbamidomethyl-Cys, variable Met oxidation, 10 ppm precursor tolerance with ±1 isotope error, and reversed decoys (1.73 M target + decoy entries).
+
+The hyperscore used for the simulated HCD data separated targets from decoys poorly on low-resolution CID spectra. We therefore adopted an Andromeda-style binomial score [33]: peaks were filtered to the top *q* per 100 m/z (*q* ∈ {4, 8, 12}, best *q* retained); *k* of *n* theoretical b/y ions (plus doubly charged ions for *z* ≥ 3) were matched within 0.4 Da; and *S* = −log₁₀ P(X ≥ *k*), with X ∼ Binomial(*n*, *p* = 2·0.4·*q*/100). PSMs were accepted at 1 % FDR (decoy/target ratio after target–decoy competition).
+
+**MassIVE-KB annotated spectra.** The 128 annotated high-resolution HCD spectra distributed with Casanovo [9] (`sample_data/sample_preprocessed_spectra.mgf`), drawn from MassIVE-KB [7], served as an independent ground-truth set. We retained the 119 spectra with supported modifications (carbamidomethyl-Cys, oxidised Met), length 6–14 and charge 2–3.
+
+**Simulator calibration.** On both real sets and on 500 simulated spectra we measured, per PSM:
+- b- and y-ion observation rates;
+- summed y/b intensity ratio;
+- intensity enhancement of cleavage N-terminal to Pro;
+- fraction of total ion current explained by b/y ions, their neutral losses and doubly charged forms;
+- number of unexplained peaks;
+- fragment mass error.
+
+Tolerances were 20 ppm for HCD and 0.4 Da for CID. We then re-simulated a *calibrated* corpus of 80,000 spectra (proteome T, peptides 6–14 residues) with *p*~obs,b~ ∼ U(0.1, 0.6), *p*~obs,y~ ∼ U(0.4, 0.95), b/y intensity factor ∼ U(0.2, 0.6), 20–80 noise peaks, ≈ 10 low-mass (immonium/internal-like) peaks and 5 ppm error. The final SpecNovo model was fine-tuned on this corpus for 800 steps (lr 10⁻⁴, 50 warm-up steps).
+
+**Real-data de novo evaluation.** Spectra were preprocessed by removing peaks within 2 m/z of the precursor and above the precursor mass, keeping the 80 most intense peaks and applying square-root normalisation. SpecNovo (zero-shot and calibrated) and the spectrum-graph baseline (tolerance 0.025 Da for HCD, 0.5 Da for CID) were scored with the metrics above. 95 % confidence intervals came from 2,000 paired bootstrap resamples of spectra.
+
+**Real MS1 bottleneck.** MS1 centroids (top 400 per scan) were linked across scans within 10 ppm, allowing gaps of up to two scans and requiring ≥ 3 scans. Isotopic peaks (z = 1–4, +1/+2 neutrons, co-eluting within 15 s) were removed. A feature was counted as *sampled* if an MS2 precursor fell within 10 ppm and inside its elution window ± 30 s, and as *identified* if that MS2 spectrum was a 1 % FDR PSM. Features from the two fractions of each sample were pooled and clustered across the three samples (10 ppm, 60 s) to compare identification-free and identification-first completeness.
 
 
 # Results
@@ -250,6 +280,66 @@ Feature attribution recovered true biomarkers above chance (AUROC 0.622), includ
 | ID-free-LR | 0.973 ± 0.024 | 0.965 ± 0.029 | 0.975 ± 0.015 | 0.968 ± 0.021 |
 | FeatureFormer+SSL | 0.727 ± 0.031 | 0.758 ± 0.010 | 0.714 ± 0.015 | 0.759 ± 0.045 |
 
+## Validation on real PRIDE and MassIVE-KB data
+
+**Real spectra are sparser and more y-dominated than the default simulator** (Table 9, Fig. 7c). On 126 MassIVE-KB HCD spectra the median b-ion observation rate was 0.29 (IQR 0.14–0.50) against 0.78 in the default simulator, while y-ion observation was 0.67 (0.50–0.86). Summed y/b intensity was 2.7 against 1.7, and b/y-family ions explained 32 % of the total ion current against 52 %.
+
+The proline effect (1.98 vs 1.73) and the number of unexplained peaks (38.5 vs 41) were close to the simulator. The fragment mass error was tighter in the real data (s.d. 4.4 ppm against 8.9 ppm). PRIDE BSA ion-trap CID spectra were different again: about 145 peaks per spectrum, 59 % of the ion current explained, y/b ratio 4.1 and fragment errors of several hundred ppm (Table 9). These measurements identify the simulator's main miscalibration as the overly symmetric b/y fragmentation.
+
+**Table 9. Calibration of the virtual instrument against real annotated spectra (median [IQR] per PSM).**
+
+| Statistic | Simulator (default) | MassIVE-KB HCD (real) | PRIDE BSA CID (real) |
+|---|---|---|---|
+| PSMs analysed | 500 | 126 | 64 |
+| b-ion observation rate | 0.78 [0.67–0.88] | 0.29 [0.14–0.50] | 0.69 [0.50–0.79] |
+| y-ion observation rate | 0.78 [0.67–0.88] | 0.67 [0.50–0.86] | 0.83 [0.67–0.89] |
+| Summed y/b intensity | 1.66 [1.12–2.27] | 2.66 [1.59–4.78] | 4.08 [2.51–6.44] |
+| Pro N-terminal cleavage enhancement | 1.73 [0.91–2.77] | 1.98 [1.25–3.69] | 2.09 [0.98–3.29] |
+| Fraction of TIC explained | 0.52 [0.44–0.60] | 0.32 [0.24–0.43] | 0.59 [0.45–0.68] |
+| Peaks per spectrum | 62 [55–68] | 53 [38–70] | 145 [114–192] |
+| Unexplained peaks | 41 [37–45] | 38.5 [26–55] | 116.5 [90–162] |
+| Fragment mass error (s.d.) | 8.9 ppm | 4.4 ppm | 323 ppm (ion trap) |
+
+**Identification on real PRIDE runs reproduces the identification bottleneck.** The binomial-score search separated targets from decoys (Fig. 7b) and accepted 64 PSMs (20 unique BSA peptides) at 1 % FDR. That is 2.0 % of the 3,135 MS2 spectra; under the conservative (*d* + 1)/*t* estimator, 88 PSMs passed at 5 % FDR.
+
+On the MS1 level, feature detection found 25,613 de-isotoped features across the six files (Table 11, Fig. 7e). Of these, 2,355 (9.2 %) were sampled for MS2 and only 48 (0.19 %) carried a 1 % FDR identification. After ID-free alignment of the three samples, 1,342 consensus features were quantified in all three samples, against a single feature with complete identification-first profiles (Fig. 7f).
+
+These numbers overstate the bottleneck in absolute terms. Our minimal search engine identifies far fewer spectra than production engines (MS-GF+, Comet, Andromeda) with rescoring, and a simple centroid-linking feature finder also counts some noise traces. The direction and the order of magnitude, however, agree with the simulation: most MS1 signal is never identified, and identification-first matrices are dominated by missing values.
+
+**Simulation-to-real transfer of de novo sequencing** (Table 10, Fig. 7d). Applied zero-shot to 119 real MassIVE-KB HCD spectra, the simulation-trained SpecNovo recovered 7.6 % of peptides (95 % CI 3.4–12.6 %) with amino-acid precision 0.261. The spectrum-graph baseline, which encodes only fragmentation physics, reached 21.8 % (15.1–29.4 %), a substantial sim-to-real gap for the learned model.
+
+Fine-tuning for 800 steps on the corpus re-simulated with the measured b/y statistics doubled SpecNovo's peptide recall to 15.1 % (9.2–21.8 %; paired difference +7.6 points, 95 % CI +2.5 to +13.4). Amino-acid precision rose to 0.408, and precision–coverage AUC rose to 0.352 (0.215–0.474), on a par with the spectrum graph (0.346, 0.224–0.466). Calibration did not cost simulated performance: peptide recall on the simulated inDB set rose from 0.416 to 0.525, partly from the additional training steps.
+
+On low-resolution ion-trap CID spectra (62 PSMs ≤ 14 residues, 19 peptides), neither the zero-shot nor the HCD-calibrated SpecNovo recovered complete peptides (amino-acid precision 0.105 and 0.144). The spectrum graph, with a 0.5 Da tolerance, recovered 8.1 %. Both de novo approaches therefore remain instrument-specific, and a learned model must be trained on, or calibrated to, the fragmentation mode and mass accuracy it will be applied to.
+
+**Table 10. De novo sequencing of real spectra (95 % bootstrap CI for MassIVE-KB).**
+
+| Data | Method | AA precision | AA recall | Peptide recall | PR-AUC |
+|---|---|---|---|---|---|
+| MassIVE-KB HCD (n = 119) | SpectrumGraph-DP | 0.593 [0.534–0.651] | 0.511 | 0.218 [0.151–0.294] | 0.346 [0.224–0.466] |
+| | SpecNovo, zero-shot (simulation only) | 0.261 [0.211–0.313] | 0.266 | 0.076 [0.034–0.126] | 0.199 [0.086–0.313] |
+| | SpecNovo, calibrated simulation | 0.408 [0.350–0.471] | 0.405 | 0.151 [0.092–0.218] | 0.352 [0.215–0.474] |
+| PRIDE BSA ion-trap CID (n = 62) | SpectrumGraph-DP (0.5 Da) | 0.292 | 0.334 | 0.081 | 0.113 |
+| | SpecNovo, zero-shot | 0.105 | 0.116 | 0.000 | 0.000 |
+| | SpecNovo, calibrated (HCD) | 0.144 | 0.154 | 0.000 | 0.000 |
+
+**Table 11. The identification bottleneck on real PRIDE-derived LC-MS runs (three BSA samples × two RT fractions).**
+
+| Quantity | Value |
+|---|---|
+| MS2 spectra / MS1 scans | 3,135 / 1,676 |
+| Target + decoy database entries | 1,725,026 |
+| PSMs at 1 % FDR (unique peptides) | 64 (20); 2.0 % of MS2 spectra |
+| De-isotoped MS1 features (six files) | 25,613 |
+| Features sampled for MS2 | 2,355 (9.2 %) |
+| Features with a 1 % FDR identification | 48 (0.19 %) |
+| Consensus features after ID-free alignment | 18,636 |
+| Quantified in all three samples: ID-free / ID-first | 1,342 / 1 |
+| Missing values: ID-free (all features) / ID-first (identified features) | 54.2 % / 55.6 % |
+| Pearson r of log-intensities between samples (ID-free, complete features) | 0.44–0.64 |
+
+![**Fig. 7. Validation on real PRIDE and MassIVE-KB data.** (a) Real annotated MassIVE-KB HCD spectrum (b ions blue, y ions red). (b) Target and decoy score distributions for the PRIDE BSA ion-trap search (log scale). (c) Fragmentation statistics of the default simulator against real HCD and CID spectra (median and IQR; ratios divided by 4 for display). (d) De novo sequencing of 119 real HCD spectra: amino-acid precision (light) and peptide recall (dark) for the spectrum-graph baseline, zero-shot SpecNovo and SpecNovo fine-tuned on calibrated simulation. (e) Identification funnel on real MS1 data: detected features, features sampled for MS2 and features with a 1 % FDR identification. (f) Number of features quantified in all three samples with identification-free and identification-first workflows.](../figures/fig7_real_validation.png){width=100%}
+
 # Discussion
 
 The move from identification-first to spectrum-native proteomics is often framed as a contest between classical algorithms and deep learning. The controlled measurements here suggest a more useful framing: **identification is an information bottleneck, and the main gains come from removing that bottleneck.** The choice of model class matters less.
@@ -264,7 +354,7 @@ This result is directly relevant to the vision of proteomics GPTs trained on Mas
 
 Third, **self-supervised pretraining is not a free lunch at small scale.** Masked-intensity pretraining on 800 unlabeled runs did not improve in-distribution phenotype prediction, but it consistently improved cross-site transfer and reduced variance. This pattern is expected if pretraining learns site-invariant co-abundance structure rather than phenotype-specific signal. It suggests that the payoff of corpus-scale pretraining will appear first in robustness and transfer across instruments, laboratories and cohorts.
 
-**Limitations.** All conclusions are drawn from simulation. The virtual instrument omits several features of real data:
+**Limitations.** The central comparisons are drawn from simulation. The real-data validation is deliberately small: 3,135 PRIDE-derived MS2 spectra and 119 MassIVE-KB spectra, obtained from public mirrors because the PRIDE archive itself could not be reached from the compute environment. It used a minimal search engine and feature finder, and it could not test phenotype prediction, which requires labelled cohorts of tens to hundreds of runs. The real data nonetheless show that the default virtual instrument overestimates b-ion completeness and that learned de novo models suffer a substantial sim-to-real gap, which calibration halves but does not close. The virtual instrument also omits several features of real data:
 
 - fragment-intensity patterns learned from real data (e.g., Prosit or AlphaPeptDeep [20,21]);
 - chimeric and DIA spectra;
@@ -277,7 +367,8 @@ The phenotype signal was deliberately additive, which favours linear models. Tra
 
 These choices are intentional: they make every quantity measurable and every experiment reproducible on a laptop. They also mean that the absolute numbers should not be compared with real-data benchmarks. Future work should:
 
-- calibrate the simulator against real PSMs (e.g., MassIVE-KB [7]);
+- extend the calibration loop demonstrated here to full MassIVE-KB/PRIDE reprocessing results (e.g., via quantms [31]), including ion-trap CID;
+- validate spectrum-to-phenotype models on labelled PRIDE cohorts annotated with SDRF [32];
 - add DIA multiplexing;
 - benchmark published models (Casanovo, InstaNovo, ProFormer) inside the same controlled environment;
 - scale SSL corpora by orders of magnitude.
@@ -288,12 +379,13 @@ We have provided a reproducible, ground-truth benchmark of the transition from i
 
 - **Sequencing.** Database search is exact but blind beyond its database. Database-free transformer sequencing becomes viable only with physics-informed inductive biases at modest data scales, offers the best-calibrated confidence, and still trails classical graph search on sparse or noisy spectra.
 - **Phenotype.** Removing identification is the dominant effect, and transformer classifiers and self-supervised pretraining add robustness rather than accuracy at cohort sizes of a few hundred.
+- **Real data.** On PRIDE-derived runs only 0.19 % of MS1 features and 2.0 % of MS2 spectra were identified by a minimal engine, confirming the bottleneck. On real HCD spectra, calibrating the simulator to measured fragmentation statistics doubled the learned model's peptide recall (7.6 % → 15.1 %) and matched the spectrum-graph baseline in precision–coverage AUC.
 
 These measurements support continued investment in large, shared, machine-learning-ready spectral corpora, and in hybrid models that unite learned representations with the physics of peptide fragmentation.
 
 # Data and code availability
 
-All source code (simulator, models, baselines, evaluation and figure scripts), result files (JSON/pickle), trained model checkpoints and figures are available in the project repository (`spectrum_native_proteomics/`). Every experiment is reproducible on a CPU with Python ≥ 3.11, PyTorch ≥ 2.0, NumPy, SciPy, scikit-learn, pyteomics and matplotlib, using the commands listed in the repository README.
+All source code (simulator, models, baselines, real-data validation, evaluation and figure scripts), result files (JSON/pickle), trained model checkpoints and figures are available in the project repository (`spectrum_native_proteomics/`). Every experiment is reproducible on a CPU with Python ≥ 3.11, PyTorch ≥ 2.0, NumPy, SciPy, scikit-learn, pyteomics and matplotlib, using the commands listed in the repository README. Real data: PRIDE-derived BSA runs from github.com/bigbio/quantms-test-datasets (`testdata/lfq_ci/BSA`, with SDRF) and MassIVE-KB annotated spectra from github.com/Noble-Lab/casanovo (`sample_data/`).
 
 # Funding
 
@@ -340,3 +432,6 @@ M.N.A.: conceptualisation, methodology, software, investigation, formal analysis
 28. van der Maaten L, Hinton G. Visualizing data using t-SNE. *J Mach Learn Res* 2008;9:2579–2605.
 29. Paszke A, Gross S, Massa F, *et al.* PyTorch: an imperative style, high-performance deep learning library. *Adv Neural Inf Process Syst* 2019;32:8024–8035.
 30. Pedregosa F, Varoquaux G, Gramfort A, *et al.* Scikit-learn: machine learning in Python. *J Mach Learn Res* 2011;12:2825–2830.
+31. Dai C, Pfeuffer J, Wang H, *et al.* quantms: a cloud-based pipeline for quantitative proteomics enables the reanalysis of public proteomics data. *Nat Methods* 2024;21:1603–1607. doi:10.1038/s41592-024-02343-1
+32. Dai C, Füllgrabe A, Pfeuffer J, *et al.* A proteomics sample metadata representation for multiomics integration and big data analysis. *Nat Commun* 2021;12:5854. doi:10.1038/s41467-021-26111-3
+33. Cox J, Neuhauser N, Michalski A, *et al.* Andromeda: a peptide search engine integrated into the MaxQuant environment. *J Proteome Res* 2011;10:1794–1805. doi:10.1021/pr101065j

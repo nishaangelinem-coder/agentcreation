@@ -30,3 +30,6 @@
 28. van der Maaten L, Hinton G. Visualizing data using t-SNE. *J Mach Learn Res* 2008;9:2579–2605.
 29. Paszke A, Gross S, Massa F, *et al.* PyTorch: an imperative style, high-performance deep learning library. *Adv Neural Inf Process Syst* 2019;32:8024–8035.
 30. Pedregosa F, Varoquaux G, Gramfort A, *et al.* Scikit-learn: machine learning in Python. *J Mach Learn Res* 2011;12:2825–2830.
+31. Dai C, Pfeuffer J, Wang H, *et al.* quantms: a cloud-based pipeline for quantitative proteomics enables the reanalysis of public proteomics data. *Nat Methods* 2024;21:1603–1607. doi:10.1038/s41592-024-02343-1
+32. Dai C, Füllgrabe A, Pfeuffer J, *et al.* A proteomics sample metadata representation for multiomics integration and big data analysis. *Nat Commun* 2021;12:5854. doi:10.1038/s41467-021-26111-3
+33. Cox J, Neuhauser N, Michalski A, *et al.* Andromeda: a peptide search engine integrated into the MaxQuant environment. *J Proteome Res* 2011;10:1794–1805. doi:10.1021/pr101065j

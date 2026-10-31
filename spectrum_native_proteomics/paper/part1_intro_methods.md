@@ -13,6 +13,8 @@ Here we address these questions with a fully controlled, open-source *virtual in
 3. **FeatureFormer**, a ProFormer-style transformer over identification-free MS1 feature tokens, pretrained with masked-intensity modelling on unlabeled runs, benchmarked against identification-first, match-between-runs (MBR) and identification-free linear pipelines across label budgets, unseen acquisition sites and a "dark-proteome" sweep.
 4. **Quantitative interpretability**: peak-level gradient × input attribution for de novo sequencing and feature-level attribution for biomarker recovery, together with replicate-retrieval analysis of learned spectrum embeddings.
 
+5. **Real-data validation** on PRIDE-derived LC-MS/MS runs and MassIVE-KB annotated spectra. It comprises simulator calibration against measured fragmentation statistics, a sim-to-real transfer test of de novo sequencing with calibrated fine-tuning, and a measurement of the identification bottleneck on real MS1 features.
+
 We report all results — including those in which classical baselines remain competitive — to give an honest map of where spectrum-native learning helps today.
 
 # Materials and methods
@@ -46,3 +48,28 @@ We report all results — including those in which classical baselines remain co
 ## Training and evaluation
 
 SpecNovo was trained with AdamW (lr 5 × 10⁻⁴, weight decay 10⁻⁴, 200 warm-up steps, cosine decay), batch 128, label smoothing 0.05 and gradient clipping at 1.0 on four CPU cores. The *base* model was trained for 3,500 steps (448k spectra); the *mass-aware* model for 2,000 steps; the *ion-evidence* model was initialised from the mass-aware checkpoint and trained for a further 1,200 steps (lr 3 × 10⁻⁴). Amino-acid precision/recall used mass-aligned matching (cumulative-mass tolerance 0.5 Da, residue tolerance 0.1 Da); peptide recall required a full-length match [9,15]. Precision–coverage curves ranked predictions by mean beam log-probability, with mass-inconsistent beams ranked last. Phenotype models were evaluated by AUROC and balanced accuracy on 500 held-out runs, for five label budgets (24–384, class-balanced) and three seeds; leave-one-site-out (LOSO) training used sites 1–3 and testing on site 4. Attribution used gradient × input [27]; t-SNE [28] visualised embeddings. All code uses PyTorch [29] and scikit-learn [30] and runs on a commodity CPU.
+
+
+## Validation on real data
+
+Direct access to the PRIDE archive servers was not available from the compute environment, so real data were obtained from public mirrors of PRIDE- and MassIVE-derived files.
+
+**PRIDE-derived LC-MS/MS runs.** We used the BSA quality-control runs that the PRIDE/bigbio team distributes as continuous-integration data for the quantms reanalysis pipeline [31] (github.com/bigbio/quantms-test-datasets, `testdata/lfq_ci/BSA`). The set comprises three BSA samples acquired on an LTQ Orbitrap Velos in data-dependent mode, with Orbitrap MS1 and ion-trap CID MS2. Each sample is split in retention time into two mzML files, giving 3,135 MS2 and 1,676 MS1 spectra in total. Sample metadata are provided in SDRF format [32]. They were searched against the supplied 9,439-protein database (18 target proteins, a *Sorangium cellulosum* background proteome and contaminants): tryptic, ≤ 2 missed cleavages, 7–30 residues, fixed carbamidomethyl-Cys, variable Met oxidation, 10 ppm precursor tolerance with ±1 isotope error, and reversed decoys (1.73 M target + decoy entries).
+
+The hyperscore used for the simulated HCD data separated targets from decoys poorly on low-resolution CID spectra. We therefore adopted an Andromeda-style binomial score [33]: peaks were filtered to the top *q* per 100 m/z (*q* ∈ {4, 8, 12}, best *q* retained); *k* of *n* theoretical b/y ions (plus doubly charged ions for *z* ≥ 3) were matched within 0.4 Da; and *S* = −log₁₀ P(X ≥ *k*), with X ∼ Binomial(*n*, *p* = 2·0.4·*q*/100). PSMs were accepted at 1 % FDR (decoy/target ratio after target–decoy competition).
+
+**MassIVE-KB annotated spectra.** The 128 annotated high-resolution HCD spectra distributed with Casanovo [9] (`sample_data/sample_preprocessed_spectra.mgf`), drawn from MassIVE-KB [7], served as an independent ground-truth set. We retained the 119 spectra with supported modifications (carbamidomethyl-Cys, oxidised Met), length 6–14 and charge 2–3.
+
+**Simulator calibration.** On both real sets and on 500 simulated spectra we measured, per PSM:
+- b- and y-ion observation rates;
+- summed y/b intensity ratio;
+- intensity enhancement of cleavage N-terminal to Pro;
+- fraction of total ion current explained by b/y ions, their neutral losses and doubly charged forms;
+- number of unexplained peaks;
+- fragment mass error.
+
+Tolerances were 20 ppm for HCD and 0.4 Da for CID. We then re-simulated a *calibrated* corpus of 80,000 spectra (proteome T, peptides 6–14 residues) with *p*~obs,b~ ∼ U(0.1, 0.6), *p*~obs,y~ ∼ U(0.4, 0.95), b/y intensity factor ∼ U(0.2, 0.6), 20–80 noise peaks, ≈ 10 low-mass (immonium/internal-like) peaks and 5 ppm error. The final SpecNovo model was fine-tuned on this corpus for 800 steps (lr 10⁻⁴, 50 warm-up steps).
+
+**Real-data de novo evaluation.** Spectra were preprocessed by removing peaks within 2 m/z of the precursor and above the precursor mass, keeping the 80 most intense peaks and applying square-root normalisation. SpecNovo (zero-shot and calibrated) and the spectrum-graph baseline (tolerance 0.025 Da for HCD, 0.5 Da for CID) were scored with the metrics above. 95 % confidence intervals came from 2,000 paired bootstrap resamples of spectra.
+
+**Real MS1 bottleneck.** MS1 centroids (top 400 per scan) were linked across scans within 10 ppm, allowing gaps of up to two scans and requiring ≥ 3 scans. Isotopic peaks (z = 1–4, +1/+2 neutrons, co-eluting within 15 s) were removed. A feature was counted as *sampled* if an MS2 precursor fell within 10 ppm and inside its elution window ± 30 s, and as *identified* if that MS2 spectrum was a 1 % FDR PSM. Features from the two fractions of each sample were pooled and clustered across the three samples (10 ppm, 60 s) to compare identification-free and identification-first completeness.

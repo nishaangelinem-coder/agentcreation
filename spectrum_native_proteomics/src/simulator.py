@@ -40,7 +40,8 @@ def mutate_saav(seq, rng):
     return seq[:pos] + rng.choice(choices) + seq[pos + 1:]
 
 
-def simulate_ms2(seq, rng, p_obs=0.8, noise_peaks=40, ppm=10.0, max_peaks=150):
+def simulate_ms2(seq, rng, p_obs=0.8, noise_peaks=40, ppm=10.0, max_peaks=150,
+                 p_obs_b=None, p_obs_y=None, b_factor=0.6, low_mass_ions=0):
     """Return (mz, intensity, precursor_mass, charge)."""
     n = len(seq)
     z = 2 if rng.random() < (0.85 if n <= 10 else 0.6) else 3
@@ -55,11 +56,13 @@ def simulate_ms2(seq, rng, p_obs=0.8, noise_peaks=40, ppm=10.0, max_peaks=150):
         if seq[i - 1] == 'P': fac[k] *= 0.5
     edge = np.minimum(pos, n - pos)
     fac *= np.where(edge <= 1, 0.35, 1.0)
-    ib = base[0] * fac * 0.6
+    ib = base[0] * fac * b_factor
     iy = base[1] * fac * 1.0
     mz, it = [], []
-    for ladder, inten in ((b, ib), (y, iy)):
-        keep = rng.random(n - 1) < p_obs
+    pob = p_obs if p_obs_b is None else p_obs_b
+    poy = p_obs if p_obs_y is None else p_obs_y
+    for ladder, inten, po in ((b, ib, pob), (y, iy, poy)):
+        keep = rng.random(n - 1) < po
         mz.append(ladder[keep]); it.append(inten[keep])
         nl = keep & (rng.random(n - 1) < 0.35)
         mz.append(ladder[nl] - H2O); it.append(inten[nl] * rng.uniform(.05, .3, nl.sum()))
@@ -68,6 +71,9 @@ def simulate_ms2(seq, rng, p_obs=0.8, noise_peaks=40, ppm=10.0, max_peaks=150):
         if z == 3:
             dk = keep & (pos > 3) & (rng.random(n - 1) < 0.5)
             mz.append((ladder[dk] + PROTON) / 2); it.append(inten[dk] * rng.uniform(.2, .6, dk.sum()))
+    if low_mass_ions:       # immonium / internal-fragment-like low-mass peaks
+        k2 = rng.poisson(low_mass_ions)
+        mz.append(rng.uniform(60, 300, k2)); it.append(rng.lognormal(-0.5, 0.8, k2))
     mz = np.concatenate(mz); it = np.concatenate(it)
     mz = mz * (1 + rng.normal(0, ppm * 1e-6, mz.size))
     pmass = peptide_mass(seq)

@@ -1,0 +1,13 @@
+/home/user/agentcreation/spectrum_native_proteomics/src/models.py:46: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  self.encoder = nn.TransformerEncoder(el, enc_layers)
+<All keys matched successfully>
+{'step': 1, 'train_loss': 1.4650558233261108, 'val_loss': 0.7576387524604797, 'val_tok_acc': 0.8636009353078722, 'seen': 128, 'time': 7.130914211273193}
+{'step': 100, 'train_loss': 1.3294633626937866, 'val_loss': 0.7431901693344116, 'val_tok_acc': 0.869933749025721, 'seen': 12800, 'time': 81.76851725578308}
+{'step': 200, 'train_loss': 1.3101850748062134, 'val_loss': 0.7060218453407288, 'val_tok_acc': 0.8801636788776306, 'seen': 25600, 'time': 153.00760865211487}
+{'step': 300, 'train_loss': 1.2379761934280396, 'val_loss': 0.6702768802642822, 'val_tok_acc': 0.8834762275915822, 'seen': 38400, 'time': 222.26987171173096}
+{'step': 400, 'train_loss': 1.2309027910232544, 'val_loss': 0.6497350931167603, 'val_tok_acc': 0.8966289945440374, 'seen': 51200, 'time': 291.0195474624634}
+{'step': 500, 'train_loss': 1.2473461627960205, 'val_loss': 0.6312018036842346, 'val_tok_acc': 0.8978955572876072, 'seen': 64000, 'time': 364.01633286476135}
+{'step': 600, 'train_loss': 1.2716975212097168, 'val_loss': 0.6215792894363403, 'val_tok_acc': 0.9001363990646921, 'seen': 76800, 'time': 436.527042388916}
+{'step': 700, 'train_loss': 1.2407495975494385, 'val_loss': 0.6166197061538696, 'val_tok_acc': 0.8980904130943103, 'seen': 89600, 'time': 506.43859100341797}
+{'step': 800, 'train_loss': 1.2644670009613037, 'val_loss': 0.6161602139472961, 'val_tok_acc': 0.8996492595479345, 'seen': 102400, 'time': 575.8412868976593}
+done 575.8561456203461
