@@ -1,0 +1,243 @@
+\begin{thebibliography}{33}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Aebersold and Mann(2016)]{aebersold2016}
+Ruedi Aebersold and Matthias Mann.
+\newblock Mass-spectrometric exploration of proteome structure and function.
+\newblock \emph{Nature}, 537:\penalty0 347--355, 2016.
+\newblock \doi{10.1038/nature19949}.
+
+\bibitem[Cox and Mann(2008)]{cox2008}
+J{\"u}rgen Cox and Matthias Mann.
+\newblock {MaxQuant} enables high peptide identification rates, individualized
+  p.p.b.-range mass accuracies and proteome-wide protein quantification.
+\newblock \emph{Nature Biotechnology}, 26:\penalty0 1367--1372, 2008.
+\newblock \doi{10.1038/nbt.1511}.
+
+\bibitem[Elias and Gygi(2007)]{elias2007}
+Joshua~E. Elias and Steven~P. Gygi.
+\newblock Target-decoy search strategy for increased confidence in large-scale
+  protein identifications by mass spectrometry.
+\newblock \emph{Nature Methods}, 4:\penalty0 207--214, 2007.
+\newblock \doi{10.1038/nmeth1019}.
+
+\bibitem[Lazar et~al.(2016)Lazar, Gatto, Ferro, Bruley, and Burger]{lazar2016}
+Cosmin Lazar, Laurent Gatto, Myriam Ferro, Christophe Bruley, and Thomas
+  Burger.
+\newblock Accounting for the multiple natures of missing values in label-free
+  quantitative proteomics data sets to compare imputation strategies.
+\newblock \emph{Journal of Proteome Research}, 15:\penalty0 1116--1125, 2016.
+\newblock \doi{10.1021/acs.jproteome.5b00981}.
+
+\bibitem[Mann et~al.(2021)Mann, Kumar, Zeng, and Strauss]{mann2021}
+Matthias Mann, Chanchal Kumar, Wen-Feng Zeng, and Maximilian~T. Strauss.
+\newblock Artificial intelligence for proteomics and biomarker discovery.
+\newblock \emph{Cell Systems}, 12:\penalty0 759--770, 2021.
+\newblock \doi{10.1016/j.cels.2021.06.006}.
+
+\bibitem[Perez-Riverol et~al.(2022)Perez-Riverol, Bai, Bandla,
+  et~al.]{perez2022}
+Yasset Perez-Riverol, Jingwen Bai, Chakradhar Bandla, et~al.
+\newblock The {PRIDE} database resources in 2022: a hub for mass
+  spectrometry-based proteomics evidences.
+\newblock \emph{Nucleic Acids Research}, 50:\penalty0 D543--D552, 2022.
+\newblock \doi{10.1093/nar/gkab1038}.
+
+\bibitem[Wang et~al.(2018)Wang, Wang, Carver, et~al.]{wang2018}
+Mingxun Wang, Jian Wang, Jeremy Carver, et~al.
+\newblock Assembling the community-scale discoverable human proteome.
+\newblock \emph{Cell Systems}, 7:\penalty0 412--421, 2018.
+\newblock \doi{10.1016/j.cels.2018.08.004}.
+
+\bibitem[Vaswani et~al.(2017)Vaswani, Shazeer, Parmar, et~al.]{vaswani2017}
+Ashish Vaswani, Noam Shazeer, Niki Parmar, et~al.
+\newblock Attention is all you need.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~30, pages 5998--6008, 2017.
+
+\bibitem[Yilmaz et~al.(2024)Yilmaz, Fondrie, Bittremieux, et~al.]{yilmaz2024}
+Melih Yilmaz, William~E. Fondrie, Wout Bittremieux, et~al.
+\newblock Sequence-to-sequence translation from mass spectra to peptides with a
+  transformer model.
+\newblock \emph{Nature Communications}, 15:\penalty0 6427, 2024.
+\newblock \doi{10.1038/s41467-024-49731-x}.
+
+\bibitem[Eloff et~al.(2025)Eloff, Kalogeropoulos, Mabona, et~al.]{eloff2025}
+Kevin Eloff, Konstantinos Kalogeropoulos, Amandla Mabona, et~al.
+\newblock {InstaNovo} enables diffusion-powered de novo peptide sequencing in
+  large-scale proteomics experiments.
+\newblock \emph{Nature Machine Intelligence}, 7:\penalty0 565--579, 2025.
+\newblock \doi{10.1038/s42256-025-01019-5}.
+
+\bibitem[Yang et~al.(2024)Yang, Ling, Sun, et~al.]{yang2024}
+Tingpeng Yang, Tianze Ling, Boyan Sun, et~al.
+\newblock Introducing $\pi$-{HelixNovo} for practical large-scale de novo
+  peptide sequencing.
+\newblock \emph{Briefings in Bioinformatics}, 25\penalty0 (2):\penalty0
+  bbae021, 2024.
+\newblock \doi{10.1093/bib/bbae021}.
+
+\bibitem[Lee and Kim(2024)]{lee2024}
+Sangjeong Lee and Hyunwoo Kim.
+\newblock Bidirectional de novo peptide sequencing using a transformer model.
+\newblock \emph{PLoS Computational Biology}, 20:\penalty0 e1011892, 2024.
+\newblock \doi{10.1371/journal.pcbi.1011892}.
+
+\bibitem[Lapin et~al.(2025)Lapin, Nilsson, Wilhelm, and K{\"a}ll]{lapin2025}
+Joel Lapin, Alfred Nilsson, Mathias Wilhelm, and Lukas K{\"a}ll.
+\newblock Pairwise attention: leveraging mass differences to enhance de novo
+  sequencing of mass spectra.
+\newblock \emph{Journal of Proteome Research}, 24:\penalty0 3722--3730, 2025.
+\newblock \doi{10.1021/acs.jproteome.5c00063}.
+
+\bibitem[Ebrahimi and Guo(2023)]{ebrahimi2023}
+Shiva Ebrahimi and Xuan Guo.
+\newblock Transformer-based de novo peptide sequencing for data-independent
+  acquisition mass spectrometry.
+\newblock In \emph{Proceedings of the IEEE International Symposium on
+  Bioinformatics and Bioengineering}, pages 28--35, 2023.
+\newblock \doi{10.1109/bibe60311.2023.00013}.
+
+\bibitem[Tran et~al.(2017)Tran, Zhang, Xin, Shan, and Li]{tran2017}
+Ngoc~Hieu Tran, Xianglilan Zhang, Lei Xin, Baozhen Shan, and Ming Li.
+\newblock De novo peptide sequencing by deep learning.
+\newblock \emph{Proceedings of the National Academy of Sciences USA},
+  114:\penalty0 8247--8252, 2017.
+\newblock \doi{10.1073/pnas.1705691114}.
+
+\bibitem[Qiao et~al.(2021)Qiao, Tran, Xin, et~al.]{qiao2021}
+Rui Qiao, Ngoc~Hieu Tran, Lei Xin, et~al.
+\newblock Computationally instrument-resolution-independent de novo peptide
+  sequencing for high-resolution devices.
+\newblock \emph{Nature Machine Intelligence}, 3:\penalty0 420--425, 2021.
+\newblock \doi{10.1038/s42256-021-00304-3}.
+
+\bibitem[Krull et~al.(2026)Krull, K{\"u}hn, H{\"o}hn, et~al.]{krull2026}
+Karl~K. Krull, Arlene K{\"u}hn, Julia H{\"o}hn, et~al.
+\newblock {ProFormer}: generalizable classification of single-cell and plasma
+  proteomes using deep learning.
+\newblock \emph{Nature Communications}, 17, 2026.
+\newblock \doi{10.1038/s41467-026-78143-2}.
+
+\bibitem[Qiu et~al.(2025)Qiu, Hu, Liu, and Wang]{qiu2025}
+Shizheng Qiu, Yang Hu, Jingjing Liu, and Yadong Wang.
+\newblock Proformer: a multimodal proteomics transformer model for multidisease
+  early risk assessment.
+\newblock \emph{Briefings in Bioinformatics}, 26\penalty0 (6):\penalty0
+  bbaf686, 2025.
+\newblock \doi{10.1093/bib/bbaf686}.
+
+\bibitem[Bittremieux et~al.(2022)Bittremieux, Avtonomov, Arora,
+  et~al.]{bittremieux2022}
+Wout Bittremieux, Dmitry~M. Avtonomov, Jitesh Arora, et~al.
+\newblock Learned embeddings from deep learning to visualize and predict
+  protein sets ({GLEAMS}).
+\newblock \emph{Nature Methods}, 19:\penalty0 675--678, 2022.
+\newblock \doi{10.1038/s41592-022-01496-1}.
+
+\bibitem[Gessulat et~al.(2019)Gessulat, Schmidt, Zolg, et~al.]{gessulat2019}
+Siegfried Gessulat, Tobias Schmidt, Daniel~Paul Zolg, et~al.
+\newblock Prosit: proteome-wide prediction of peptide tandem mass spectra by
+  deep learning.
+\newblock \emph{Nature Methods}, 16:\penalty0 509--518, 2019.
+\newblock \doi{10.1038/s41592-019-0426-7}.
+
+\bibitem[Zeng et~al.(2022)Zeng, Zhou, Willems, et~al.]{zeng2022}
+Wen-Feng Zeng, Xie-Xuan Zhou, Sander Willems, et~al.
+\newblock {AlphaPeptDeep}: a modular deep learning framework to predict peptide
+  properties for proteomics.
+\newblock \emph{Nature Communications}, 13:\penalty0 7238, 2022.
+\newblock \doi{10.1038/s41467-022-34904-3}.
+
+\bibitem[Dai et~al.(2024)Dai, Pfeuffer, Wang, et~al.]{dai2024}
+Chengxin Dai, Julianus Pfeuffer, Hong Wang, et~al.
+\newblock quantms: a cloud-based pipeline for quantitative proteomics enables
+  the reanalysis of public proteomics data.
+\newblock \emph{Nature Methods}, 21:\penalty0 1603--1607, 2024.
+\newblock \doi{10.1038/s41592-024-02343-1}.
+
+\bibitem[Dai et~al.(2021)Dai, F{\"u}llgrabe, Pfeuffer, et~al.]{dai2021}
+Chengxin Dai, Anja F{\"u}llgrabe, Julianus Pfeuffer, et~al.
+\newblock A proteomics sample metadata representation for multiomics
+  integration and big data analysis.
+\newblock \emph{Nature Communications}, 12:\penalty0 5854, 2021.
+\newblock \doi{10.1038/s41467-021-26111-3}.
+
+\bibitem[Gorishniy et~al.(2021)Gorishniy, Rubachev, Khrulkov, and
+  Babenko]{gorishniy2021}
+Yury Gorishniy, Ivan Rubachev, Valentin Khrulkov, and Artem Babenko.
+\newblock Revisiting deep learning models for tabular data.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~34, pages 18932--18943, 2021.
+
+\bibitem[Devlin et~al.(2019)Devlin, Chang, Lee, and Toutanova]{devlin2019}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock {BERT}: pre-training of deep bidirectional transformers for language
+  understanding.
+\newblock In \emph{Proceedings of NAACL-HLT}, pages 4171--4186, 2019.
+
+\bibitem[He et~al.(2022)He, Chen, Xie, Li, Doll{\'a}r, and Girshick]{he2022}
+Kaiming He, Xinlei Chen, Saining Xie, Yanghao Li, Piotr Doll{\'a}r, and Ross
+  Girshick.
+\newblock Masked autoencoders are scalable vision learners.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, pages 16000--16009, 2022.
+
+\bibitem[Dan{\v{c}}{\'\i}k et~al.(1999)Dan{\v{c}}{\'\i}k, Addona, Clauser,
+  Vath, and Pevzner]{dancik1999}
+Vlado Dan{\v{c}}{\'\i}k, Theresa~A. Addona, Karl~R. Clauser, James~E. Vath, and
+  Pavel~A. Pevzner.
+\newblock De novo peptide sequencing via tandem mass spectrometry.
+\newblock \emph{Journal of Computational Biology}, 6:\penalty0 327--342, 1999.
+\newblock \doi{10.1089/106652799318300}.
+
+\bibitem[Ma et~al.(2003)Ma, Zhang, Hendrie, et~al.]{ma2003}
+Bin Ma, Kaizhong Zhang, Christopher Hendrie, et~al.
+\newblock {PEAKS}: powerful software for peptide de novo sequencing by tandem
+  mass spectrometry.
+\newblock \emph{Rapid Communications in Mass Spectrometry}, 17:\penalty0
+  2337--2342, 2003.
+\newblock \doi{10.1002/rcm.1196}.
+
+\bibitem[Shrikumar et~al.(2017)Shrikumar, Greenside, and
+  Kundaje]{shrikumar2017}
+Avanti Shrikumar, Peyton Greenside, and Anshul Kundaje.
+\newblock Learning important features through propagating activation
+  differences.
+\newblock In \emph{Proceedings of the 34th International Conference on Machine
+  Learning}, volume~70, pages 3145--3153, 2017.
+
+\bibitem[van~der Maaten and Hinton(2008)]{maaten2008}
+Laurens van~der Maaten and Geoffrey Hinton.
+\newblock Visualizing data using t-{SNE}.
+\newblock \emph{Journal of Machine Learning Research}, 9:\penalty0 2579--2605,
+  2008.
+
+\bibitem[Paszke et~al.(2019)Paszke, Gross, Massa, et~al.]{paszke2019}
+Adam Paszke, Sam Gross, Francisco Massa, et~al.
+\newblock {PyTorch}: an imperative style, high-performance deep learning
+  library.
+\newblock In \emph{Advances in Neural Information Processing Systems},
+  volume~32, pages 8024--8035, 2019.
+
+\bibitem[Pedregosa et~al.(2011)Pedregosa, Varoquaux, Gramfort,
+  et~al.]{pedregosa2011}
+Fabian Pedregosa, Ga{\"e}l Varoquaux, Alexandre Gramfort, et~al.
+\newblock Scikit-learn: machine learning in {Python}.
+\newblock \emph{Journal of Machine Learning Research}, 12:\penalty0 2825--2830,
+  2011.
+
+\bibitem[Cox et~al.(2011)Cox, Neuhauser, Michalski, Scheltema, Olsen, and
+  Mann]{cox2011}
+J{\"u}rgen Cox, Nadin Neuhauser, Annette Michalski, Richard~A. Scheltema,
+  Jesper~V. Olsen, and Matthias Mann.
+\newblock Andromeda: a peptide search engine integrated into the {MaxQuant}
+  environment.
+\newblock \emph{Journal of Proteome Research}, 10:\penalty0 1794--1805, 2011.
+\newblock \doi{10.1021/pr101065j}.
+
+\end{thebibliography}
