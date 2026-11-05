@@ -168,6 +168,31 @@ def fig_cma_plate():
     fig.savefig(f'{OUT}/fig_cma_currents.pdf'); plt.close(fig)
 
 
+def fig_aperture():
+    import glob
+    fig, ax = plt.subplots(1, 2, figsize=(7.0, 2.6))
+    for fn, ls in zip(sorted(glob.glob('results/aperture_coupling_eps*.json')), ('r-o', 'b--s', 'g:^')):
+        c = json.load(open(fn)); sw = c['sweep']
+        Ls = sorted(float(k) for k in sw if k not in ('0', 'cont')); y = [sw[f'{L:.1f}'] for L in Ls]
+        ax[0].plot(Ls, 20 * np.log10(np.array(y) / sw['0']), ls, ms=4, label=f'$\\varepsilon_{{eff}}$ = {c["eps_eff"]:.2f}')
+        if 'cont' in sw:
+            ax[0].axhline(20 * np.log10(sw['cont'] / sw['0']), color=ls[0], lw=0.6, ls=':')
+    ax[0].axhline(0, color='k', lw=0.5); ax[0].set_xlabel('slit length $L_d$ (mm)'); ax[0].set_ylabel('$|y_{12}|$ change (dB)')
+    ax[0].legend(); ax[0].grid(alpha=.3); ax[0].set_title('(a) sub-array mutual admittance, 28 GHz', fontsize=8)
+    fn = sorted(glob.glob('results/aperture_cma_eps*.npz'))
+    if fn:
+        d = np.load(fn[-1]); fr = d['freqs'] / 1e9
+        from siwlab.mom import modal_significance
+        for n in range(d['lam'].shape[1]):
+            sf = d['slitfrac'][np.argmin(abs(fr - 28)), n]
+            ax[1].plot(fr, modal_significance(d['lam'][:, n]), color=plt.cm.coolwarm(sf), lw=1.0 + 1.5 * sf)
+        sm = plt.cm.ScalarMappable(cmap='coolwarm', norm=plt.Normalize(0, 1)); sm.set_array([])
+        fig.colorbar(sm, ax=ax[1], label='slit current fraction at 28 GHz')
+        ax[1].set_xlabel('frequency (GHz)'); ax[1].set_ylabel('modal significance'); ax[1].set_ylim(0, 1.05); ax[1].grid(alpha=.3)
+        ax[1].axvline(28, color='k', lw=0.5, ls=':'); ax[1].set_title(f'(b) aperture-system modes, $L_d$ = {float(d["Ld"]):.1f} mm', fontsize=8)
+    fig.savefig(f'{OUT}/fig_aperture.pdf'); plt.close(fig)
+
+
 def fig_sparams(tags):
     fig, ax = plt.subplots(1, 2, figsize=(7.0, 2.6))
     for tag, lab, ls in tags:
@@ -220,7 +245,7 @@ def fig_radiation(tags):
 if __name__ == '__main__':
     cal = json.load(open('results/cma_calibration.json')) if os.path.exists('results/cma_calibration.json') else None
     Ls = cal['slit_L_28GHz'] if cal else 4.0
-    for fn, args in ((fig_geometry, (Ls,)), (fig_validation, ()), (fig_slot, ()), (fig_cma_cal, ()), (fig_cma_plate, ()),
+    for fn, args in ((fig_geometry, (Ls,)), (fig_validation, ()), (fig_slot, ()), (fig_cma_cal, ()), (fig_cma_plate, ()), (fig_aperture, ()),
                      (fig_sparams, ([('nodecouple', 'without slits', 'k--'), ('decoupled', 'with CM-guided slits', 'r-')],)),
                      (fig_radiation, ([('nodecouple', 'without slits', 'k--'), ('decoupled', 'with slits', 'r-')],))):
         try:

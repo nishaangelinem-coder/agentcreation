@@ -16,9 +16,13 @@ slots = [tuple(s) for s in des['slots']]
 lamg = des['lamg_mm']
 slits = []
 if Ls > 0:
-    for n in range(n_slits):
-        yc = -des['first_offset_mm'] - n * des['spacing_mm']
+    if n_slits == 1:   # single continuous slit centred on the slot section
+        yc = -des['first_offset_mm'] - (des['N'] - 1) * des['spacing_mm'] / 2
         slits.append((0.0, yc, Ls, w_slit))
+    else:
+        for n in range(n_slits):
+            yc = -des['first_offset_mm'] - n * des['spacing_mm']
+            slits.append((0.0, yc, Ls, w_slit))
 xc = [-D / 2, D / 2]
 reference = (tag == 'reference')
 lay = Layout(xc=xc, y_short=None if reference else 0.0, slots=[[], []] if reference else [slots, slots],
