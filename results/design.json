@@ -2,7 +2,7 @@
  "g_sum": 1.0810619042578442,
  "a_eff_fdtd_mm": 5.276444314157959,
  "lamg_mm": 9.908842644753651,
- "L_res_mm": 3.9,
+ "L_res_mm": 3.8,
  "K": 17.247257780807733,
  "N": 5,
  "g": [
@@ -23,46 +23,46 @@
   [
    -2.5,
    0.2,
-   3.9,
+   3.8,
    0.4
   ],
   [
    -7.5,
    -0.2,
-   3.9,
+   3.8,
    0.4
   ],
   [
    -12.5,
    0.2,
-   3.9,
+   3.8,
    0.4
   ],
   [
    -17.5,
    -0.2,
-   3.9,
+   3.8,
    0.4
   ],
   [
    -22.5,
    0.2,
-   3.9,
+   3.8,
    0.4
   ]
  ],
  "fit": {
   "L": [
-   4.5,
+   4.6,
    5.0,
-   5.5,
+   5.6,
    6.0,
-   4.5,
-   4.5,
-   3.7,
-   3.9,
-   4.1,
-   3.9
+   4.6,
+   4.6,
+   3.8,
+   4.0,
+   4.2,
+   4.0
   ],
   "f_res": [
    27937952769.162266,
@@ -101,7 +101,5 @@
    0.3
   ]
  },
- "spacing_mm": 5.0,
- "first_offset_mm": 2.5,
- "note": "slot length shortened from 4.0 to 3.9 mm after the first array run (band centred at 27.5 GHz)"
+ "note": "slot length 3.8 mm (on-grid): the first array run with L_s = 4.0 mm had its band centred at 27.5 GHz (array mutual coupling lowers the slot resonance by ~0.9 GHz w.r.t. the isolated slot), so the next shorter on-grid length is used"
 }

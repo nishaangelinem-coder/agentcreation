@@ -31,7 +31,7 @@ def first_mode_lambda(m, f, eps_below):
 def resonance(m, eps_below, f_lo=14e9, f_hi=40e9):
     """First +/- sign change of the dominant eigenvalue on a coarse scan, refined by brentq."""
     g = lambda f: first_mode_lambda(m, f, eps_below)
-    fs = np.arange(f_lo, f_hi + 1, 1e9)
+    fs = np.arange(f_lo, f_hi + 1, 2e9)
     v = [g(f) for f in fs]
     for i in range(len(fs) - 1):
         if v[i] * v[i + 1] < 0:

@@ -38,23 +38,26 @@ M['aeffFD'] = f"{des['a_eff_fdtd_mm']:.2f}"
 M['aeffDiff'] = f"{(1 - des['a_eff_fdtd_mm'] / prm.a_eff) * 100:.1f}"
 M['lamg'] = f"{des['lamg_mm']:.2f}"
 M['STLtl'] = f"{tl['S21_dB'][i28]:.2f}"
+fit = des['fit']
 M['Kfit'] = f"{des['K']:.1f}"
 M['Lres'] = f"{des['L_res_mm']:.1f}"
-fit = des['fit']
+Lr = np.array(fit['L']); fr_ = np.array(fit['f_res']); xr_ = np.array(fit['xo'])
+m_ = xr_ == 0.2; p_, q_ = np.polyfit(Lr[m_], 1.0 / fr_[m_], 1); M['LresIso'] = f"{(1 / 28e9 - q_) / p_:.2f}"
 g02 = [g for L, x, g, fr in zip(fit['L'], fit['xo'], fit['g_res'], fit['f_res']) if x == 0.2 and abs(fr - 28e9) < 1e9]
 M['gslot'] = f"{np.mean(g02):.2f}"
 M['gsum'] = f"{des['g_sum']:.2f}"
 M['SSum'] = f"{abs((1 - des['g_sum']) / (1 + des['g_sum'])):.2f}"
 M['fAir'] = f"{cal['f_air'] / 1e9:.1f}"
 M['epsEff'] = f"{cal['eps_eff']:.2f}"
-M['Ld'] = f"{cal['slit_L_28GHz']:.1f}"
-Ld = round(cal['slit_L_28GHz'], 1)
+M['Ld'] = f"{cal['slit_L_28GHz']:.2f}"
+Ld = 2 * round(cal['slit_L_28GHz'] / 2, 1)   # implemented on the 0.2 mm length grid
+M['Lduse'] = f"{Ld:.1f}"
 # arrays
 ref = np.load('results/array_nodecouple_post.npz'); dec = np.load('results/array_decoupled_post.npz')
 fa = ref['f']; j28 = np.argmin(abs(fa - 28e9))
 lo_r, hi_r = band(fa, ref['S11']); lo_d, hi_d = band(fa, dec['S11'])
 M['BWref'] = f"{lo_r:.2f}--{hi_r:.2f}"; M['BWrefRel'] = f"{(hi_r - lo_r) / 28 * 100:.1f}"
-M['BWdec'] = f"{lo_d:.2f}--{hi_d:.2f}"; M['BWdecRel'] = f"{(hi_d - lo_d) / 28 * 100:.1f}"
+M['BWdec'] = f"{lo_d:.2f}--{hi_d:.2f}"; M['fcDec'] = f"{0.5 * (lo_d + hi_d):.1f}"; M['BWdecRel'] = f"{(hi_d - lo_d) / 28 * 100:.1f}"
 inb_r = (fa >= lo_r * 1e9) & (fa <= hi_r * 1e9); inb_d = (fa >= lo_d * 1e9) & (fa <= hi_d * 1e9)
 M['IsoRefTwentyEight'] = f"{db(ref['S21'])[j28]:.1f}"; M['IsoDecTwentyEight'] = f"{db(dec['S21'])[j28]:.1f}"
 M['IsoRefMin'] = f"{db(ref['S21'])[inb_r].max():.1f}"; M['IsoDecMin'] = f"{db(dec['S21'])[inb_d].max():.1f}"
