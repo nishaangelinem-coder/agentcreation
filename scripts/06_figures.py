@@ -133,12 +133,19 @@ def fig_cma_cal():
     fig.savefig(f'{OUT}/fig_cma_cal.pdf'); plt.close(fig)
 
 
+def norm_gci(data):
+    """Area-normalised gap-crossing index: mean |Jx| in the channel / mean |J| on the plate."""
+    cen = data['cen']; area = data['area']; D_ = float(data['D'])
+    gap = np.abs(cen[:, 0]) < (D_ / 2 - 2.8 - 0.2) * 1e-3
+    return data['gci'] * area.sum() / area[gap].sum()
+
+
 def fig_cma_plate():
     r = np.load('results/cma_ref.npz'); s = np.load('results/cma_slits.npz')
     fig, ax = plt.subplots(1, 2, figsize=(7.0, 2.6))
     from siwlab.mom import modal_significance
     for data, a, ttl in ((r, ax[0], '(a) without slits'), (s, ax[1], '(b) with slits')):
-        fr = data['freqs'] / 1e9; lam = data['lam']; gci = data['gci']
+        fr = data['freqs'] / 1e9; lam = data['lam']; gci = norm_gci(data)
         order = np.argsort(-gci[np.argmin(abs(fr - 28))])[:6]
         for n in order:
             a.plot(fr, modal_significance(lam[:, n]), label=f'mode {n+1} (GCI {gci[np.argmin(abs(fr-28)), n]:.2f})')
@@ -148,14 +155,14 @@ def fig_cma_plate():
     # current maps of the strongest gap-crossing mode at 28 GHz
     fig, ax = plt.subplots(1, 2, figsize=(5.0, 4.2))
     for data, a, ttl in ((r, ax[0], '(a) without slits'), (s, ax[1], '(b) with slits')):
-        fr = data['freqs'] / 1e9; i28 = np.argmin(abs(fr - 28)); n = int(np.argmax(data['gci'][i28]))
+        fr = data['freqs'] / 1e9; i28 = np.argmin(abs(fr - 28)); gci = norm_gci(data); n = int(np.argmax(gci[i28]))
         J = data['J28'][n]; Jm = np.linalg.norm(J, axis=1); Jm /= Jm.max()
         nodes = data['nodes'] * 1e3; tris = data['tris']
         tp = a.tripcolor(nodes[:, 0], nodes[:, 1], tris, facecolors=Jm, cmap='inferno', vmin=0, vmax=1)
         cen = data['cen'] * 1e3; k = np.arange(0, len(cen), 6)
         a.quiver(cen[k, 0], cen[k, 1], J[k, 0].real, J[k, 1].real, color='c', scale=np.abs(J).max() * 25, width=0.004)
         a.set_aspect('equal'); a.set_xlabel('x (mm)'); a.set_ylabel('y (mm)')
-        a.set_title(f'{ttl}\nmode {n+1}, $\\lambda_n$ = {data["lam"][i28, n]:.2f}, GCI = {data["gci"][i28, n]:.2f}', fontsize=7)
+        a.set_title(f'{ttl}\nmode {n+1}, $\\lambda_n$ = {data["lam"][i28, n]:.2f}, GCI = {gci[i28, n]:.2f}', fontsize=7)
     fig.colorbar(tp, ax=ax, shrink=0.6, label='|J| (normalised)')
     fig.savefig(f'{OUT}/fig_cma_currents.pdf'); plt.close(fig)
 

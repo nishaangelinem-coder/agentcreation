@@ -92,10 +92,14 @@ M['CondLoss'] = f"{ac:.2f}"
 try:
     r = np.load('results/cma_ref.npz'); s = np.load('results/cma_slits.npz')
     from siwlab.mom import modal_significance
-    ir = np.argmin(abs(r['freqs'] - 28e9)); n = int(np.argmax(r['gci'][ir]))
-    M['MSref'] = f"{modal_significance(r['lam'][ir, n]):.2f}"; M['GCIref'] = f"{r['gci'][ir, n]:.2f}"
+    def norm_gci(data):
+        cen = data['cen']; area = data['area']; gap = np.abs(cen[:, 0]) < (float(data['D']) / 2 - 2.8 - 0.2) * 1e-3
+        return data['gci'] * area.sum() / area[gap].sum()
+    gr_, gs_ = norm_gci(r), norm_gci(s)
+    ir = np.argmin(abs(r['freqs'] - 28e9)); n = int(np.argmax(gr_[ir]))
+    M['MSref'] = f"{modal_significance(r['lam'][ir, n]):.2f}"; M['GCIref'] = f"{gr_[ir, n]:.2f}"
     isd = np.argmin(abs(s['freqs'] - 28e9)); sig = modal_significance(s['lam'][isd]) > 0.5
-    M['GCIslit'] = f"{s['gci'][isd][sig].max() if sig.any() else s['gci'][isd].max():.2f}"
+    M['GCIslit'] = f"{gs_[isd][sig].max() if sig.any() else gs_[isd].max():.2f}"
     M['platesize'] = f"{2 * float(r['px']):.1f}~mm$\\times$~{float(r['y1']) - float(r['y0']):.0f}~mm"
 except Exception as e:
     print('CMA plate data missing:', e)
