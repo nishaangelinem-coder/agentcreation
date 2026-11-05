@@ -1,0 +1,7 @@
+slot L=4.0 mm: free-space CM resonance 29.34 GHz -> eps_eff = 1.098  (153s)
+  check: with eps_eff the slot mode resonates at 25.73 GHz
+slit L=3.4 mm (w=0.3): CM resonance nan GHz   (394s)
+slit L=3.7 mm (w=0.3): CM resonance 25.93 GHz   (488s)
+slit L=4.0 mm (w=0.3): CM resonance nan GHz   (606s)
+slit L=4.3 mm (w=0.3): CM resonance 25.84 GHz   (717s)
+==> slit length for 28 GHz characteristic resonance: nan mm

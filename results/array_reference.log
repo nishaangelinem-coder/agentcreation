@@ -1,0 +1,8 @@
+grid 216 x 407 x 51 = 4.48 Mcells, dt = 0.1885 ps, aperture nodes: 0 Ex, 0 Ey
+  step 0/19093  t=0.000 ns  max|Ez|=5.497e-11
+  step 4000/19093  t=0.754 ns  max|Ez|=4.479e-01
+  step 8000/19093  t=1.509 ns  max|Ez|=1.273e-01
+  step 12000/19093  t=2.263 ns  max|Ez|=4.358e-02
+  step 16000/19093  t=3.017 ns  max|Ez|=7.597e-02
+19093 steps in 1003 s
+reference run saved

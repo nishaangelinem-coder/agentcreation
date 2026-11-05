@@ -1,0 +1,17 @@
+grid 146 x 309 x 51 = 2.30 Mcells, dt = 0.1885 ps, aperture nodes: 144 Ex, 180 Ey
+  step 0/13789  t=0.000 ns  max|Ez|=5.497e-11
+  step 5000/13789  t=0.943 ns  max|Ez|=2.292e-01
+  step 10000/13789  t=1.886 ns  max|Ez|=8.929e-02
+L=3.6 xo=0.9: 140 s; at 28 GHz y = 0.044+0.581j; b=0 at 32.95 GHz, g_res=1.583
+grid 146 x 309 x 51 = 2.30 Mcells, dt = 0.1885 ps, aperture nodes: 156 Ex, 195 Ey
+  step 0/13789  t=0.000 ns  max|Ez|=5.497e-11
+  step 5000/13789  t=0.943 ns  max|Ez|=2.203e-01
+  step 10000/13789  t=1.886 ns  max|Ez|=9.301e-02
+L=3.9 xo=0.9: 147 s; at 28 GHz y = 0.077+0.752j; b=0 at 32.05 GHz, g_res=1.716
+grid 146 x 309 x 51 = 2.30 Mcells, dt = 0.1885 ps, aperture nodes: 168 Ex, 210 Ey
+  step 0/13789  t=0.000 ns  max|Ez|=5.497e-11
+  step 5000/13789  t=0.943 ns  max|Ez|=1.975e-01
+  step 10000/13789  t=1.886 ns  max|Ez|=9.709e-02
+L=4.2 xo=0.9: 629 s; at 28 GHz y = 0.135+0.960j; b=0 at 31.25 GHz, g_res=1.880
+grid 146 x 309 x 51 = 2.30 Mcells, dt = 0.1885 ps, aperture nodes: 180 Ex, 225 Ey
+  step 0/13789  t=0.000 ns  max|Ez|=5.497e-11
