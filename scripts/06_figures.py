@@ -142,15 +142,16 @@ def norm_gci(data):
 
 def fig_cma_plate():
     r = np.load('results/cma_ref.npz'); s = np.load('results/cma_slits.npz')
-    fig, ax = plt.subplots(1, 2, figsize=(7.0, 2.6))
-    from siwlab.mom import modal_significance
+    fig, ax = plt.subplots(1, 2, figsize=(7.0, 2.6), sharey=True)
     for data, a, ttl in ((r, ax[0], '(a) without slits'), (s, ax[1], '(b) with slits')):
-        fr = data['freqs'] / 1e9; lam = data['lam']; gci = norm_gci(data)
-        order = np.argsort(-gci[np.argmin(abs(fr - 28))])[:6]
-        for n in order:
-            a.plot(fr, modal_significance(lam[:, n]), label=f'mode {n+1} (GCI {gci[np.argmin(abs(fr-28)), n]:.2f})')
-        a.set_xlabel('frequency (GHz)'); a.set_ylabel('modal significance'); a.set_ylim(0, 1.05); a.grid(alpha=.3)
-        a.axvline(28, color='k', lw=0.5, ls=':'); a.legend(fontsize=6); a.set_title(ttl, fontsize=8)
+        fr = data['freqs'] / 1e9; gci = norm_gci(data)
+        for n in range(gci.shape[1]):
+            a.plot(fr, gci[:, n], color='0.6', lw=0.7)
+        a.plot(fr, gci.max(axis=1), 'r-', lw=1.6, label='maximum over the 10 modes')
+        a.plot(fr, gci.mean(axis=1), 'b--', lw=1.2, label='mean over the 10 modes')
+        a.set_xlabel('frequency (GHz)'); a.grid(alpha=.3); a.axvline(28, color='k', lw=0.5, ls=':')
+        a.set_title(ttl, fontsize=8); a.legend(fontsize=6)
+    ax[0].set_ylabel('gap-crossing index')
     fig.savefig(f'{OUT}/fig_cma_ms.pdf'); plt.close(fig)
     # current maps of the strongest gap-crossing mode at 28 GHz
     fig, ax = plt.subplots(1, 2, figsize=(5.0, 4.2))

@@ -52,7 +52,7 @@ print(f"grid-snapped offsets = {xo_snap}, g_n = {np.round(g_snap, 3)}, sum = {g_
       f"|S11| at resonance ~ {abs((1 - g_snap.sum()) / (1 + g_snap.sum())):.3f}")
 slots = [(yc, np.sign(x) * xs, L, w) for (yc, x, L, w), xs in zip(slots, xo_snap)]
 xo = xo_snap
-des = dict(g_sum=float(g_snap.sum()), a_eff_fdtd_mm=float(a_eff_fd * 1e3), lamg_mm=float(lamg), L_res_mm=float(L28), K=float(K),
+des = dict(spacing_mm=5.0, first_offset_mm=2.5, g_sum=float(g_snap.sum()), a_eff_fdtd_mm=float(a_eff_fd * 1e3), lamg_mm=float(lamg), L_res_mm=float(L28), K=float(K),
            N=N, g=list(map(float, g)), xo_mm=list(map(float, xo)),
            slots=[(float(yc), float(x), float(L), 0.4) for (yc, x, L, _) in slots],
            fit=dict(L=list(map(float, Lr)), f_res=list(map(float, fr)), g_res=list(map(float, gr)), xo=list(map(float, xr))))

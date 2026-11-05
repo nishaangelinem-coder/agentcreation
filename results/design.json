@@ -101,5 +101,7 @@
    0.3
   ]
  },
- "note": "slot length 3.8 mm (on-grid): the first array run with L_s = 4.0 mm had its band centred at 27.5 GHz (array mutual coupling lowers the slot resonance by ~0.9 GHz w.r.t. the isolated slot), so the next shorter on-grid length is used"
+ "note": "slot length 3.8 mm (on-grid): the first array run with L_s = 4.0 mm had its band centred at 27.5 GHz (array mutual coupling lowers the slot resonance by ~0.9 GHz w.r.t. the isolated slot), so the next shorter on-grid length is used",
+ "spacing_mm": 5.0,
+ "first_offset_mm": 2.5
 }
