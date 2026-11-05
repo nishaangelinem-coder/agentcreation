@@ -1,2 +1,9 @@
 slot aperture mesh: 336 triangles, 458 edges
 slot L=4.12 mm in air/air: aperture-mode resonance 33.28 GHz (90s)
+==> effective permittivity of the lower half-space: eps_eff = 1.878  (1407s)
+slit L=3.4 mm: aperture-mode resonance 33.14 GHz (1607s)
+slit L=3.7 mm: aperture-mode resonance 30.65 GHz (1677s)
+slit L=4.0 mm: aperture-mode resonance 28.35 GHz (1770s)
+slit L=4.3 mm: aperture-mode resonance 26.38 GHz (1893s)
+slit L=4.6 mm: aperture-mode resonance 23.71 GHz (2008s)
+==> slit length for a 28 GHz aperture-mode resonance: L_d = 3.957 mm

@@ -1,15 +1,23 @@
-"""Dual-port 2 x (1x4) SIW slot array: FDTD S-parameters, far field, ECC.
-usage: python 05_array_fdtd.py <tag> <D_mm> <slit_L_mm or 0> [n_slits] [slit_w] [T_ns]"""
+"""Dual-port 2 x (1x5) SIW slot array: FDTD S-parameters, far field, ECC.
+usage: python 05_array_fdtd.py <tag> [key=value ...]
+  D=7.0      SIW centre spacing (mm)
+  Ls=0       parasitic slit/slot length in the channel (0 = none)
+  n=5        number of slits (1 = single slit centred on the slot section)
+  w=0.3      slit width (mm)
+  xoff=0     slit x offset from the channel centre (mm)
+  bar=0      width of transverse end bars (dumbbell slit)
+  cav=0      1 -> PEC walls across the channel at the slot pitch (parasitic cavities)
+  T=3.6      simulated time (ns)"""
 import sys, time, json, numpy as np
 sys.path.insert(0, '.')
 from siwlab.geometry import Layout, SIWParams, build
 from siwlab.fdtd import gaussian_modulated, spectrum, aperture_farfield, radiation_intensity, hemisphere_integral
 from siwlab.constants import eta0
 
-tag = sys.argv[1]; D = float(sys.argv[2]); Ls = float(sys.argv[3])
-n_slits = int(sys.argv[4]) if len(sys.argv) > 4 else 5
-w_slit = float(sys.argv[5]) if len(sys.argv) > 5 else 0.3
-T = float(sys.argv[6]) * 1e-9 if len(sys.argv) > 6 else 3.6e-9
+tag = sys.argv[1]
+kv = dict(a.split('=') for a in sys.argv[2:])
+D = float(kv.get('D', 7.0)); Ls = float(kv.get('Ls', 0)); n_slits = int(kv.get('n', 5)); w_slit = float(kv.get('w', 0.3))
+xoff = float(kv.get('xoff', 0)); bar = float(kv.get('bar', 0)); cav = int(kv.get('cav', 0)); T = float(kv.get('T', 3.6)) * 1e-9
 prm = SIWParams()
 des = json.load(open('results/design.json'))
 slots = [tuple(s) for s in des['slots']]
@@ -18,15 +26,23 @@ slits = []
 if Ls > 0:
     if n_slits == 1:   # single continuous slit centred on the slot section
         yc = -des['first_offset_mm'] - (des['N'] - 1) * des['spacing_mm'] / 2
-        slits.append((0.0, yc, Ls, w_slit))
+        slits.append((xoff, yc, Ls, w_slit))
     else:
         for n in range(n_slits):
             yc = -des['first_offset_mm'] - n * des['spacing_mm']
-            slits.append((0.0, yc, Ls, w_slit))
+            slits.append((xoff, yc, Ls, w_slit))
+            if bar > 0:   # end bars of length 0.2 mm (y) and width `bar` (x) at both slit ends
+                slits.append((xoff, yc - Ls / 2 + 0.1, 0.2, bar)); slits.append((xoff, yc + Ls / 2 - 0.1, 0.2, bar))
 xc = [-D / 2, D / 2]
+walls = []
+if cav:   # parasitic cavities between the inner via rows, one per slot period
+    wp = D - prm.a
+    for n in range(des['N'] + 1):
+        walls.append((-n * des['spacing_mm'], -wp / 2 + prm.d / 2, wp / 2 - prm.d / 2))
 reference = (tag == 'reference')
 lay = Layout(xc=xc, y_short=None if reference else 0.0, slots=[[], []] if reference else [slots, slots],
-             slits=[] if reference else slits, y_fine=(-25.5, 1.0), y_src=-31.0, y_probe1=-27.0, y_min=-36.0)
+             slits=[] if reference else slits, walls_y=[] if reference else walls,
+             y_fine=(-25.5, 1.0), y_src=-31.0, y_probe1=-27.0, y_min=-36.0)
 sim, ports, dft_nodes, apg = build(lay, prm)
 src = gaussian_modulated(28e9, 6e9)
 nsteps = int(T / sim.dt)
@@ -39,7 +55,7 @@ V1 = spectrum(out['rec']['P1']['V'], sim.dt, f); I1 = spectrum(out['rec']['P1'][
 V2 = spectrum(out['rec']['P2']['V'], sim.dt, f)
 np.savez(f'results/array_{tag}.npz', f=f, V1=V1, I1=I1, V2=V2, dft_f=dft_f, accEx=out['accEx'], accEy=out['accEy'],
          ex_xy=np.array(apg['ex_xy']), ex_dS=apg['ex_dS'], ey_xy=np.array(apg['ey_xy']), ey_dS=apg['ey_dS'],
-         norm=ports[0]['norm'], D=D, Ls=Ls, n_slits=n_slits, w_slit=w_slit, slots=np.array(slots))
+         norm=ports[0]['norm'], D=D, Ls=Ls, n_slits=n_slits, w_slit=w_slit, bar=bar, xoff=xoff, cav=cav, slots=np.array(slots))
 if reference:
     print("reference run saved"); sys.exit()
 ref = np.load('results/array_reference.npz')

@@ -16,7 +16,7 @@ MM = 1e-3
 des = json.load(open('results/design.json'))
 cal = json.load(open('results/cma_calibration.json'))
 eps_eff = float(sys.argv[1]) if len(sys.argv) > 1 else cal['eps_eff']
-D = 7.0; w_slit = 0.3; hmax = 0.2 * MM
+D = float(sys.argv[2]) if len(sys.argv) > 2 else 7.0; w_slit = 0.3; hmax = 0.2 * MM
 
 
 def aperture_system(Ld, n_slits=5):
@@ -87,7 +87,7 @@ m, eg = aperture_system(24.0, 1)
 Y = aperture_admittance_matrix(m, f0, (1.0, eps_eff)); c, _ = coupling_metric(Y, eg)
 out['sweep']['cont'] = c
 print(f"continuous slit: |y12/y11| = {c:.4f} ({20*np.log10(c/c0_):+.1f} dB)")
-json.dump(out, open(f'results/aperture_coupling_eps{eps_eff:.2f}.json', 'w'), indent=1)
+json.dump(out, open(f'results/aperture_coupling_D{D:.1f}_eps{eps_eff:.2f}.json', 'w'), indent=1)
 # characteristic modes of the aperture system versus frequency for the best slit length
 best = min((k for k in out['sweep'] if k not in ('0', 'cont')), key=lambda k: out['sweep'][k])
 Ld = float(best)
@@ -109,5 +109,5 @@ for fi, f in enumerate(freqs):
         even[fi, n] = min(p1, p2) / max(p1, p2, 1e-30)
         lam_tr[fi, n] = lam[n]
     print(f"f={f/1e9:.0f} GHz MS={np.round(modal_significance(lam), 2)} slitfrac={np.round(slitfrac[fi], 2)} ({time.time()-t0:.0f}s)", flush=True)
-np.savez(f'results/aperture_cma_eps{eps_eff:.2f}.npz', freqs=freqs, lam=lam_tr, slitfrac=slitfrac, even=even, Ld=Ld, eps_eff=eps_eff)
+np.savez(f'results/aperture_cma_D{D:.1f}_eps{eps_eff:.2f}.npz', freqs=freqs, lam=lam_tr, slitfrac=slitfrac, even=even, Ld=Ld, eps_eff=eps_eff)
 print('saved')

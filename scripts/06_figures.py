@@ -171,7 +171,7 @@ def fig_cma_plate():
 def fig_aperture():
     import glob
     fig, ax = plt.subplots(1, 2, figsize=(7.0, 2.6))
-    for fn, ls in zip(sorted(glob.glob('results/aperture_coupling_eps*.json')), ('r-o', 'b--s', 'g:^')):
+    for fn, ls in zip(sorted(glob.glob('results/aperture_coupling_D7.0_eps*.json')), ('r-o', 'b--s', 'g:^')):
         c = json.load(open(fn)); sw = c['sweep']
         Ls = sorted(float(k) for k in sw if k not in ('0', 'cont')); y = [sw[f'{L:.1f}'] for L in Ls]
         ax[0].plot(Ls, 20 * np.log10(np.array(y) / sw['0']), ls, ms=4, label=f'$\\varepsilon_{{eff}}$ = {c["eps_eff"]:.2f}')
@@ -179,7 +179,7 @@ def fig_aperture():
             ax[0].axhline(20 * np.log10(sw['cont'] / sw['0']), color=ls[0], lw=0.6, ls=':')
     ax[0].axhline(0, color='k', lw=0.5); ax[0].set_xlabel('slit length $L_d$ (mm)'); ax[0].set_ylabel('$|y_{12}|$ change (dB)')
     ax[0].legend(); ax[0].grid(alpha=.3); ax[0].set_title('(a) sub-array mutual admittance, 28 GHz', fontsize=8)
-    fn = sorted(glob.glob('results/aperture_cma_eps*.npz'))
+    fn = sorted(glob.glob('results/aperture_cma_D7.0_eps*.npz'))
     if fn:
         d = np.load(fn[-1]); fr = d['freqs'] / 1e9
         from siwlab.mom import modal_significance

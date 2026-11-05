@@ -35,6 +35,7 @@ class Layout:
     y_short: float = None        # y of shorting wall (None = through line into +y PML)
     slots: list = field(default_factory=list)
     slits: list = field(default_factory=list)
+    walls_y: list = field(default_factory=list)   # extra PEC walls across the substrate: (y, x0, x1) in mm
     y_src: float = -26.0
     y_probe1: float = -22.0
     y_probe2: float = 10.0       # used for through-line / single slot characterisation
@@ -99,6 +100,8 @@ def build(lay: Layout, prm: SIWParams, verbose=True):
         if lay.y_short is not None:
             j = sim.idx('y', lay.y_short * MM)
             sim.add_pec_wall_y(j, (xc - prm.a / 2) * MM, (xc + prm.a / 2) * MM, 0, kh)
+    for (yw, x0, x1) in lay.walls_y:
+        sim.add_pec_wall_y(sim.idx('y', yw * MM), x0 * MM, x1 * MM, 0, kh)
     ports = []
     for n, xc in enumerate(lay.xc):
         jsrc = sim.idx('y', lay.y_src * MM); jpr = sim.idx('y', lay.y_probe1 * MM)
