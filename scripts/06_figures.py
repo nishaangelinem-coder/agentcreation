@@ -182,7 +182,7 @@ def fig_aperture():
         c = json.load(open(fn)); sw = c['sweep']; Dv = fn.split('_D')[1].split('_')[0]
         Ls = sorted(float(k) for k in sw if k not in ('0', 'cont')); y = [sw[f'{L:.1f}'] for L in Ls]
         ax[0].plot(Ls, 20 * np.log10(np.array(y) / sw['0']), ls, ms=4, label=f'$D$ = {Dv} mm, $\\varepsilon_{{eff}}$ = {c["eps_eff"]:.2f}')
-    ax[0].axhline(0, color='k', lw=0.5); ax[0].set_xlabel('slit length $L_d$ (mm)'); ax[0].set_ylabel('$|y_{12}|$ change (dB)')
+    ax[0].axhline(0, color='k', lw=0.5); ax[0].set_ylim(-25, 6); ax[0].set_xlabel('parasitic slot length $L_d$ (mm)'); ax[0].set_ylabel('$|y_{12}|$ change (dB)')
     ax[0].legend(); ax[0].grid(alpha=.3); ax[0].set_title('(a) sub-array mutual admittance, 28 GHz', fontsize=8)
     fn = sorted(glob.glob('results/aperture_cma_D7.0_eps*.npz'))
     if fn:
@@ -237,13 +237,13 @@ def fig_radiation(tags):
             idx = np.argmin(abs(((np.pi - ph)[None, :] - ph[:, None] + np.pi) % (2 * np.pi) - np.pi), axis=1)
             E2th = Eth[:, idx]; E2ph = -Eph[:, idx]
             ec.append(ecc(Eth, Eph, E2th, E2ph, TH))
-        ax[2].plot(fd, Gmax, ls, label=lab + ' (realised gain)')
+        ax[2].plot(fd, Gmax, ls, label=lab)
         ax2 = ax[2].twinx() if tag == tags[0][0] else ax2
-        ax2.semilogy(fd, ec, ls=('--' if '--' in ls else '-'), marker='o', ms=3, color='g', label=lab + ' (ECC)')
+        ax2.semilogy(fd, ec, ls=('--' if '--' in ls else '-'), marker='o', ms=3, color='g')
     for a, t in zip(ax[:2], ('(a) y-z plane, 28 GHz', '(b) x-z plane, 28 GHz')):
         a.set_xlabel(r'$\theta$ (deg)'); a.set_ylabel('gain (dBi)'); a.set_ylim(-20, 15); a.grid(alpha=.3); a.legend(); a.set_title(t, fontsize=8)
     ax[2].set_xlabel('frequency (GHz)'); ax[2].set_ylabel('realised gain (dBi)'); ax2.set_ylabel('ECC', color='g'); ax[2].grid(alpha=.3)
-    ax[2].legend(loc='lower left', fontsize=6); ax[2].set_title('(c) gain and ECC', fontsize=8)
+    ax[2].legend(loc='lower center', fontsize=6); ax[2].set_title('(c) realised gain (left) and ECC (green, right)', fontsize=8)
     fig.savefig(f'{OUT}/fig_radiation.pdf'); plt.close(fig)
 
 

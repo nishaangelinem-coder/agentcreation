@@ -125,8 +125,8 @@ def describe(p):
     n = int(p['n_slits']) if 'n_slits' in p.files else 5
     if L == 0:
         return f"{D_:.1f} & none & --"
-    kind = ('continuous slit' if n == 1 else ('cavity-backed slot' if cav else 'slit'))
-    return f"{D_:.1f} & {kind}{', offset %.1f mm' % xo if xo else ''} & {L:.1f}"
+    kind = ('cont. slit' if n == 1 else ('cav. slot' if cav else 'slit'))
+    return f"{D_:.1f} & {kind}{' ($x_d$=%.1f)' % xo if xo else (' (centred)' if cav else '')} & {L:.1f}"
 rows = []
 for fn in sorted(glob.glob('results/array_*_post.npz')):
     tag = fn[len('results/array_'):-len('_post.npz')]
@@ -139,7 +139,7 @@ for fn in sorted(glob.glob('results/array_*_post.npz')):
                  db(p['S21'])[inb].max(), 10 * np.log10(p['Gr'][k28].max())))
 rows.sort(key=lambda r: (r[0], r[1], r[2]))
 with open('paper/table_sweep.tex', 'w') as fh:
-    fh.write("\\begin{tabular}{@{}lcccccc@{}}\\toprule\n$D$ (mm) & parasitic structure & $L_d$ (mm) & $|S_{11}|$ (dB) & $|S_{21}|$ (dB) & max $|S_{21}|$, 27.5--28.5 GHz (dB) & realised gain (dBi)\\\\\\midrule\n")
+    fh.write("\\begin{tabular}{@{}llccccc@{}}\\toprule\n$D$ (mm) & structure & $L_d$ (mm) & $|S_{11}|$ & $|S_{21}|$ & $|S_{21}|_{\\max}$ & $G_r$ (dBi)\\\\\\midrule\n")
     for r in rows:
         fh.write(f"{r[3]} & {r[4]:.1f} & {r[5]:.1f} & {r[6]:.1f} & {r[7]:.1f}\\\\\n")
     fh.write("\\bottomrule\\end{tabular}\n")

@@ -105,7 +105,7 @@ The exterior part is modelled with (\ref{eq:ymn}) using an effective permittivit
 \caption{Aperture-system analysis at 28~GHz: (a) change of the external mutual admittance between the sub-arrays produced by a row of five parasitic apertures of length $L_d$ (Schur complement of the aperture admittance matrix); (b) modal significance of the aperture-system modes for $D = \SI{7.0}{mm}$ and $L_d = \SI{4.8}{mm}$, coloured by the fraction of the modal current located in the parasitic apertures.}\label{fig:aperture}\end{figure}
 
 \subsection{Why top-wall slits over the channel do not decouple}
-The exterior model assumes that the aperture is backed by an open region. In the compact configuration ($D = \SI{7.0}{mm}$) the channel between the inner via rows is only \SI{1.4}{mm} wide (\SI{1.0}{mm} clear) and \SI{0.508}{mm} high; its lowest mode cuts off above 100~GHz, so a slit etched over it sees, on its lower side, an evanescent region that is equivalent to a short circuit at a depth of $0.05\lambda_0$. The interior admittance is then a very large inductive susceptance and the slit cannot resonate anywhere near 28~GHz. The FDTD confirms this (Table~\ref{tab:sweep}): five slits of 3.6, 4.0, 4.4 or \SI{4.8}{mm} or a single continuous \SI{24}{mm} slit at the channel centre leave the isolation at \IsoSeventy~dB within $\pm$1.5~dB, while the aperture model with an open backing would have predicted a reduction. The electric-current CMA of the finite top wall gives the same warning from the other side: the slits reduce the gap-crossing index of the dominant modes from \GCIref to \GCIslit (Fig.~\ref{fig:cmams}), i.e. they do interrupt the transverse surface current between the sub-arrays, but since that current is not the source of the exterior field the isolation does not change. Interrupting the surface current is therefore not a valid design criterion for slot radiators in a common ground plane.
+The exterior model assumes that the aperture is backed by an open region. In the compact configuration ($D = \SI{7.0}{mm}$) the channel between the inner via rows is only \SI{1.4}{mm} wide (\SI{1.0}{mm} clear) and \SI{0.508}{mm} high; its lowest mode cuts off above 100~GHz, so a slit etched over it sees, on its lower side, an evanescent region that is equivalent to a short circuit at a depth of $0.05\lambda_0$. The interior admittance is then a very large inductive susceptance and the slit cannot resonate anywhere near 28~GHz. The FDTD confirms this (Table~\ref{tab:sweep}): five slits of 3.6, 4.0, 4.4 or \SI{4.8}{mm} or a single continuous \SI{24}{mm} slit at the channel centre leave the isolation at \IsoSeventy~dB within $\pm$1.5~dB, while the aperture model with an open backing would have predicted a reduction. The electric-current CMA of the finite top wall gives the same warning from the other side: the slits reduce the gap-crossing index of the dominant modes from \GCIref{} to \GCIslit{} (Fig.~\ref{fig:cmams}), i.e. they do interrupt the transverse surface current between the sub-arrays, but since that current is not the source of the exterior field the isolation does not change. Interrupting the surface current is therefore not a valid design criterion for slot radiators in a common ground plane.
 
 \begin{figure}[t]\centering\includegraphics[width=\linewidth]{fig_cma_ms}
 \caption{Electric-current CMA of the finite shared top wall ($D = \SI{7.0}{mm}$): gap-crossing index of the ten lowest-$|\lambda|$ modes (a) without and (b) with five \SI{4.0}{mm} slits; the slits suppress the transverse surface current between the sub-arrays without affecting the isolation.}\label{fig:cmams}\end{figure}
@@ -120,12 +120,12 @@ Fig.~\ref{fig:sparams} shows the FDTD reflection and transmission coefficients o
 \begin{figure}[t]\centering\includegraphics[width=\linewidth]{fig_sparams}
 \caption{FDTD S-parameters of the dual-port array: compact spacing without decoupling, and final spacing without and with the CM-guided parasitic row: (a) reflection; (b) isolation.}\label{fig:sparams}\end{figure}
 
-\begin{table}[t]\centering\caption{FDTD results for all configurations (port 1 excited; values at 28~GHz unless stated).}\label{tab:sweep}
-\small\input{table_sweep}
+\begin{table}[t]\centering\caption{FDTD results for all configurations (port 1 excited; $|S_{11}|$, $|S_{21}|$ and the realised gain $G_r$ at 28~GHz; $|S_{21}|_{\max}$ is the worst isolation over 27.5--28.5~GHz; $x_d$ in mm).}\label{tab:sweep}
+\footnotesize\input{table_sweep}
 \end{table}
 
 \subsection{Radiation}
-Fig.~\ref{fig:radiation} shows the embedded gain patterns of port 1 at 28~GHz in the two principal planes, the realised gain versus frequency and the ECC computed from the embedded patterns of the final array. The sub-array radiates a broadside beam with a realised gain of \GainDec~dBi at 28~GHz with the parasitic row (\GainRef~dBi without; the parasitic slots are excited in phase and enlarge the radiating aperture), a half-power beamwidth of about \HPBWe$^\circ$ in the $y$-$z$ plane (five slots) and \HPBWh$^\circ$ in the $x$-$z$ plane, and a radiation efficiency of \EffDec\,\% (dielectric loss only; the copper is modelled as PEC, so that the conductor loss of about \CondLoss~dB estimated analytically for the \SI{25}{mm} slot section should be subtracted). Without the parasitic row the coupling tilts the beam of the excited sub-array by \TiltRef$^\circ$ in the $x$-$z$ plane; with it the tilt is \TiltDec$^\circ$. The ECC between the two ports, computed from the embedded patterns, is \ECCref without and \ECCdec with the parasitic row at 28~GHz: it remains far below the usual 0.5 limit, the slight increase reflecting the fact that the parasitic slots are shared by both ports and radiate with either of them.
+Fig.~\ref{fig:radiation} shows the embedded gain patterns of port 1 at 28~GHz in the two principal planes, the realised gain versus frequency and the ECC computed from the embedded patterns of the final array. The sub-array radiates a broadside beam with a realised gain of \GainDec~dBi at 28~GHz with the parasitic row (\GainRef~dBi without; the parasitic slots are excited in phase and enlarge the radiating aperture), a half-power beamwidth of about \HPBWe$^\circ$ in the $y$-$z$ plane (five slots) and \HPBWh$^\circ$ in the $x$-$z$ plane, and a radiation efficiency of \EffDec\,\% (dielectric loss only; the copper is modelled as PEC, so that the conductor loss of about \CondLoss~dB estimated analytically for the \SI{25}{mm} slot section should be subtracted). Without the parasitic row the coupling tilts the beam of the excited sub-array by \TiltRef$^\circ$ in the $x$-$z$ plane; with it the tilt is \TiltDec$^\circ$. The ECC between the two ports, computed from the embedded patterns, is \ECCref{} without and \ECCdec{} with the parasitic row at 28~GHz: it remains far below the usual 0.5 limit, the slight increase reflecting the fact that the parasitic slots are shared by both ports and radiate with either of them.
 
 \begin{figure}[t]\centering\includegraphics[width=\linewidth]{fig_radiation}
 \caption{FDTD radiation results for port 1 of the final array: (a) $y$-$z$ plane and (b) $x$-$z$ plane gain patterns at 28~GHz; (c) realised gain and ECC versus frequency.}\label{fig:radiation}\end{figure}
@@ -134,16 +134,16 @@ Fig.~\ref{fig:radiation} shows the embedded gain patterns of port 1 at 28~GHz in
 Table~\ref{tab:comp} compares the proposed antenna with reported 28~GHz SIW slot arrays and decoupled mmWave arrays. The proposed design combines the lowest profile with an isolation comparable to that of dedicated decoupling networks \cite{diman2021} or shields \cite{alibakhshikenari2019,dey2021}, using no additional layer or component, and the parasitic row adds gain instead of absorbing it. Its bandwidth is that of a standing-wave array; a travelling-wave or centre-fed configuration would widen it at the cost of a frequency-scanning beam, which is left for future work.
 
 \begin{table}[t]\centering\caption{Comparison with reported mmWave SIW slot arrays and decoupled arrays (simulated results for this work).}\label{tab:comp}
-\small\begin{tabular}{@{}lccccc@{}}\toprule
+\footnotesize\begin{tabular}{@{}lcccp{2.0cm}p{3.2cm}@{}}\toprule
 Ref. & $f_0$ (GHz) & Profile ($\lambda_0$) & Gain (dBi) & Isolation (dB) & Decoupling \\\midrule
-\cite{ashraf2015} & 28/38 & 0.047 & 11.9 & -- & -- (single port)\\
-\cite{lai2020} & 28/38 & 0.05 & 9.3--10.9 & -- & -- (single port)\\
-\cite{singh2021} & 28 & 0.05 & 12.3 & -- & -- (single port)\\
+\cite{ashraf2015} & 28/38 & 0.047 & 11.9 & -- & single port\\
+\cite{lai2020} & 28/38 & 0.05 & 9.3--10.9 & -- & single port\\
+\cite{singh2021} & 28 & 0.05 & 12.3 & -- & single port\\
 \cite{kobal2022} & 28 & 0.07 & 4.7/8 & $>30$ & port placement (annular slot)\\
 \cite{diman2021} & 10 & 0.05 & -- & 35 & two-layer SIW coupler network\\
 \cite{alibakhshikenari2019} & 60 & 0.15 & 10.1 & $\approx 25$ & metamaterial shield\\
 \cite{dey2021} & 28 & $>0.1$ & 9--13.3 & $>40$ & stacked EBG + DGS\\
-This work & 28 & 0.054 & \GainDec & \IsoDecMin--\IsoDecMax & CM-guided parasitic cavity-backed slots\\
+This work & 28 & 0.054 & \GainDec{} & \IsoDecMin{} to \IsoDecMax{} (27.5--28.5 GHz) & CM-guided parasitic cavity-backed slots, same layer\\
 \bottomrule\end{tabular}\end{table}
 
 \subsection{Limitations}
