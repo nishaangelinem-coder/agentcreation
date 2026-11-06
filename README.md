@@ -25,6 +25,20 @@ environment and the manuscript *"Low-Profile SIW Slot Array With Characteristic-
 | `results/` | Raw and post-processed data (JSON/NPZ) produced by the scripts |
 | `paper/` | LaTeX source (`elsarticle`), bibliography, figures and compiled PDF |
 
+## Main results (FDTD, port 1 excited, 28 GHz)
+
+| Configuration | $|S_{11}|$ | $|S_{21}|$ | worst $|S_{21}|$ 27.5–28.5 GHz | realised gain |
+|---|---|---|---|---|
+| D = 7.0 mm, no decoupling structure | −9.0 dB | −15.3 dB | −14.9 dB | 10.9 dBi |
+| D = 7.0 mm, top-wall slits 3.6…4.8 mm or continuous | −9…−10 dB | −14.8…−13.9 dB | — | — |
+| D = 9.4 mm, parasitic cavities, no slots | −9.1 dB | −17.5 dB | −17.2 dB | 10.1 dBi |
+| D = 9.4 mm, CM-guided offset cavity-backed slots (4.0 mm, 0.8 mm offset) | −8.2 dB | **−23.5 dB** | **−20.5 dB** | **11.9 dBi** |
+
+Key physical finding: slits etched in the top wall over the sub-cut-off channel between adjacent SIWs cannot
+resonate (the channel acts as a short at 0.05 λ0 depth) and therefore do not decouple the sub-arrays, whatever
+their length; a parasitic aperture must be backed by a cavity/open region, which the aperture-mode CMA makes
+explicit. See `paper/main.pdf`.
+
 ## Reproducing
 
 ```bash
@@ -36,9 +50,12 @@ python scripts/03a_cma_calibration.py 4.5
 python scripts/03b_cma_dual_plate.py ref 7.0 0
 python scripts/03b_cma_dual_plate.py slits 7.0 <L_slit>
 python scripts/04_aperture_cma_array.py
-python scripts/05_array_fdtd.py reference 7.0 0
-python scripts/05_array_fdtd.py nodecouple 7.0 0
-python scripts/05_array_fdtd.py decoupled 7.0 <L_slit>
+python scripts/05_array_fdtd.py reference D=7.0
+python scripts/05_array_fdtd.py nodecouple D=7.0
+python scripts/05_array_fdtd.py decoupled D=7.0 Ls=4.0          # top-wall slits (negative result)
+python scripts/05_array_fdtd.py reference D=9.4
+python scripts/05_array_fdtd.py D94_base D=9.4 cav=1
+python scripts/05_array_fdtd.py D94_o40 D=9.4 cav=1 Ls=4.0 xoff=0.8   # final design
 python scripts/06_figures.py
 python scripts/07_numbers.py
 python -m pytest tests -q
