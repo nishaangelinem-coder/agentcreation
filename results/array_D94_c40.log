@@ -1,0 +1,16 @@
+grid 240 x 407 x 51 = 4.98 Mcells, dt = 0.1885 ps, aperture nodes: 1870 Ex, 1740 Ey
+  step 0/19093  t=0.000 ns  max|Ez|=5.497e-11
+  step 4000/19093  t=0.754 ns  max|Ez|=1.624e+00
+  step 8000/19093  t=1.509 ns  max|Ez|=2.758e-01
+  step 12000/19093  t=2.263 ns  max|Ez|=2.391e-01
+  step 16000/19093  t=3.017 ns  max|Ez|=1.735e-01
+19093 steps in 1131 s
+f=26.0 GHz |S11|=-1.0 dB |S21|=-31.1 dB Gmax=6.81 dBi  realized=-0.00 dBi  eff=53.8%  peak at th=90 ph=184
+f=26.5 GHz |S11|=-1.7 dB |S21|=-26.9 dB Gmax=10.39 dBi  realized=5.38 dBi  eff=80.8%  peak at th=90 ph=182
+f=27.0 GHz |S11|=-3.3 dB |S21|=-21.6 dB Gmax=11.54 dBi  realized=8.75 dBi  eff=91.7%  peak at th=90 ph=180
+f=27.5 GHz |S11|=-6.0 dB |S21|=-18.6 dB Gmax=11.85 dBi  realized=10.51 dBi  eff=94.9%  peak at th=66 ph=180
+f=28.0 GHz |S11|=-8.5 dB |S21|=-17.4 dB Gmax=12.00 dBi  realized=11.25 dBi  eff=96.4%  peak at th=55 ph=180
+f=28.5 GHz |S11|=-8.6 dB |S21|=-17.9 dB Gmax=12.07 dBi  realized=11.36 dBi  eff=97.4%  peak at th=47 ph=180
+f=29.0 GHz |S11|=-6.2 dB |S21|=-21.1 dB Gmax=11.99 dBi  realized=10.77 dBi  eff=96.3%  peak at th=39 ph=182
+f=29.5 GHz |S11|=-3.4 dB |S21|=-26.9 dB Gmax=10.76 dBi  realized=8.05 dBi  eff=90.6%  peak at th=33 ph=186
+f=30.0 GHz |S11|=-1.9 dB |S21|=-35.7 dB Gmax=9.77 dBi  realized=5.33 dBi  eff=89.9%  peak at th=31 ph=210

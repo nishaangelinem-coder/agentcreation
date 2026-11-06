@@ -35,10 +35,13 @@ if Ls > 0:
                 slits.append((xoff, yc - Ls / 2 + 0.1, 0.2, bar)); slits.append((xoff, yc + Ls / 2 - 0.1, 0.2, bar))
 xc = [-D / 2, D / 2]
 walls = []
-if cav:   # parasitic cavities between the inner via rows, one per slot period
-    wp = D - prm.a
+wp = D - prm.a
+if cav == 1:   # parasitic cavities between the inner via rows, one per slot period
     for n in range(des['N'] + 1):
         walls.append((-n * des['spacing_mm'], -wp / 2 + prm.d / 2, wp / 2 - prm.d / 2))
+elif cav == 2:  # one long parasitic cavity spanning the slot section (closed at y = 0 and y = -N*spacing)
+    for yw in (0.0, -des['N'] * des['spacing_mm']):
+        walls.append((yw, -wp / 2 + prm.d / 2, wp / 2 - prm.d / 2))
 reference = (tag == 'reference')
 lay = Layout(xc=xc, y_short=None if reference else 0.0, slots=[[], []] if reference else [slots, slots],
              slits=[] if reference else slits, walls_y=[] if reference else walls,

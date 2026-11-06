@@ -15,16 +15,23 @@ os.makedirs(OUT, exist_ok=True)
 prm = SIWParams()
 des = json.load(open('results/design.json'))
 D = 7.0
+import os
+REF_TAG = os.environ.get('REF_TAG', 'D94_base'); DEC_TAG = os.environ.get('DEC_TAG', 'D94_o40'); DFIN = 9.4
 
 
 def db(x):
     return 20 * np.log10(np.maximum(np.abs(x), 1e-12))
 
 
-def fig_geometry(Ls):
+def fig_geometry(Ls, xoff=0.8):
     fig, (ax, ax2) = plt.subplots(2, 1, figsize=(3.6, 6.2), gridspec_kw=dict(height_ratios=[4.2, 1]))
     # top view
-    ax.add_patch(Rectangle((-9, -36), 18, 39, fc='#d9d9d9', ec='none'))   # top metal
+    D = DFIN
+    ax.add_patch(Rectangle((-10, -36), 20, 39, fc='#d9d9d9', ec='none'))   # top metal
+    wp = D - prm.a
+    for n in range(des['N'] + 1):   # parasitic cavity walls (via posts) across the channel
+        for xv in np.arange(-wp / 2 + prm.d / 2, wp / 2 - prm.d / 2 + 1e-9, prm.p):
+            ax.add_patch(Circle((xv, -n * des['spacing_mm']), prm.d / 2, fc='k', ec='none'))
     for xc in (-D / 2, D / 2):
         for xr in (xc - prm.a / 2, xc + prm.a / 2):
             for yc in np.arange(0, -36, -prm.p):
@@ -36,11 +43,11 @@ def fig_geometry(Ls):
         ax.text(xc, -37.3, 'P1' if xc < 0 else 'P2', ha='center', va='top', fontsize=8)
     for n in range(des['N']):
         yc = -des['first_offset_mm'] - n * des['spacing_mm']
-        ax.add_patch(Rectangle((-0.15, yc - Ls / 2), 0.3, Ls, fc='white', ec='r', lw=0.8))
-    ax.set_xlim(-9.5, 9.5); ax.set_ylim(-39, 4.5); ax.set_aspect('equal')
+        ax.add_patch(Rectangle((xoff - 0.15, yc - Ls / 2), 0.3, Ls, fc='white', ec='r', lw=0.8))
+    ax.set_xlim(-10.5, 10.5); ax.set_ylim(-39, 4.5); ax.set_aspect('equal')
     ax.set_xlabel('x (mm)'); ax.set_ylabel('y (mm)')
     ax.text(0, 1.2, 'shorting via wall', ha='center', fontsize=7)
-    ax.annotate('decoupling slits\n$L_d \\times$ 0.3 mm', xy=(0.2, -22.5), xytext=(2.4, -31.5), fontsize=7, color='r',
+    ax.annotate('parasitic cavity-backed\nslots $L_d \\times$ 0.3 mm', xy=(xoff + 0.2, -22.5), xytext=(2.4, -31.5), fontsize=7, color='r',
                 arrowprops=dict(arrowstyle='->', color='r', lw=0.7))
     ax.annotate('$L_s \\times w$', xy=(-D/2 + 0.2 + 0.25, -2.5), xytext=(-9.2, -1.0), fontsize=7,
                 arrowprops=dict(arrowstyle='->', lw=0.6))
@@ -54,14 +61,14 @@ def fig_geometry(Ls):
     ax.text(D/2, -25.6, '$a$', fontsize=7, ha='center')
     ax.set_title('(a) top view', fontsize=8)
     # cross-section
-    ax2.add_patch(Rectangle((-9, 0), 18, prm.h, fc='#f3e6c8', ec='k', lw=0.5))
-    ax2.plot([-9, 9], [0, 0], 'k-', lw=2); ax2.plot([-9, 9], [prm.h, prm.h], 'k-', lw=2)
+    ax2.add_patch(Rectangle((-10, 0), 20, prm.h, fc='#f3e6c8', ec='k', lw=0.5))
+    ax2.plot([-10, 10], [0, 0], 'k-', lw=2); ax2.plot([-10, 10], [prm.h, prm.h], 'k-', lw=2)
     for xc in (-D / 2, D / 2):
         for xr in (xc - prm.a / 2, xc + prm.a / 2):
             ax2.add_patch(Rectangle((xr - prm.d / 2, 0), prm.d, prm.h, fc='k'))
         ax2.add_patch(Rectangle((xc + 0.2 - 0.2, prm.h - 0.03), 0.4, 0.08, fc='white', ec='none'))
-    ax2.add_patch(Rectangle((-0.15, prm.h - 0.03), 0.3, 0.08, fc='white', ec='r', lw=0.6))
-    ax2.set_xlim(-9.5, 9.5); ax2.set_ylim(-0.3, 1.3); ax2.set_yticks([0, 0.5])
+    ax2.add_patch(Rectangle((xoff - 0.15, prm.h - 0.03), 0.3, 0.08, fc='white', ec='r', lw=0.6))
+    ax2.set_xlim(-10.5, 10.5); ax2.set_ylim(-0.3, 1.3); ax2.set_yticks([0, 0.5])
     ax2.set_xlabel('x (mm)'); ax2.set_ylabel('z (mm)')
     ax2.text(0, 0.85, f'$\\varepsilon_r$ = {prm.er}, $h$ = {prm.h} mm, $d$ = {prm.d} mm, $p$ = {prm.p} mm', ha='center', fontsize=6.5)
     ax2.set_title('(b) cross-section', fontsize=8)
@@ -171,12 +178,10 @@ def fig_cma_plate():
 def fig_aperture():
     import glob
     fig, ax = plt.subplots(1, 2, figsize=(7.0, 2.6))
-    for fn, ls in zip(sorted(glob.glob('results/aperture_coupling_D7.0_eps*.json')), ('r-o', 'b--s', 'g:^')):
-        c = json.load(open(fn)); sw = c['sweep']
+    for fn, ls in zip(sorted(glob.glob('results/aperture_coupling_D*_eps*.json')), ('b--s', 'r-o', 'g:^')):
+        c = json.load(open(fn)); sw = c['sweep']; Dv = fn.split('_D')[1].split('_')[0]
         Ls = sorted(float(k) for k in sw if k not in ('0', 'cont')); y = [sw[f'{L:.1f}'] for L in Ls]
-        ax[0].plot(Ls, 20 * np.log10(np.array(y) / sw['0']), ls, ms=4, label=f'$\\varepsilon_{{eff}}$ = {c["eps_eff"]:.2f}')
-        if 'cont' in sw:
-            ax[0].axhline(20 * np.log10(sw['cont'] / sw['0']), color=ls[0], lw=0.6, ls=':')
+        ax[0].plot(Ls, 20 * np.log10(np.array(y) / sw['0']), ls, ms=4, label=f'$D$ = {Dv} mm, $\\varepsilon_{{eff}}$ = {c["eps_eff"]:.2f}')
     ax[0].axhline(0, color='k', lw=0.5); ax[0].set_xlabel('slit length $L_d$ (mm)'); ax[0].set_ylabel('$|y_{12}|$ change (dB)')
     ax[0].legend(); ax[0].grid(alpha=.3); ax[0].set_title('(a) sub-array mutual admittance, 28 GHz', fontsize=8)
     fn = sorted(glob.glob('results/aperture_cma_D7.0_eps*.npz'))
@@ -234,7 +239,7 @@ def fig_radiation(tags):
             ec.append(ecc(Eth, Eph, E2th, E2ph, TH))
         ax[2].plot(fd, Gmax, ls, label=lab + ' (realised gain)')
         ax2 = ax[2].twinx() if tag == tags[0][0] else ax2
-        ax2.semilogy(fd, ec, ls.replace('-', ':') if '-' in ls else ls, color='g', label=lab + ' (ECC)')
+        ax2.semilogy(fd, ec, ls=('--' if '--' in ls else '-'), marker='o', ms=3, color='g', label=lab + ' (ECC)')
     for a, t in zip(ax[:2], ('(a) y-z plane, 28 GHz', '(b) x-z plane, 28 GHz')):
         a.set_xlabel(r'$\theta$ (deg)'); a.set_ylabel('gain (dBi)'); a.set_ylim(-20, 15); a.grid(alpha=.3); a.legend(); a.set_title(t, fontsize=8)
     ax[2].set_xlabel('frequency (GHz)'); ax[2].set_ylabel('realised gain (dBi)'); ax2.set_ylabel('ECC', color='g'); ax[2].grid(alpha=.3)
@@ -245,9 +250,10 @@ def fig_radiation(tags):
 if __name__ == '__main__':
     cal = json.load(open('results/cma_calibration.json')) if os.path.exists('results/cma_calibration.json') else None
     Ls = cal['slit_L_28GHz'] if cal else 4.0
-    for fn, args in ((fig_geometry, (Ls,)), (fig_validation, ()), (fig_slot, ()), (fig_cma_cal, ()), (fig_cma_plate, ()), (fig_aperture, ()),
-                     (fig_sparams, ([('nodecouple', 'without slits', 'k--'), ('decoupled', 'with CM-guided slits', 'r-')],)),
-                     (fig_radiation, ([('nodecouple', 'without slits', 'k--'), ('decoupled', 'with slits', 'r-')],))):
+    for fn, args in ((fig_geometry, (4.0, 0.8)), (fig_validation, ()), (fig_slot, ()), (fig_cma_cal, ()), (fig_cma_plate, ()), (fig_aperture, ()),
+                     (fig_sparams, ([('nodecouple', '$D$ = 7.0 mm, no parasitic structure', 'k:'), (REF_TAG, '$D$ = 9.4 mm, no parasitic slots', 'b--'),
+                                     (DEC_TAG, '$D$ = 9.4 mm, CM-guided parasitic slots', 'r-')],)),
+                     (fig_radiation, ([(REF_TAG, 'no parasitic slots', 'b--'), (DEC_TAG, 'with parasitic slots', 'r-')],))):
         try:
             fn(*args); print('ok', fn.__name__)
         except Exception as e:
