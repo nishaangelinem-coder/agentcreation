@@ -1,0 +1,57 @@
+{
+  "qc": {
+    "n_maf_rows": 479147,
+    "n_snv": 396977,
+    "n_ref_mismatch": 0
+  },
+  "flow": {
+    "all_samples": 54331,
+    "all_patients": 48179,
+    "basket_samples": {
+      "ASI": 129,
+      "ACC": 88,
+      "THYM": 77
+    },
+    "basket_patients": {
+      "ACC": 86,
+      "ASI": 125,
+      "THYM": 73
+    },
+    "excluded_unmatched": 0,
+    "after_dedup": {
+      "ASI": 125,
+      "ACC": 86,
+      "THYM": 73
+    },
+    "fit_class": {
+      "ACC": {
+        "DROP": 38,
+        "FULL": 18,
+        "SPARSE": 30
+      },
+      "ASI": {
+        "DROP": 43,
+        "FULL": 45,
+        "SPARSE": 37
+      },
+      "THYM": {
+        "DROP": 50,
+        "FULL": 9,
+        "SPARSE": 14
+      }
+    },
+    "hypermutators": {
+      "ASI": 1
+    },
+    "analysable": {
+      "ASI": 82,
+      "ACC": 48,
+      "THYM": 23
+    },
+    "gate_ge50_per_group": {
+      "ASI": true,
+      "THYM": false,
+      "ACC": false
+    }
+  }
+}

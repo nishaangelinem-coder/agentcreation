@@ -1,0 +1,558 @@
+{
+ "angs_painter_2025": {
+  "n_samples_with_SNV": 81,
+  "n_patients": 63,
+  "BX_LOCATION_top": {
+   "breast": 25,
+   "head/face/neck/scalp": 18,
+   "blood biopsy": 9,
+   "bonelimb": 6,
+   "chest": 4,
+   "nan": 4,
+   "skin": 3,
+   "lung": 2,
+   "spleen": 2,
+   "back": 2,
+   "heart": 2,
+   "ovary": 1
+  },
+  "n_patients_ge20SNV": 56,
+  "UV_dominant_by_headneck": {
+   "False": {
+    "false": 38,
+    "true": 3
+   },
+   "True": {
+    "false": 1,
+    "true": 14
+   }
+  },
+  "fisher_OR": 177.33333333333334,
+  "fisher_p": 1.640041273114675e-09,
+  "UV_frac_median_headneck_vs_other": [
+   0.7742292579172809,
+   0.06566097259797442
+  ],
+  "MWU_p": 2.4383652349157116e-07,
+  "pooled_headneck": {
+   "Clock": [
+    0.006,
+    0.0,
+    0.039
+   ],
+   "UV": [
+    0.849,
+    0.785,
+    0.871
+   ],
+   "Tobacco": [
+    0.017,
+    0.006,
+    0.035
+   ],
+   "HRD": [
+    0.025,
+    0.007,
+    0.049
+   ],
+   "TMZ": [
+    0.089,
+    0.075,
+    0.105
+   ]
+  },
+  "pooled_other": {
+   "Clock": [
+    0.562,
+    0.493,
+    0.665
+   ],
+   "UV": [
+    0.167,
+    0.045,
+    0.195
+   ],
+   "Tobacco": [
+    0.0,
+    0.0,
+    0.07
+   ],
+   "HRD": [
+    0.096,
+    0.065,
+    0.232
+   ],
+   "POLE": [
+    0.0,
+    0.0,
+    0.051
+   ],
+   "MMR": [
+    0.152,
+    0.006,
+    0.209
+   ],
+   "TMZ": [
+    0.022,
+    0.001,
+    0.04
+   ]
+  },
+  "panel_downsampling": {
+   "n_WES_ge50": 34,
+   "median_WES_SNV": 61.0,
+   "median_panel_SNV": 4.0,
+   "n_panel_ge2": 32,
+   "n_panel_ge4": 24,
+   "cosine_call_rate": 0.4375,
+   "cosine_acc_when_called": 0.8571428571428571,
+   "nnls_dominant_acc": 0.5,
+   "truth_distribution": {
+    "UV": 15,
+    "Clock": 11,
+    "HRD": 4,
+    "MMR": 2
+   },
+   "UV_sens_cosine": 0.6666666666666666,
+   "UV_spec_cosine": 1.0,
+   "UV_n_truth": 15
+  },
+  "pooled_headneck_panel_territory": {
+   "APOBEC": [
+    0.0,
+    0.0,
+    0.046
+   ],
+   "UV": [
+    0.827,
+    0.719,
+    0.868
+   ],
+   "Tobacco": [
+    0.023,
+    0.0,
+    0.068
+   ],
+   "HRD": [
+    0.0,
+    0.0,
+    0.083
+   ],
+   "MMR": [
+    0.008,
+    0.0,
+    0.08
+   ],
+   "TMZ": [
+    0.133,
+    0.063,
+    0.172
+   ]
+  }
+ },
+ "angs_project_painter_2018": {
+  "n_samples_with_SNV": 48,
+  "n_patients": 36,
+  "BX_LOCATION_top": {
+   "breast": 19,
+   "scalp": 4,
+   "chest wall": 4,
+   "face": 3,
+   "back": 2,
+   "forehead": 2,
+   "neck": 2,
+   "lung": 2,
+   "bladder wall": 1,
+   "chin,neck": 1,
+   "pectoralis minor": 1,
+   "brow": 1
+  },
+  "n_patients_ge20SNV": 32,
+  "UV_dominant_by_headneck": {
+   "False": {
+    "false": 20,
+    "true": 3
+   },
+   "True": {
+    "false": 2,
+    "true": 7
+   }
+  },
+  "fisher_OR": 23.333333333333332,
+  "fisher_p": 0.0010239297224836714,
+  "UV_frac_median_headneck_vs_other": [
+   0.8227684014931574,
+   0.12753080621220989
+  ],
+  "MWU_p": 0.001249647962855485,
+  "pooled_headneck": {
+   "Clock": [
+    0.017,
+    0.0,
+    0.069
+   ],
+   "UV": [
+    0.851,
+    0.779,
+    0.889
+   ],
+   "Tobacco": [
+    0.02,
+    0.007,
+    0.032
+   ],
+   "HRD": [
+    0.02,
+    0.0,
+    0.063
+   ],
+   "TMZ": [
+    0.089,
+    0.054,
+    0.116
+   ]
+  },
+  "pooled_other": {
+   "Clock": [
+    0.146,
+    0.03,
+    0.769
+   ],
+   "UV": [
+    0.694,
+    0.063,
+    0.85
+   ],
+   "Tobacco": [
+    0.011,
+    0.002,
+    0.065
+   ],
+   "HRD": [
+    0.082,
+    0.016,
+    0.135
+   ],
+   "POLE": [
+    0.001,
+    0.0,
+    0.038
+   ],
+   "MMR": [
+    0.015,
+    0.0,
+    0.049
+   ],
+   "TMZ": [
+    0.049,
+    0.0,
+    0.062
+   ]
+  },
+  "panel_downsampling": {
+   "n_WES_ge50": 23,
+   "median_WES_SNV": 68.0,
+   "median_panel_SNV": 5.0,
+   "n_panel_ge2": 23,
+   "n_panel_ge4": 17,
+   "cosine_call_rate": 0.5217391304347826,
+   "cosine_acc_when_called": 0.9166666666666666,
+   "nnls_dominant_acc": 0.782608695652174,
+   "truth_distribution": {
+    "Clock": 12,
+    "UV": 10,
+    "HRD": 1
+   },
+   "UV_sens_cosine": 0.9,
+   "UV_spec_cosine": 1.0,
+   "UV_n_truth": 10
+  },
+  "pooled_headneck_panel_territory": {
+   "Clock": [
+    0.014,
+    0.0,
+    0.074
+   ],
+   "APOBEC": [
+    0.006,
+    0.0,
+    0.038
+   ],
+   "UV": [
+    0.864,
+    0.777,
+    0.933
+   ],
+   "POLE": [
+    0.007,
+    0.0,
+    0.047
+   ],
+   "TMZ": [
+    0.109,
+    0.0,
+    0.197
+   ]
+  }
+ },
+ "acc_tcga_pan_can_atlas_2018": {
+  "n": 91,
+  "median_SNV": 37.0,
+  "dominant_family_ge20": {
+   "HRD": 26,
+   "Clock": 25,
+   "MMR": 10,
+   "Tobacco": 7,
+   "UV": 4,
+   "APOBEC": 2
+  },
+  "n_ge20": 74,
+  "pooled_WES": {
+   "Clock": [
+    0.314,
+    0.201,
+    0.462
+   ],
+   "APOBEC": [
+    0.079,
+    0.062,
+    0.11
+   ],
+   "UV": [
+    0.025,
+    0.015,
+    0.042
+   ],
+   "Tobacco": [
+    0.273,
+    0.015,
+    0.468
+   ],
+   "HRD": [
+    0.188,
+    0.082,
+    0.29
+   ],
+   "POLE": [
+    0.027,
+    0.008,
+    0.07
+   ],
+   "MMR": [
+    0.089,
+    0.007,
+    0.214
+   ],
+   "TMZ": [
+    0.005,
+    0.0,
+    0.03
+   ]
+  },
+  "pooled_panel_territory": {
+   "Clock": [
+    0.223,
+    0.08,
+    0.511
+   ],
+   "APOBEC": [
+    0.087,
+    0.044,
+    0.123
+   ],
+   "UV": [
+    0.014,
+    0.0,
+    0.088
+   ],
+   "Tobacco": [
+    0.162,
+    0.0,
+    0.373
+   ],
+   "HRD": [
+    0.379,
+    0.146,
+    0.486
+   ],
+   "POLE": [
+    0.042,
+    0.0,
+    0.109
+   ],
+   "MMR": [
+    0.093,
+    0.009,
+    0.273
+   ]
+  },
+  "panel_territory_SNV_total": 383,
+  "panel_downsampling": {
+   "n_WES_ge50": 33,
+   "median_WES_SNV": 37.0,
+   "median_panel_SNV": 2.0,
+   "n_panel_ge2": 30,
+   "n_panel_ge4": 19,
+   "cosine_call_rate": 0.23333333333333334,
+   "cosine_acc_when_called": 0.8571428571428571,
+   "nnls_dominant_acc": 0.43333333333333335,
+   "truth_distribution": {
+    "HRD": 10,
+    "Clock": 10,
+    "Tobacco": 5,
+    "MMR": 2,
+    "APOBEC": 2,
+    "UV": 1
+   }
+  },
+  "cox_AGE_log10TMB": {
+   "n": 91,
+   "events": 33,
+   "hr": {
+    "AGE": {
+     "exp(coef)": 1.0036,
+     "exp(coef) lower 95%": 0.981,
+     "exp(coef) upper 95%": 1.0267,
+     "p": 0.7588
+    },
+    "log10TMB": {
+     "exp(coef)": 3.8718,
+     "exp(coef) lower 95%": 1.7061,
+     "exp(coef) upper 95%": 8.7865,
+     "p": 0.0012
+    }
+   }
+  }
+ },
+ "thym_tcga_pan_can_atlas_2018": {
+  "n": 123,
+  "median_SNV": 26.0,
+  "dominant_family_ge20": {
+   "Clock": 26,
+   "MMR": 23,
+   "HRD": 13,
+   "Tobacco": 13,
+   "UV": 7,
+   "APOBEC": 1
+  },
+  "n_ge20": 83,
+  "pooled_WES": {
+   "Clock": [
+    0.347,
+    0.243,
+    0.475
+   ],
+   "APOBEC": [
+    0.027,
+    0.005,
+    0.058
+   ],
+   "UV": [
+    0.046,
+    0.025,
+    0.074
+   ],
+   "Tobacco": [
+    0.193,
+    0.146,
+    0.251
+   ],
+   "HRD": [
+    0.122,
+    0.053,
+    0.193
+   ],
+   "MMR": [
+    0.227,
+    0.108,
+    0.345
+   ],
+   "TMZ": [
+    0.028,
+    0.011,
+    0.048
+   ]
+  },
+  "pooled_panel_territory": {
+   "Clock": [
+    0.266,
+    0.105,
+    0.516
+   ],
+   "APOBEC": [
+    0.02,
+    0.0,
+    0.082
+   ],
+   "UV": [
+    0.04,
+    0.0,
+    0.144
+   ],
+   "Tobacco": [
+    0.291,
+    0.146,
+    0.402
+   ],
+   "HRD": [
+    0.167,
+    0.0,
+    0.334
+   ],
+   "POLE": [
+    0.014,
+    0.0,
+    0.068
+   ],
+   "MMR": [
+    0.164,
+    0.033,
+    0.337
+   ],
+   "TMZ": [
+    0.037,
+    0.0,
+    0.092
+   ]
+  },
+  "panel_territory_SNV_total": 164,
+  "panel_downsampling": {
+   "n_WES_ge50": 12,
+   "median_WES_SNV": 26.0,
+   "median_panel_SNV": 1.0,
+   "n_panel_ge2": 8,
+   "n_panel_ge4": 3,
+   "cosine_call_rate": 0.25,
+   "cosine_acc_when_called": 1.0,
+   "nnls_dominant_acc": 0.5,
+   "truth_distribution": {
+    "HRD": 3,
+    "Clock": 2,
+    "Tobacco": 1,
+    "MMR": 1,
+    "APOBEC": 1
+   }
+  },
+  "cox_AGE_log10TMB": {
+   "n": 122,
+   "events": 9,
+   "hr": {
+    "AGE": {
+     "exp(coef)": 1.028,
+     "exp(coef) lower 95%": 0.9681,
+     "exp(coef) upper 95%": 1.0916,
+     "p": 0.3673
+    },
+    "log10TMB": {
+     "exp(coef)": 32.7802,
+     "exp(coef) lower 95%": 3.6159,
+     "exp(coef) upper 95%": 297.1716,
+     "p": 0.0019
+    }
+   }
+  },
+  "histology": {
+   "Thymoma": 123
+  }
+ }
+}

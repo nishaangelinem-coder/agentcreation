@@ -1,0 +1,758 @@
+{
+ "landscape": {
+  "table": {
+   "ACC": {
+    "AMBIGUOUS": 37,
+    "Clock": 5,
+    "MMR": 2,
+    "Other called": 4,
+    "UV": 0
+   },
+   "ASI": {
+    "AMBIGUOUS": 50,
+    "Clock": 3,
+    "MMR": 5,
+    "Other called": 9,
+    "UV": 15
+   },
+   "THYM": {
+    "AMBIGUOUS": 16,
+    "Clock": 0,
+    "MMR": 3,
+    "Other called": 4,
+    "UV": 0
+   }
+  },
+  "chi2": 21.312698560033564,
+  "dof": 8,
+  "p_asymptotic": 0.006361562560897884,
+  "p_permutation": 0.0081,
+  "min_expected": 1.2026143790849673,
+  "adj_std_residuals": {
+   "ACC": {
+    "AMBIGUOUS": 1.74,
+    "Clock": 1.95,
+    "MMR": -0.8,
+    "Other called": -0.74,
+    "UV": -2.76
+   },
+   "ASI": {
+    "AMBIGUOUS": -1.8,
+    "Clock": -0.94,
+    "MMR": -0.24,
+    "Other called": -0.06,
+    "UV": 3.79
+   },
+   "THYM": {
+    "AMBIGUOUS": 0.25,
+    "Clock": -1.22,
+    "MMR": 1.37,
+    "Other called": 1.04,
+    "UV": -1.72
+   }
+  }
+ },
+ "ASI_UV_by_site_fisher": {
+  "table": [
+   [
+    53,
+    4
+   ],
+   [
+    14,
+    11
+   ]
+  ],
+  "odds_ratio": 10.410714285714286,
+  "p": 0.00019277370346189212
+ },
+ "survival": {
+  "n": 263,
+  "events": 114,
+  "by_group": {
+   "ACC": {
+    "n": 78,
+    "events": 36,
+    "median_OS_months": 36.493,
+    "median_followup": 17.4085,
+    "OS_24m": 0.5814670228161146
+   },
+   "ASI": {
+    "n": 118,
+    "events": 60,
+    "median_OS_months": 22.323,
+    "median_followup": 13.3975,
+    "OS_24m": 0.4697063579669824
+   },
+   "THYM": {
+    "n": 67,
+    "events": 18,
+    "median_OS_months": 60.131,
+    "median_followup": 35.77,
+    "OS_24m": 0.8499140548186025
+   }
+  },
+  "logrank_groups_p": 0.00030875059521658966,
+  "cox": [
+   {
+    "label": "A: all basket patients, protocol covariates (ref ASI)",
+    "n": 261,
+    "events": 114,
+    "concordance": 0.6115392849496896,
+    "hr": {
+     "AGE": {
+      "exp(coef)": 1.005,
+      "exp(coef) lower 95%": 0.9914,
+      "exp(coef) upper 95%": 1.0187,
+      "p": 0.4767
+     },
+     "log10TMB": {
+      "exp(coef)": 2.0848,
+      "exp(coef) lower 95%": 0.7468,
+      "exp(coef) upper 95%": 5.82,
+      "p": 0.1607
+     },
+     "N_SNV": {
+      "exp(coef)": 0.9665,
+      "exp(coef) lower 95%": 0.899,
+      "exp(coef) upper 95%": 1.039,
+      "p": 0.3557
+     },
+     "MSI": {
+      "exp(coef)": 0.9976,
+      "exp(coef) lower 95%": 0.8949,
+      "exp(coef) upper 95%": 1.112,
+      "p": 0.9649
+     },
+     "G_THYM": {
+      "exp(coef)": 0.4021,
+      "exp(coef) lower 95%": 0.2272,
+      "exp(coef) upper 95%": 0.7116,
+      "p": 0.0018
+     },
+     "G_ACC": {
+      "exp(coef)": 0.8681,
+      "exp(coef) lower 95%": 0.5358,
+      "exp(coef) upper 95%": 1.4065,
+      "p": 0.5655
+     }
+    },
+    "schoenfeld_p": {
+     "AGE": 0.4022122552888793,
+     "G_ACC": 0.9262321865620461,
+     "G_THYM": 0.044328363064050934,
+     "MSI": 0.05780826005945142,
+     "N_SNV": 0.00010024998431258386,
+     "log10TMB": 0.000594804118039763
+    },
+    "ph_ok": false
+   },
+   {
+    "label": "A2: as A, stratified by group",
+    "n": 261,
+    "events": 114,
+    "concordance": 0.556060606060606,
+    "hr": {
+     "AGE": {
+      "exp(coef)": 1.0055,
+      "exp(coef) lower 95%": 0.9919,
+      "exp(coef) upper 95%": 1.0193,
+      "p": 0.4271
+     },
+     "log10TMB": {
+      "exp(coef)": 1.9234,
+      "exp(coef) lower 95%": 0.6659,
+      "exp(coef) upper 95%": 5.5559,
+      "p": 0.2268
+     },
+     "N_SNV": {
+      "exp(coef)": 0.972,
+      "exp(coef) lower 95%": 0.903,
+      "exp(coef) upper 95%": 1.0462,
+      "p": 0.4493
+     },
+     "MSI": {
+      "exp(coef)": 0.995,
+      "exp(coef) lower 95%": 0.8906,
+      "exp(coef) upper 95%": 1.1116,
+      "p": 0.9293
+     },
+     "MET": {
+      "exp(coef)": 1.4539,
+      "exp(coef) lower 95%": 0.9792,
+      "exp(coef) upper 95%": 2.1588,
+      "p": 0.0635
+     }
+    },
+    "schoenfeld_p": {
+     "AGE": 0.2230405023282834,
+     "MET": 0.27579874182176245,
+     "MSI": 0.07878200714930238,
+     "N_SNV": 0.010210203941353425,
+     "log10TMB": 0.007596579363829623
+    },
+    "ph_ok": false
+   },
+   {
+    "label": "B: ASI analysable, consensus UV-dominant",
+    "n": 77,
+    "events": 40,
+    "concordance": 0.5566461020751542,
+    "hr": {
+     "UV": {
+      "exp(coef)": 1.3879,
+      "exp(coef) lower 95%": 0.435,
+      "exp(coef) upper 95%": 4.4286,
+      "p": 0.5798
+     },
+     "AGE": {
+      "exp(coef)": 0.9927,
+      "exp(coef) lower 95%": 0.9683,
+      "exp(coef) upper 95%": 1.0177,
+      "p": 0.5637
+     },
+     "log10TMB": {
+      "exp(coef)": 0.3513,
+      "exp(coef) lower 95%": 0.0483,
+      "exp(coef) upper 95%": 2.5523,
+      "p": 0.3011
+     },
+     "MET": {
+      "exp(coef)": 1.0595,
+      "exp(coef) lower 95%": 0.4814,
+      "exp(coef) upper 95%": 2.3317,
+      "p": 0.8858
+     }
+    },
+    "schoenfeld_p": {
+     "AGE": 0.10757516906348763,
+     "MET": 0.41620076408399664,
+     "UV": 0.6672896213956854,
+     "log10TMB": 0.2700074890587777
+    },
+    "ph_ok": true
+   },
+   {
+    "label": "B2: as B + cutaneous/H&N site",
+    "n": 77,
+    "events": 40,
+    "concordance": 0.5810431856421762,
+    "hr": {
+     "UV": {
+      "exp(coef)": 1.4774,
+      "exp(coef) lower 95%": 0.4623,
+      "exp(coef) upper 95%": 4.7218,
+      "p": 0.5103
+     },
+     "CUT": {
+      "exp(coef)": 0.6178,
+      "exp(coef) lower 95%": 0.2729,
+      "exp(coef) upper 95%": 1.3984,
+      "p": 0.2479
+     },
+     "AGE": {
+      "exp(coef)": 0.9978,
+      "exp(coef) lower 95%": 0.9719,
+      "exp(coef) upper 95%": 1.0245,
+      "p": 0.8727
+     },
+     "log10TMB": {
+      "exp(coef)": 0.4692,
+      "exp(coef) lower 95%": 0.0616,
+      "exp(coef) upper 95%": 3.5739,
+      "p": 0.4651
+     },
+     "MET": {
+      "exp(coef)": 1.0465,
+      "exp(coef) lower 95%": 0.4755,
+      "exp(coef) upper 95%": 2.3034,
+      "p": 0.91
+     }
+    },
+    "schoenfeld_p": {
+     "AGE": 0.1741762310304405,
+     "CUT": 0.3382687161344242,
+     "MET": 0.43746416472388583,
+     "UV": 0.8424765939996018,
+     "log10TMB": 0.22210928034250854
+    },
+    "ph_ok": true
+   },
+   {
+    "label": "B-sens: ASI FULL class only (SPARSE excluded)",
+    "n": 43,
+    "events": 20,
+    "concordance": 0.5529531568228105,
+    "hr": {
+     "UV": {
+      "exp(coef)": 1.2338,
+      "exp(coef) lower 95%": 0.3723,
+      "exp(coef) upper 95%": 4.0895,
+      "p": 0.7311
+     },
+     "AGE": {
+      "exp(coef)": 0.9999,
+      "exp(coef) lower 95%": 0.9636,
+      "exp(coef) upper 95%": 1.0376,
+      "p": 0.9977
+     },
+     "log10TMB": {
+      "exp(coef)": 0.3335,
+      "exp(coef) lower 95%": 0.022,
+      "exp(coef) upper 95%": 5.0662,
+      "p": 0.4289
+     },
+     "MET": {
+      "exp(coef)": 0.8785,
+      "exp(coef) lower 95%": 0.2869,
+      "exp(coef) upper 95%": 2.6902,
+      "p": 0.8205
+     }
+    },
+    "schoenfeld_p": {
+     "AGE": 0.002160054259197592,
+     "MET": 0.16725790199842974,
+     "UV": 0.5369649009481827,
+     "log10TMB": 0.037543072346018676
+    },
+    "ph_ok": false
+   },
+   {
+    "label": "C: ASI all patients, cutaneous/H&N site",
+    "n": 118,
+    "events": 60,
+    "concordance": 0.5887445887445888,
+    "hr": {
+     "CUT": {
+      "exp(coef)": 0.621,
+      "exp(coef) lower 95%": 0.3252,
+      "exp(coef) upper 95%": 1.1858,
+      "p": 0.1488
+     },
+     "AGE": {
+      "exp(coef)": 0.9965,
+      "exp(coef) lower 95%": 0.976,
+      "exp(coef) upper 95%": 1.0175,
+      "p": 0.7439
+     },
+     "log10TMB": {
+      "exp(coef)": 0.9869,
+      "exp(coef) lower 95%": 0.4075,
+      "exp(coef) upper 95%": 2.39,
+      "p": 0.9768
+     },
+     "MET": {
+      "exp(coef)": 1.3682,
+      "exp(coef) lower 95%": 0.7656,
+      "exp(coef) upper 95%": 2.4448,
+      "p": 0.2899
+     }
+    },
+    "schoenfeld_p": {
+     "AGE": 0.08247563023680646,
+     "CUT": 0.7087752000573415,
+     "MET": 0.746303154688619,
+     "log10TMB": 0.9864403087636895
+    },
+    "ph_ok": true
+   },
+   {
+    "label": "D: ACC all patients",
+    "n": 78,
+    "events": 36,
+    "concordance": 0.6531808035714286,
+    "hr": {
+     "AGE": {
+      "exp(coef)": 1.03,
+      "exp(coef) lower 95%": 1.0043,
+      "exp(coef) upper 95%": 1.0564,
+      "p": 0.022
+     },
+     "log10TMB": {
+      "exp(coef)": 1.4189,
+      "exp(coef) lower 95%": 0.56,
+      "exp(coef) upper 95%": 3.595,
+      "p": 0.4607
+     },
+     "MET": {
+      "exp(coef)": 1.6353,
+      "exp(coef) lower 95%": 0.8045,
+      "exp(coef) upper 95%": 3.3242,
+      "p": 0.1742
+     }
+    },
+    "schoenfeld_p": {
+     "AGE": 0.21253145017531894,
+     "MET": 0.39773598253533193,
+     "log10TMB": 0.8020725333144949
+    },
+    "ph_ok": true
+   },
+   {
+    "label": "E: THYM all patients",
+    "n": 67,
+    "events": 18,
+    "concordance": 0.6777777777777778,
+    "hr": {
+     "AGE": {
+      "exp(coef)": 1.0045,
+      "exp(coef) lower 95%": 0.9691,
+      "exp(coef) upper 95%": 1.0413,
+      "p": 0.8051
+     },
+     "log10TMB": {
+      "exp(coef)": 4.2622,
+      "exp(coef) lower 95%": 1.241,
+      "exp(coef) upper 95%": 14.6383,
+      "p": 0.0213
+     },
+     "MET": {
+      "exp(coef)": 1.7365,
+      "exp(coef) lower 95%": 0.607,
+      "exp(coef) upper 95%": 4.9672,
+      "p": 0.3034
+     }
+    },
+    "schoenfeld_p": {
+     "AGE": 0.18227164470616478,
+     "MET": 0.35069999844511934,
+     "log10TMB": 0.6621979848493826
+    },
+    "ph_ok": true
+   }
+  ],
+  "ASI_UV_logrank": {
+   "n_UV": 14,
+   "events_UV": 7,
+   "n_nonUV": 63,
+   "p": 0.6514676360348046,
+   "median_UV": 23.934,
+   "median_nonUV": 22.323
+  }
+ },
+ "enrichment": {
+  "n_mutations": 861,
+  "n_tests": 920,
+  "n_sig_q05": 0,
+  "top": [
+   {
+    "gene": "KDR",
+    "family": "Tobacco",
+    "n_gene": 13,
+    "n_gene_family": 6,
+    "odds_ratio": 13.1209,
+    "p": 0.0001,
+    "q": 0.079
+   },
+   {
+    "gene": "NOTCH4",
+    "family": "Tobacco",
+    "n_gene": 5,
+    "n_gene_family": 3,
+    "odds_ratio": 21.8455,
+    "p": 0.0026,
+    "q": 0.7918
+   },
+   {
+    "gene": "NTRK3",
+    "family": "UV",
+    "n_gene": 5,
+    "n_gene_family": 5,
+    "odds_ratio": Infinity,
+    "p": 0.0037,
+    "q": 0.7918
+   },
+   {
+    "gene": "NRAS",
+    "family": "Tobacco",
+    "n_gene": 6,
+    "n_gene_family": 3,
+    "odds_ratio": 14.5455,
+    "p": 0.005,
+    "q": 0.7918
+   },
+   {
+    "gene": "RB1",
+    "family": "Clock",
+    "n_gene": 3,
+    "n_gene_family": 3,
+    "odds_ratio": Infinity,
+    "p": 0.0054,
+    "q": 0.7918
+   },
+   {
+    "gene": "KDR",
+    "family": "UV",
+    "n_gene": 13,
+    "n_gene_family": 0,
+    "odds_ratio": 0.0,
+    "p": 0.0067,
+    "q": 0.7918
+   },
+   {
+    "gene": "NRAS",
+    "family": "TMZ",
+    "n_gene": 6,
+    "n_gene_family": 2,
+    "odds_ratio": 23.25,
+    "p": 0.0073,
+    "q": 0.7918
+   },
+   {
+    "gene": "PTCH1",
+    "family": "MMR",
+    "n_gene": 3,
+    "n_gene_family": 3,
+    "odds_ratio": Infinity,
+    "p": 0.0086,
+    "q": 0.7918
+   }
+  ],
+  "mutations_by_family": {
+   "UV": 283,
+   "MMR": 177,
+   "Clock": 152,
+   "HRD": 79,
+   "Tobacco": 58,
+   "POLE": 52,
+   "APOBEC": 40,
+   "TMZ": 20
+  }
+ },
+ "top_genes": {
+  "ACC": {
+   "TP53": [
+    23,
+    26.7
+   ],
+   "CTNNB1": [
+    17,
+    19.8
+   ],
+   "MEN1": [
+    10,
+    11.6
+   ],
+   "ATRX": [
+    8,
+    9.3
+   ],
+   "NF1": [
+    8,
+    9.3
+   ],
+   "TERT": [
+    7,
+    8.1
+   ],
+   "APC": [
+    7,
+    8.1
+   ],
+   "ARID2": [
+    5,
+    5.8
+   ]
+  },
+  "ASI": {
+   "TP53": [
+    31,
+    24.8
+   ],
+   "KDR": [
+    22,
+    17.6
+   ],
+   "ATM": [
+    13,
+    10.4
+   ],
+   "FLT4": [
+    12,
+    9.6
+   ],
+   "PIK3CA": [
+    11,
+    8.8
+   ],
+   "FAT1": [
+    10,
+    8.0
+   ],
+   "ARID1A": [
+    10,
+    8.0
+   ],
+   "EPHA5": [
+    10,
+    8.0
+   ]
+  },
+  "THYM": {
+   "TP53": [
+    11,
+    15.1
+   ],
+   "HRAS": [
+    4,
+    5.5
+   ],
+   "CYLD": [
+    4,
+    5.5
+   ],
+   "SETD2": [
+    4,
+    5.5
+   ],
+   "CDKN2A": [
+    4,
+    5.5
+   ],
+   "KIT": [
+    3,
+    4.1
+   ],
+   "KDM6A": [
+    3,
+    4.1
+   ],
+   "EIF1AX": [
+    3,
+    4.1
+   ]
+  }
+ },
+ "ASI_gene_vs_UV": [
+  {
+   "gene": "ROS1",
+   "n_mut": 5,
+   "mut_in_UV": 5,
+   "n_UV": 15,
+   "odds_ratio": Infinity,
+   "p": 0.0001,
+   "q": 0.0024
+  },
+  {
+   "gene": "IKZF1",
+   "n_mut": 6,
+   "mut_in_UV": 4,
+   "n_UV": 15,
+   "odds_ratio": 11.8182,
+   "p": 0.0092,
+   "q": 0.1013
+  },
+  {
+   "gene": "NOTCH2",
+   "n_mut": 7,
+   "mut_in_UV": 4,
+   "n_UV": 15,
+   "odds_ratio": 7.7576,
+   "p": 0.019,
+   "q": 0.1396
+  },
+  {
+   "gene": "PTPRD",
+   "n_mut": 5,
+   "mut_in_UV": 3,
+   "n_UV": 15,
+   "odds_ratio": 8.125,
+   "p": 0.0403,
+   "q": 0.1479
+  },
+  {
+   "gene": "NOTCH4",
+   "n_mut": 5,
+   "mut_in_UV": 3,
+   "n_UV": 15,
+   "odds_ratio": 8.125,
+   "p": 0.0403,
+   "q": 0.1479
+  },
+  {
+   "gene": "EPHA3",
+   "n_mut": 5,
+   "mut_in_UV": 3,
+   "n_UV": 15,
+   "odds_ratio": 8.125,
+   "p": 0.0403,
+   "q": 0.1479
+  },
+  {
+   "gene": "FAT1",
+   "n_mut": 9,
+   "mut_in_UV": 4,
+   "n_UV": 15,
+   "odds_ratio": 4.5091,
+   "p": 0.0537,
+   "q": 0.1688
+  },
+  {
+   "gene": "ATRX",
+   "n_mut": 6,
+   "mut_in_UV": 3,
+   "n_UV": 15,
+   "odds_ratio": 5.3333,
+   "p": 0.0715,
+   "q": 0.1965
+  }
+ ],
+ "biomarker": {
+  "consensus_MMR_n": 10,
+  "consensus_MMR_MSI_TYPE": {
+   "Stable": 5,
+   "Do not report": 2,
+   "Instable": 2,
+   "Indeterminate": 1
+  },
+  "consensus_MMR_MSI_SCORE_median": 0.135,
+  "consensus_MMR_N_SNV": [
+   12,
+   3,
+   9,
+   2,
+   20,
+   17,
+   2,
+   4,
+   6,
+   4
+  ],
+  "basket_MSI_instable_n": 2,
+  "instable_cases": [
+   {
+    "GROUP": "ACC",
+    "N_SNV": 20,
+    "MSI_SCORE": 16.62,
+    "CONSENSUS": "MMR",
+    "M1_SPA": "MMR",
+    "M2_MSKv2": "MMR",
+    "M3_cosine": "Clock"
+   },
+   {
+    "GROUP": "THYM",
+    "N_SNV": 17,
+    "MSI_SCORE": 16.63,
+    "CONSENSUS": "MMR",
+    "M1_SPA": "MMR",
+    "M2_MSKv2": "MMR",
+    "M3_cosine": "MMR"
+   }
+  ],
+  "MSI_score_MMRcalled_vs_rest_MWU_p": 0.9371902864533785,
+  "hypermutator": [
+   {
+    "GROUP": "ASI",
+    "PRIMARY_SITE": "Rectum and Colon",
+    "N_SNV": 53,
+    "TMB_SCORE": 52.1408235101989,
+    "MSI_TYPE": "Do not report",
+    "MSI_SCORE": 0.0,
+    "CONSENSUS": "Other",
+    "M1_SPA": "Other",
+    "M2_MSKv2": "Other",
+    "M3_cosine": "UV"
+   }
+  ]
+ }
+}

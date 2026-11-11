@@ -1,0 +1,21 @@
+name: msk50k
+channels: [conda-forge, bioconda]
+dependencies:
+  - python=3.11
+  - bedtools
+  - pip
+  - pip:
+    - SigProfilerAssignment
+    - SigProfilerMatrixGenerator
+    - SigProfilerSimulator
+    - SigProfilerExtractor
+    - lifelines
+    - scipy
+    - statsmodels
+    - seaborn
+    - requests
+    - scikit-learn
+    - py2bit
+    - python-docx
+    - plotly
+    - kaleido

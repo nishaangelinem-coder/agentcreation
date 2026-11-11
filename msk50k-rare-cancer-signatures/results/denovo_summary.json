@@ -1,0 +1,140 @@
+{
+ "n_samples": 130,
+ "n_mutations": 565,
+ "solutions": [
+  {
+   "Signatures": "1*",
+   "Stability (Avg Silhouette)": 1.0,
+   "Minimum Stability": 1.0,
+   "Considerable Solution": "YES",
+   "P-value": "Most Stab Sigs",
+   "Matrix Frobenius%": "92.17%",
+   "Mean Sample L1%": "185.75%",
+   "Maximum Sample L1%": "198.95%",
+   "Mean Sample L2%": "96.99%",
+   "Maximum Sample L2%": 101.96,
+   "Mean Sample KL": 2.9816,
+   "Maximum Sample KL": 5.2803,
+   "Mean Cosine Distance": 0.733,
+   "Max Cosine Distance": 0.976,
+   "Mean Correlation": 0.199,
+   "Minimum Correlation": -0.092
+  },
+  {
+   "Signatures": "2",
+   "Stability (Avg Silhouette)": 0.41,
+   "Minimum Stability": 0.34,
+   "Considerable Solution": "NO",
+   "P-value": NaN,
+   "Matrix Frobenius%": "83.92%",
+   "Mean Sample L1%": "181.21%",
+   "Maximum Sample L1%": "198.8%",
+   "Mean Sample L2%": "95.67%",
+   "Maximum Sample L2%": 102.18,
+   "Mean Sample KL": 2.8474,
+   "Maximum Sample KL": 5.178,
+   "Mean Cosine Distance": 0.692,
+   "Max Cosine Distance": 0.975,
+   "Mean Correlation": 0.249,
+   "Minimum Correlation": -0.08
+  },
+  {
+   "Signatures": "3",
+   "Stability (Avg Silhouette)": 0.35,
+   "Minimum Stability": 0.18,
+   "Considerable Solution": "NO",
+   "P-value": NaN,
+   "Matrix Frobenius%": "77.07%",
+   "Mean Sample L1%": "178.25%",
+   "Maximum Sample L1%": "198.8%",
+   "Mean Sample L2%": "94.45%",
+   "Maximum Sample L2%": 101.96,
+   "Mean Sample KL": 2.7239,
+   "Maximum Sample KL": 5.1725,
+   "Mean Cosine Distance": 0.646,
+   "Max Cosine Distance": 0.974,
+   "Mean Correlation": 0.306,
+   "Minimum Correlation": -0.087
+  },
+  {
+   "Signatures": "4",
+   "Stability (Avg Silhouette)": 0.35,
+   "Minimum Stability": 0.15,
+   "Considerable Solution": "NO",
+   "P-value": NaN,
+   "Matrix Frobenius%": "71.31%",
+   "Mean Sample L1%": "169.61%",
+   "Maximum Sample L1%": "198.45%",
+   "Mean Sample L2%": "90.42%",
+   "Maximum Sample L2%": 102.18,
+   "Mean Sample KL": 2.6024,
+   "Maximum Sample KL": 4.9423,
+   "Mean Cosine Distance": 0.588,
+   "Max Cosine Distance": 0.969,
+   "Mean Correlation": 0.373,
+   "Minimum Correlation": -0.067
+  }
+ ],
+ "signatures_vs_COSMIC": [
+  {
+   "solution": "SBS96_S1_Signatures.txt",
+   "signature": "SBS96A",
+   "best_COSMIC": "SBS5",
+   "cosine": 0.826
+  },
+  {
+   "solution": "SBS96_S2_Signatures.txt",
+   "signature": "SBS96A",
+   "best_COSMIC": "SBS102",
+   "cosine": 0.818
+  },
+  {
+   "solution": "SBS96_S2_Signatures.txt",
+   "signature": "SBS96B",
+   "best_COSMIC": "SBS18",
+   "cosine": 0.838
+  },
+  {
+   "solution": "SBS96_S3_Signatures.txt",
+   "signature": "SBS96A",
+   "best_COSMIC": "SBS5",
+   "cosine": 0.82
+  },
+  {
+   "solution": "SBS96_S3_Signatures.txt",
+   "signature": "SBS96B",
+   "best_COSMIC": "SBS7a",
+   "cosine": 0.834
+  },
+  {
+   "solution": "SBS96_S3_Signatures.txt",
+   "signature": "SBS96C",
+   "best_COSMIC": "SBS18",
+   "cosine": 0.828
+  },
+  {
+   "solution": "SBS96_S4_Signatures.txt",
+   "signature": "SBS96A",
+   "best_COSMIC": "SBS15",
+   "cosine": 0.758
+  },
+  {
+   "solution": "SBS96_S4_Signatures.txt",
+   "signature": "SBS96B",
+   "best_COSMIC": "SBS7a",
+   "cosine": 0.879
+  },
+  {
+   "solution": "SBS96_S4_Signatures.txt",
+   "signature": "SBS96C",
+   "best_COSMIC": "SBS87",
+   "cosine": 0.852
+  },
+  {
+   "solution": "SBS96_S4_Signatures.txt",
+   "signature": "SBS96D",
+   "best_COSMIC": "SBS18",
+   "cosine": 0.8
+  }
+ ]
+}

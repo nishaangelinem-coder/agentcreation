@@ -1,0 +1,16 @@
+data/
+results/snv_annotated.parquet
+results/sbs96_all_samples.parquet
+results/calls_all_samples.tsv.gz
+results/cohort.tsv
+results/basket_sample_calls.tsv
+results/basket_mutation_attribution.tsv
+results/survival_table.tsv
+results/control_sets.tsv
+results/external_*.tsv
+results/spa/
+results/spa_activities.tsv
+results/denovo/
+results/pooled_bootstrap.parquet
+results/*.log
+__pycache__/

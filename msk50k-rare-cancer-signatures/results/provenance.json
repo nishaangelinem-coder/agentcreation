@@ -1,0 +1,52 @@
+{
+  "access_date_utc": "2026-11-11T04:46:12.296396Z",
+  "studies": {
+    "msk_impact_50k_2026": {
+      "tarball_sha256": "16560d85cd25f716c49fec5aed82feeacfca0058cf19e73e110bb03f2c1aa264",
+      "name": "MSK-IMPACT 50K Clinical Sequencing Cohort (MSK, Cancer Cell 2026)",
+      "pmid": "41895280",
+      "citation": "Bandlamudi et al. Cancer Cell 2026",
+      "api_allSampleCount": 54331
+    },
+    "acc_tcga_pan_can_atlas_2018": {
+      "tarball_sha256": "21553bb0e0232d85c656f242646e2a7ff25d3473ed03af09492ede4c190e098b",
+      "name": "Adrenocortical Carcinoma (TCGA, PanCancer Atlas)",
+      "pmid": "29625048,29596782,29622463,29617662,29625055,29625050,29617662,32214244,29625049,29850653,36334560",
+      "citation": "TCGA, Cell 2018",
+      "api_allSampleCount": 92
+    },
+    "thym_tcga_pan_can_atlas_2018": {
+      "tarball_sha256": "6f1072af8bc927bad22c23ecdc55312cbb6dfd7506a5b8ca6bd242fd223f8519",
+      "name": "Thymoma (TCGA, PanCancer Atlas)",
+      "pmid": "29625048,29596782,29622463,29617662,29625055,29625050,29617662,32214244,29625049,29850653,36334560",
+      "citation": "TCGA, Cell 2018",
+      "api_allSampleCount": 123
+    },
+    "angs_painter_2025": {
+      "tarball_sha256": "b890db7af8bda0fdc79caeb43e2f5afbe269d9b7a720a7ecdd9cd62c95b2e702",
+      "name": "The Angiosarcoma Project - Count Me In (Provisional, April 2025)",
+      "pmid": null,
+      "citation": null,
+      "api_allSampleCount": 328
+    },
+    "angs_project_painter_2018": {
+      "tarball_sha256": "6197c5c576e420be24ffa00befa43175f56bc430446e7469e8276cdd2a54bbb0",
+      "name": "The Angiosarcoma Project - Count Me In (Nature Medicine, 2020)",
+      "pmid": "32042194",
+      "citation": "Painter et al. Nat Med 2020",
+      "api_allSampleCount": 48
+    }
+  },
+  "maf_sha256": "35b368ebb5352a5f7749b4b7bf9ec07c881263ab48df6fbc030d8fb37d2f88b5",
+  "n_samples_file": 54331,
+  "n_missing_sampleId": 0,
+  "n_samples_api": 54331,
+  "license": "CC BY-NC-ND 4.0 (per study meta)",
+  "datahub_commit": null,
+  "panels": {
+    "IMPACT341": 341,
+    "IMPACT410": 410,
+    "IMPACT468": 469,
+    "IMPACT505": 505
+  }
+}

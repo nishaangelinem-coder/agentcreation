@@ -1,0 +1,53 @@
+{
+  "exome_cds_bp": 33368829,
+  "IMPACT341": {
+    "genes": 341,
+    "unmatched_genes": [],
+    "territory_bp": 1003079
+  },
+  "IMPACT410": {
+    "genes": 410,
+    "unmatched_genes": [],
+    "territory_bp": 1135779
+  },
+  "IMPACT468": {
+    "genes": 469,
+    "unmatched_genes": [
+      "WHR1"
+    ],
+    "territory_bp": 1277496
+  },
+  "IMPACT505": {
+    "genes": 505,
+    "unmatched_genes": [
+      "WHR1"
+    ],
+    "territory_bp": 1355324
+  },
+  "cosine_panel_vs_genome": {
+    "exome_refseq_cds": 0.9190804514994595,
+    "IMPACT341": 0.9356366446718567,
+    "IMPACT410": 0.9318094409918088,
+    "IMPACT468": 0.9323184945940104,
+    "IMPACT505": 0.9331680534507393
+  },
+  "cosine_505_vs_other_panels": {
+    "IMPACT341": 0.9999551371591188,
+    "IMPACT410": 0.9999854563968754,
+    "IMPACT468": 0.9999954381682862,
+    "exome_refseq_cds": 0.9986743395813842
+  },
+  "max_fold_enrichment_505_vs_genome": {
+    "ATA": 0.445,
+    "CCG": 3.678
+  },
+  "frac_all_SNVs_inside_modelled_territory": 0.9796033523352738,
+  "outside_by_class": {
+    "5'Flank": 6330,
+    "Missense_Mutation": 1380,
+    "Intron": 118,
+    "Nonsense_Mutation": 117,
+    "Splice_Site": 69,
+    "5'UTR": 56
+  }
+}
