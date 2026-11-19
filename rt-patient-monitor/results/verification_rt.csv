@@ -1,4 +1,7 @@
 test_id,description,metric,value,limit,verdict
-TC-RT-01,"Alarm latency, proposed configuration under overload (2378 alarms, 1 runs): maximum",L_max_ms,3.7299,<= 10,PASS
-TC-RT-02,"Acquisition release jitter, proposed configuration under overload (49500 samples): maximum",J_max_ms,8.5557,<= 1,FAIL
+TC-RT-01,"Alarm latency, proposed configuration under overload (7161 alarms, 3 runs): maximum",L_max_ms,3.7299,<= 10,PASS
+TC-RT-01b,"Pipeline latency of every sample (release to end of processing), proposed configuration under overload (148500 samples): samples above 10 ms",late_samples,1.0000,== 0,FAIL
+TC-RT-02,"Acquisition release jitter, proposed configuration under overload (148500 samples): maximum",J_max_ms,8.7194,<= 1,FAIL
 TC-RT-03,"Samples or alarm events lost, proposed configuration, all probe runs",lost,0.0000,== 0,PASS
+TC-WDG-01,Runaway processing thread injected under overload (5 runs): undetected stalls,undetected,0.0000,== 0,PASS
+TC-WDG-01b,Runaway processing thread: maximum time from stall start to SYS_STALL annunciation,t_max_ms,118.0012,<= 200,PASS

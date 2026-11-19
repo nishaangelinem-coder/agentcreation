@@ -86,10 +86,10 @@ with open(f"{PAPER}/tables/tab_latency.tex", "w") as f:
         if load == "idle": f.write("\\midrule\n")
 with open(f"{PAPER}/tables/tab_jitter.tex", "w") as f:
     for load in ("idle", "stress"):
-        f.write(f"\\multicolumn{{8}}{{l}}{{\\textit{{{'No interference load' if load == 'idle' else 'Overload'}}}}}\\\\\n")
+        f.write(f"\\multicolumn{{9}}{{l}}{{\\textit{{{'No interference load' if load == 'idle' else 'Overload'}}}}}\\\\\n")
         for _, r in res[res.load == load].iterrows():
             f.write(f"{LBL[(r.policy, r.alarm)]} & {fmt(r.n_samples)} & {fmt(r.jit_p50, 1)} & {fmt(r.jit_p999)} & {fmt(r.jit_max)} & "
-                    f"{fmt(r.pipe_p50, 1)} & {fmt(r.pipe_p999)} & {fmt(r.pipe_max)} \\\\\n")
+                    f"{fmt(r.pipe_p50, 1)} & {fmt(r.pipe_p999)} & {fmt(r.pipe_max)} & {int(r.pipe_miss)} \\\\\n")
         if load == "idle": f.write("\\midrule\n")
 
 def get(pol, al, load): 
@@ -106,6 +106,8 @@ for pol in ("fifo", "other"):
             num[tag + "UB"] = f"{r.miss_ub95_pct:.3f}"; num[tag + "JitMax"] = fmt(r.jit_max); num[tag + "JitPNNN"] = fmt(r.jit_p999)
             num[tag + "ResMax"] = fmt(r.resid_max); num[tag + "ResPNNN"] = fmt(r.resid_p999); num[tag + "NGtOne"] = str(int(r.n_gt1ms))
             num[tag + "LateShare"] = "n/a" if r.late_share != r.late_share else f"{100 * r.late_share:.0f}"
+            num[tag + "PipeMiss"] = str(int(r.pipe_miss)); num[tag + "PipeMissPpm"] = f"{1e6 * r.pipe_miss / r.n_samples:.0f}"
+            num[tag + "PipeMaxMs"] = f"{r.pipe_max / 1e3:.1f}"; num[tag + "JitMaxMs"] = f"{r.jit_max / 1e3:.1f}"; num[tag + "ResP"] = fmt(r.resid_p50)
             num[tag + "PipeMax"] = fmt(r.pipe_max); num[tag + "JitOver"] = str(int(r.jit_gt1ms)); num[tag + "NSamp"] = fmt(r.n_samples)
 
 # hypothesis tests under overload
@@ -124,6 +126,7 @@ cmp(("other", "event", "stress"), ("other", "event", "idle"), "TestLoadTs")
 r = get("fifo", "event", "stress")
 if r is not None:
     verdict("TC-RT-01", f"Alarm latency, proposed configuration under overload ({int(r.n)} alarms, {int(r.reps)} runs): maximum", "L_max_ms", r["max"] / 1e3, "<=", 10.0)
+    verdict("TC-RT-01b", f"Pipeline latency of every sample (release to end of processing), proposed configuration under overload ({int(r.n_samples)} samples): samples above 10 ms", "late_samples", float(r.pipe_miss), "==", 0)
     verdict("TC-RT-02", f"Acquisition release jitter, proposed configuration under overload ({int(r.n_samples)} samples): maximum", "J_max_ms", r.jit_max / 1e3, "<=", 1.0)
     verdict("TC-RT-03", "Samples or alarm events lost, proposed configuration, all probe runs", "lost",
             float(sum(meta[k]["drops"] for k in meta if k[0] == "fifo" and k[1] == "event")), "==", 0)
@@ -141,7 +144,9 @@ if key in cacq:
     for _ in range(50): R = Rb + math.ceil(R / 20000.0) * Cw
     Lmax = r["max"]
     wc = dict(C_acq=Ca, C_proc=Cp, C_alarm=Cal, C_wdg=Cw, B_ui=B, R_app=R, L_max=Lmax, platform=Lmax - R,
-              C_acq_mean=float(np.concatenate(cacq[key]).mean()), C_proc_mean=float(np.concatenate(cproc[key]).mean()))
+              C_acq_mean=float(np.concatenate(cacq[key]).mean()), C_proc_mean=float(np.concatenate(cproc[key]).mean()),
+              C_acq_pq=pct(np.concatenate(cacq[key]), 99.99), C_proc_pq=pct(np.concatenate(cproc[key]), 99.99),
+              resid_max=float(r.resid_max), jit_max=float(r.jit_max))
     json.dump(wc, open("results/wcet_rta.json", "w"), indent=1)
     for k, v in wc.items(): num["Wc" + k.replace("_", "")] = fmt(v, 1)
     num["WcUtil"] = f"{100.0 * (wc['C_acq_mean'] + wc['C_proc_mean']) / 2000.0:.1f}"
@@ -270,6 +275,6 @@ pd.DataFrame(verdicts, columns=["test_id", "description", "metric", "value", "li
 json.dump({"tests": tests, "stall_ms": st, "clinical_s": {k: {f"{a}/{b}": v for (a, b), v in d_.items()} for k, d_ in clin.items()}}, open("results/stats.json", "w"), indent=1, default=float)
 with open(f"{PAPER}/tables/numbers.tex", "w") as f:
     for k, v in sorted(num.items()): f.write(f"\\newcommand{{\\N{k}}}{{{v}}}\n")
-print(res[["load", "policy", "alarm", "n", "p50", "p999", "max", "miss", "jit_p999", "jit_max", "jit_gt1ms", "resid_p999", "resid_max", "n_gt1ms", "late_share", "drops"]].round(1).to_string(index=False))
+print(res[["load", "policy", "alarm", "n", "p50", "p999", "max", "miss", "jit_p999", "jit_max", "jit_gt1ms", "pipe_miss", "resid_p50", "resid_p999", "resid_max", "n_gt1ms", "late_share", "drops"]].round(1).to_string(index=False))
 for v in verdicts: print(v)
 print(json.dumps(tests, indent=1, default=float))
