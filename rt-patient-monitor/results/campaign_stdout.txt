@@ -35,3 +35,5 @@ other/event normal: fires=0 max_latency=0.0 us misses(>10 ms)=0 drops=0
 fifo/event clinical: fires=7 max_latency=164.4 us misses(>10 ms)=0 drops=0
 fifo/event clinical: fires=7 max_latency=87.3 us misses(>10 ms)=0 drops=0
 fifo/event clinical: fires=7 max_latency=60.1 us misses(>10 ms)=0 drops=0
+other/event clinical: fires=7 max_latency=2989.8 us misses(>10 ms)=0 drops=0
+CAMPAIGN_DONE

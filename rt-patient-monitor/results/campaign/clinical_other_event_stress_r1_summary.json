@@ -1,0 +1,1 @@
+{"policy":"other","alarm_path":"event","poll_ms":5,"scenario":"clinical","duration_s":210.0,"seed":12,"cpu":1,"mlock":0,"deadline_ms":10.0,"samples":105000,"sample_drops":0,"sample_q_high_water":10,"alarm_ev_drops":0,"alarm_fires":7,"deadline_misses":0,"latency_max_us":2989.8,"wcet_alarm_ns":3494,"mean_alarm_ns":1627,"stall_at_s":-1.0}

@@ -1,5 +1,5 @@
 build/
-results/campaign/*_samples.csv
+results/**/*_samples.csv
 paper/*.aux
 paper/*.log
 paper/*.out

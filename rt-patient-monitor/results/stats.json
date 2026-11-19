@@ -37,8 +37,94 @@
    93.3862,
    114.0158,
    110.0365,
-   103.3645
+   103.3645,
+   100.01910000000001
   ]
  },
- "clinical_s": {}
+ "clinical_s": {
+  "ASYSTOLE": {
+   "fifo/idle": [
+    4.104
+   ],
+   "fifo/stress": [
+    4.108,
+    4.118
+   ],
+   "other/stress": [
+    4.108
+   ]
+  },
+  "LOW_PERF": {
+   "fifo/idle": [
+    8.06
+   ],
+   "fifo/stress": [
+    8.37,
+    7.56
+   ],
+   "other/stress": [
+    8.37
+   ]
+  },
+  "TACHY": {
+   "fifo/idle": [
+    1.722
+   ],
+   "fifo/stress": [
+    1.87,
+    1.824
+   ],
+   "other/stress": [
+    1.87
+   ]
+  },
+  "BRADY": {
+   "fifo/idle": [
+    6.126
+   ],
+   "fifo/stress": [
+    6.01,
+    5.966
+   ],
+   "other/stress": [
+    6.01
+   ]
+  },
+  "DESAT": {
+   "fifo/idle": [
+    6.92
+   ],
+   "fifo/stress": [
+    7.02,
+    6.82
+   ],
+   "other/stress": [
+    7.02
+   ]
+  },
+  "SPO2_LOW": {
+   "fifo/idle": [
+    10.88
+   ],
+   "fifo/stress": [
+    10.9,
+    10.73
+   ],
+   "other/stress": [
+    10.9
+   ]
+  },
+  "LEADS_OFF": {
+   "fifo/idle": [
+    0.498
+   ],
+   "fifo/stress": [
+    0.498,
+    0.498
+   ],
+   "other/stress": [
+    0.498
+   ]
+  }
+ }
 }

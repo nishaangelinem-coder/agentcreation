@@ -163,7 +163,7 @@ for ax, load, ttl in zip(axs, ("idle", "stress"), ("(a) no interference load", "
     ax.axvline(10, color="#444", lw=0.9); ax.text(10.6, 0.5, "10 ms deadline", rotation=90, va="center", fontsize=7.5, color="#444")
     ax.set_xscale("log"); ax.set_yscale("log"); ax.set_xlabel("alarm latency $L$ (ms)"); ax.set_title(ttl, fontsize=9, loc="left")
     ax.set_xlim(0.01, 300); ax.set_ylim(5e-5, 1.3)
-axs[0].set_ylabel("fraction of alarms with latency > $L$"); axs[1].legend(loc="lower left", fontsize=7.5)
+axs[0].set_ylabel("fraction of alarms with latency > $L$"); axs[0].legend(loc="lower left", fontsize=7.5)
 fig.tight_layout(); fig.savefig(f"{PAPER}/figs/fig_latency_ccdf.pdf"); fig.savefig(f"{PAPER}/figs/fig_latency_ccdf.png", dpi=200); plt.close(fig)
 
 # figure: release jitter CCDF under overload + per-run maxima
@@ -173,7 +173,7 @@ for c in (("fifo", "event"), ("other", "event")):
     if key in jit:
         x = np.sort(np.concatenate(jit[key])) / 1e3; x = np.maximum(x, 1e-3); y = 1.0 - np.arange(len(x)) / len(x)
         axs[0].step(x, y, where="post", color=COL[c], ls=LS[c], label={"fifo": "FP (SCHED_FIFO)", "other": "TS (time-sharing)"}[c[0]])
-axs[0].axvline(1, color="#444", lw=0.9); axs[0].text(1.07, 0.4, "1 ms limit", rotation=90, va="center", fontsize=7.5, color="#444")
+axs[0].axvline(1, color="#444", lw=0.9); axs[0].text(1.07, 3e-5, "1 ms limit", rotation=90, va="center", fontsize=7.5, color="#444")
 axs[0].set_xscale("log"); axs[0].set_yscale("log"); axs[0].set_xlabel("acquisition release jitter (ms)"); axs[0].set_ylabel("fraction of samples above")
 axs[0].set_title("(a) release jitter under overload", fontsize=9, loc="left"); axs[0].legend(fontsize=7.5, loc="lower left"); axs[0].set_ylim(5e-6, 1.3)
 xs, labs = [], []
@@ -185,7 +185,7 @@ for i, c in enumerate(CFG):
         axs[1].scatter([i + (jx - 0.5) * 0.3] * len(mx), mx, s=26, color=COL[c], marker="o" if load == "idle" else "s",
                        facecolors="none" if load == "idle" else COL[c], zorder=3)
 axs[1].scatter([], [], s=26, color="#555", facecolors="none", marker="o", label="no load"); axs[1].scatter([], [], s=26, color="#555", marker="s", label="overload")
-axs[1].axhline(10, color="#444", lw=0.9); axs[1].set_yscale("log"); axs[1].set_xticks(range(4))
+axs[1].axhline(10, color="#444", lw=0.9); axs[1].set_yscale("log"); axs[1].set_ylim(0.2, 90); axs[1].set_xticks(range(4))
 axs[1].set_xticklabels(["FP\nevent", "FP\npolling", "TS\nevent", "TS\npolling"]); axs[1].set_ylabel("per-run maximum latency (ms)")
 axs[1].set_title("(b) worst alarm latency in each run", fontsize=9, loc="left"); axs[1].legend(fontsize=7.5, loc="upper left")
 fig.tight_layout(); fig.savefig(f"{PAPER}/figs/fig_jitter.pdf"); fig.savefig(f"{PAPER}/figs/fig_jitter.png", dpi=200); plt.close(fig)

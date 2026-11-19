@@ -5,23 +5,44 @@ H-01,ecg_proc,SRS-ECG-03,TC-ASY-03b,PASS
 H-01,ecg_proc,SRS-ALM-01,TC-ASY-01,PASS
 H-01,ecg_proc,SRS-ALM-01,TC-ASY-01b,PASS
 H-01,ecg_proc,SRS-ALM-01,TC-ASY-01c,PASS
+H-01,ecg_proc,SRS-ALM-01,TC-RT-04,PASS
+H-01,ecg_proc,SRS-ALM-01,TC-RT-04b,PASS
+H-01,ecg_proc,SRS-ALM-01,TC-RT-04c,PASS
+H-02,monitor (scheduling),SRS-RT-01,TC-RT-01,PASS
+H-02,monitor (scheduling),SRS-RT-01,TC-RT-01b,FAIL
 H-02,monitor (scheduling),SRS-RT-02,TC-INSP-01,PASS
+H-02,monitor (scheduling),SRS-RT-02,TC-RT-01,PASS
+H-02,monitor (scheduling),SRS-RT-02,TC-RT-01b,FAIL
 H-03,chan / monitor,SRS-RT-02,TC-INSP-01,PASS
+H-03,chan / monitor,SRS-RT-02,TC-RT-01,PASS
+H-03,chan / monitor,SRS-RT-02,TC-RT-01b,FAIL
 H-04,monitor / rt_util,SRS-RT-03,TC-INSP-01,PASS
+H-05,monitor (watchdog),SRS-WDG-01,TC-WDG-01,PASS
+H-05,monitor (watchdog),SRS-WDG-01,TC-WDG-01b,PASS
+H-06,chan,SRS-ACQ-02,TC-RT-03,PASS
 H-07,ecg_proc,SRS-ALM-06,TC-ASY-03,PASS
 H-07,ecg_proc,SRS-ALM-06,TC-ASY-03b,PASS
 H-07,ecg_proc,SRS-ALM-06,TC-LO-01,PASS
 H-07,ecg_proc,SRS-ALM-06,TC-LO-01b,PASS
+H-07,ecg_proc,SRS-ALM-06,TC-RT-04,PASS
+H-07,ecg_proc,SRS-ALM-06,TC-RT-04b,PASS
+H-07,ecg_proc,SRS-ALM-06,TC-RT-04c,PASS
 H-07,ecg_proc,SRS-ALM-10,TC-FA-01,PASS
 H-08,ecg_proc / spo2_proc,SRS-ALM-06,TC-ASY-03,PASS
 H-08,ecg_proc / spo2_proc,SRS-ALM-06,TC-ASY-03b,PASS
 H-08,ecg_proc / spo2_proc,SRS-ALM-06,TC-LO-01,PASS
 H-08,ecg_proc / spo2_proc,SRS-ALM-06,TC-LO-01b,PASS
+H-08,ecg_proc / spo2_proc,SRS-ALM-06,TC-RT-04,PASS
+H-08,ecg_proc / spo2_proc,SRS-ALM-06,TC-RT-04b,PASS
+H-08,ecg_proc / spo2_proc,SRS-ALM-06,TC-RT-04c,PASS
 H-08,ecg_proc / spo2_proc,SRS-ALM-07,TC-PERF-01,PASS
 H-08,ecg_proc / spo2_proc,SRS-ALM-07,TC-PERF-01b,PASS
 H-09,spo2_proc,SRS-ALM-07,TC-PERF-01,PASS
 H-09,spo2_proc,SRS-ALM-07,TC-PERF-01b,PASS
 H-09,spo2_proc,SRS-SPO-01,TC-SPO-01,PASS
+H-10,spo2_proc,SRS-ALM-04,TC-RT-04,PASS
+H-10,spo2_proc,SRS-ALM-04,TC-RT-04b,PASS
+H-10,spo2_proc,SRS-ALM-04,TC-RT-04c,PASS
 H-10,spo2_proc,SRS-ALM-04,TC-SPO-02,PASS
 H-10,spo2_proc,SRS-ALM-04,TC-SPO-02b,PASS
 H-10,spo2_proc,SRS-ALM-04,TC-SPO-02c,PASS
@@ -36,3 +57,5 @@ H-13,ecg_proc / spo2_proc,SRS-ECG-01,TC-ECG-01,PASS
 H-13,ecg_proc / spo2_proc,SRS-ECG-01,TC-ECG-01b,PASS
 H-13,ecg_proc / spo2_proc,SRS-ECG-02,TC-ECG-02,PASS
 H-13,ecg_proc / spo2_proc,SRS-ALM-10,TC-FA-01,PASS
+H-14,monitor (acquisition),SRS-ACQ-01,TC-RT-02,FAIL
+H-14,monitor (acquisition),SRS-RT-04,TC-RT-02,FAIL

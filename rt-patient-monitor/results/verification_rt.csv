@@ -5,3 +5,6 @@ TC-RT-02,"Acquisition release jitter, proposed configuration under overload (148
 TC-RT-03,"Samples or alarm events lost, proposed configuration, all probe runs",lost,0.0000,== 0,PASS
 TC-WDG-01,Runaway processing thread injected under overload (5 runs): undetected stalls,undetected,0.0000,== 0,PASS
 TC-WDG-01b,Runaway processing thread: maximum time from stall start to SYS_STALL annunciation,t_max_ms,118.0012,<= 200,PASS
+TC-RT-04,"Clinical scenario in real time, proposed configuration (3 runs): runs with missing, extra or repeated alarms",bad_runs,0.0000,== 0,PASS
+TC-RT-04b,Clinical scenario in real time: smallest margin to the time-to-alarm limits,margin_s,0.0060,>= 0,PASS
+TC-RT-04c,Clinical scenario in real time: maximum alarm-system latency,L_max_ms,0.1644,<= 10,PASS

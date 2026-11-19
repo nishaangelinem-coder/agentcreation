@@ -20,7 +20,7 @@ watchdog) is treated as **Class C**; the display/operator thread as Class B, seg
 
 ## 2. Hazard log
 
-Verification summary: **27 PASS, 0 FAIL** out of 27 executed checks.
+Verification summary: **34 PASS, 2 FAIL** out of 36 executed checks.
 
 ### H-01 - Life-threatening arrhythmia (asystole) not annunciated
 
@@ -34,9 +34,9 @@ Verification summary: **27 PASS, 0 FAIL** out of 27 executed checks.
 | Risk control measures | Absolute threshold floor (0.2 mV-equivalent); T-wave window excluded from search-back; asystole timer on validated beats only |
 | Control type | Inherent safety by design |
 | Requirements | SRS-ECG-03, SRS-ALM-01 |
-| Verification | TC-ASY-01 (PASS), TC-ASY-01b (PASS), TC-ASY-01c (PASS), TC-ASY-02 (PASS), TC-ASY-03 (PASS), TC-ASY-03b (PASS) |
+| Verification | TC-ASY-01 (PASS), TC-ASY-01b (PASS), TC-ASY-01c (PASS), TC-ASY-02 (PASS), TC-ASY-03 (PASS), TC-ASY-03b (PASS), TC-RT-04 (PASS), TC-RT-04b (PASS), TC-RT-04c (PASS) |
 | Residual risk | S5 x P1 = 5 (Acceptable) |
-| Status | **Not run** |
+| Status | **Verified** |
 | Residual-risk note | Ventricular fibrillation is not classified by this prototype (out of scope); coarse VF may be counted as beats. |
 
 ### H-02 - Alarm annunciated too late
@@ -51,9 +51,9 @@ Verification summary: **27 PASS, 0 FAIL** out of 27 executed checks.
 | Risk control measures | Fixed-priority preemptive scheduling with alarm manager highest; event-driven (non-polled) alarm path; 10 ms hard deadline verified under overload |
 | Control type | Inherent safety by design |
 | Requirements | SRS-RT-01, SRS-RT-02 |
-| Verification | TC-INSP-01 (PASS) |
+| Verification | TC-INSP-01 (PASS), TC-RT-01 (PASS), TC-RT-01b (FAIL) |
 | Residual risk | S4 x P1 = 4 (Acceptable) |
-| Status | **Not run** |
+| Status | **OPEN: control not verified** |
 | Residual-risk note | Bound demonstrated empirically on the evaluation platform only; a certified RTOS/board latency bound is required for a product. |
 
 ### H-03 - Alarm annunciated too late
@@ -68,9 +68,9 @@ Verification summary: **27 PASS, 0 FAIL** out of 27 executed checks.
 | Risk control measures | Priority-inheritance protocol on every shared mutex; critical sections limited to fixed-size copies |
 | Control type | Inherent safety by design |
 | Requirements | SRS-RT-02 |
-| Verification | TC-INSP-01 (PASS) |
+| Verification | TC-INSP-01 (PASS), TC-RT-01 (PASS), TC-RT-01b (FAIL) |
 | Residual risk | S4 x P1 = 4 (Acceptable) |
-| Status | **Not run** |
+| Status | **OPEN: control not verified** |
 
 ### H-04 - Alarm annunciated too late
 
@@ -100,9 +100,9 @@ Verification summary: **27 PASS, 0 FAIL** out of 27 executed checks.
 | Risk control measures | Independent watchdog thread above the supervised threads; SYS_STALL HIGH-priority technical alarm within 200 ms |
 | Control type | Protective measure |
 | Requirements | SRS-WDG-01 |
-| Verification |  |
+| Verification | TC-WDG-01 (PASS), TC-WDG-01b (PASS) |
 | Residual risk | S5 x P1 = 5 (Acceptable) |
-| Status | **Not run** |
+| Status | **Verified** |
 | Residual-risk note | A stalled alarm-manager thread or a kernel hang is not covered: an external hardware watchdog is required. |
 
 ### H-06 - Physiological data silently lost
@@ -117,9 +117,9 @@ Verification summary: **27 PASS, 0 FAIL** out of 27 executed checks.
 | Risk control measures | Bounded queue with drop counter; DATA_LOSS technical alarm on any drop; queue sized for 1 s of backlog |
 | Control type | Protective measure |
 | Requirements | SRS-ACQ-02 |
-| Verification |  |
+| Verification | TC-RT-03 (PASS) |
 | Residual risk | S3 x P1 = 3 (Acceptable) |
-| Status | **Not run** |
+| Status | **Verified** |
 
 ### H-07 - False asystole alarm after lead reconnection
 
@@ -133,9 +133,9 @@ Verification summary: **27 PASS, 0 FAIL** out of 27 executed checks.
 | Risk control measures | Hold-last-value during saturation; blanking and threshold re-learning after reconnection; bounded single-beat influence on the threshold |
 | Control type | Inherent safety by design |
 | Requirements | SRS-ALM-06, SRS-ALM-10 |
-| Verification | TC-ASY-03 (PASS), TC-ASY-03b (PASS), TC-FA-01 (PASS), TC-LO-01 (PASS), TC-LO-01b (PASS) |
+| Verification | TC-ASY-03 (PASS), TC-ASY-03b (PASS), TC-FA-01 (PASS), TC-LO-01 (PASS), TC-LO-01b (PASS), TC-RT-04 (PASS), TC-RT-04b (PASS), TC-RT-04c (PASS) |
 | Residual risk | S3 x P2 = 6 (Tolerable) |
-| Status | **Not run** |
+| Status | **Verified** |
 
 ### H-08 - Asystole masked by leads-off condition
 
@@ -149,9 +149,9 @@ Verification summary: **27 PASS, 0 FAIL** out of 27 executed checks.
 | Risk control measures | LEADS_OFF technical alarm within 0.5 s; independent pulse supervision through PPG perfusion (LOW_PERF); asystole detected within 10 s of reconnection even if thresholds were learnt on noise |
 | Control type | Protective measure + information for safety |
 | Requirements | SRS-ALM-06, SRS-ALM-07 |
-| Verification | TC-ASY-03 (PASS), TC-ASY-03b (PASS), TC-LO-01 (PASS), TC-LO-01b (PASS), TC-PERF-01 (PASS), TC-PERF-01b (PASS) |
+| Verification | TC-ASY-03 (PASS), TC-ASY-03b (PASS), TC-LO-01 (PASS), TC-LO-01b (PASS), TC-PERF-01 (PASS), TC-PERF-01b (PASS), TC-RT-04 (PASS), TC-RT-04b (PASS), TC-RT-04c (PASS) |
 | Residual risk | S5 x P1 = 5 (Acceptable) |
-| Status | **Not run** |
+| Status | **Verified** |
 | Residual-risk note | LEADS_OFF is MEDIUM and LOW_PERF is LOW priority; escalation when both are present is a recommended extension. |
 
 ### H-09 - Wrong SpO2 value displayed
@@ -183,9 +183,9 @@ Verification summary: **27 PASS, 0 FAIL** out of 27 executed checks.
 | Risk control measures | Two-level SpO2 limits with bounded persistence times (5 s / 10 s) |
 | Control type | Inherent safety by design |
 | Requirements | SRS-ALM-04, SRS-ALM-05 |
-| Verification | TC-SPO-02 (PASS), TC-SPO-02b (PASS), TC-SPO-02c (PASS) |
+| Verification | TC-RT-04 (PASS), TC-RT-04b (PASS), TC-RT-04c (PASS), TC-SPO-02 (PASS), TC-SPO-02b (PASS), TC-SPO-02c (PASS) |
 | Residual risk | S4 x P1 = 4 (Acceptable) |
-| Status | **Not run** |
+| Status | **Verified** |
 
 ### H-11 - High-priority alarm hidden by lower-priority alarm
 
@@ -249,35 +249,35 @@ Verification summary: **27 PASS, 0 FAIL** out of 27 executed checks.
 | Risk control measures | Absolute-time periodic release; timers counted in sample indices, not wall-clock reads |
 | Control type | Inherent safety by design |
 | Requirements | SRS-ACQ-01, SRS-RT-04 |
-| Verification |  |
+| Verification | TC-RT-02 (FAIL) |
 | Residual risk | S3 x P1 = 3 (Acceptable) |
-| Status | **Not run** |
+| Status | **OPEN: control not verified** |
 
 ## 3. Software requirements and verification status
 
 | ID | Requirement | Tests | Status |
 |---|---|---|---|
-| SRS-ACQ-01 | ECG shall be acquired at 500 Hz and PPG at 100 Hz by a periodic task released on an absolute time base (no cumulative drift). |  | **NOT RUN** |
-| SRS-ACQ-02 | No acquired sample shall be lost between acquisition and processing; any loss shall raise the HIGH-priority technical alarm DATA_LOSS. |  | **NOT RUN** |
+| SRS-ACQ-01 | ECG shall be acquired at 500 Hz and PPG at 100 Hz by a periodic task released on an absolute time base (no cumulative drift). | TC-RT-02 | **FAIL** |
+| SRS-ACQ-02 | No acquired sample shall be lost between acquisition and processing; any loss shall raise the HIGH-priority technical alarm DATA_LOSS. | TC-RT-03 | **PASS** |
 | SRS-ECG-01 | QRS detection sensitivity and positive predictivity shall each be >= 99.5 % for R-wave amplitudes 0.5-4.4 mV and heart rates 40-180 bpm on the reference signal set. | TC-ECG-01, TC-ECG-01b | **PASS** |
 | SRS-ECG-02 | Displayed heart rate shall be within +/-10 % of the true rate. | TC-ECG-02 | **PASS** |
 | SRS-ECG-03 | The QRS detection threshold shall have an absolute floor so that signals below 0.15 mV (noise, isoelectric line) are never counted as beats. | TC-ASY-02, TC-ASY-03, TC-ASY-03b | **PASS** |
-| SRS-ALM-01 | ASYSTOLE (HIGH) shall be raised when no QRS is detected for 4.0 s; time to alarm from the last QRS shall be >= 4.0 s and <= 4.5 s. | TC-ASY-01, TC-ASY-01b, TC-ASY-01c | **NOT RUN** |
-| SRS-ALM-02 | TACHY (HIGH) shall be raised when the 4-beat mean heart rate exceeds 150 bpm, within 10 s of the rate change. | TC-TAC-01, TC-TAC-01b | **NOT RUN** |
-| SRS-ALM-03 | BRADY (HIGH) shall be raised when the 4-beat mean heart rate falls below 40 bpm, within 10 s of the rate change. | TC-BRA-01, TC-BRA-01b | **NOT RUN** |
-| SRS-ALM-04 | DESAT (HIGH) shall be raised when SpO2 < 85 % persists for 5 s, within 10 s of a step desaturation. | TC-SPO-02, TC-SPO-02b, TC-SPO-02c | **NOT RUN** |
+| SRS-ALM-01 | ASYSTOLE (HIGH) shall be raised when no QRS is detected for 4.0 s; time to alarm from the last QRS shall be >= 4.0 s and <= 4.5 s. | TC-ASY-01, TC-ASY-01b, TC-ASY-01c, TC-RT-04, TC-RT-04b, TC-RT-04c | **PASS** |
+| SRS-ALM-02 | TACHY (HIGH) shall be raised when the 4-beat mean heart rate exceeds 150 bpm, within 10 s of the rate change. | TC-RT-04, TC-RT-04b, TC-RT-04c, TC-TAC-01, TC-TAC-01b | **PASS** |
+| SRS-ALM-03 | BRADY (HIGH) shall be raised when the 4-beat mean heart rate falls below 40 bpm, within 10 s of the rate change. | TC-BRA-01, TC-BRA-01b, TC-RT-04, TC-RT-04b, TC-RT-04c | **PASS** |
+| SRS-ALM-04 | DESAT (HIGH) shall be raised when SpO2 < 85 % persists for 5 s, within 10 s of a step desaturation. | TC-RT-04, TC-RT-04b, TC-RT-04c, TC-SPO-02, TC-SPO-02b, TC-SPO-02c | **PASS** |
 | SRS-ALM-05 | SPO2_LOW (MEDIUM) shall be raised when SpO2 < 90 % persists for 10 s, within 15 s of a step change. | TC-SPO-02, TC-SPO-02b, TC-SPO-02c | **PASS** |
-| SRS-ALM-06 | LEADS_OFF (MEDIUM, technical) shall be raised after 0.5 s of front-end saturation; ECG rhythm alarms shall be inhibited while the ECG is invalid and the detector shall re-learn its thresholds after reconnection. | TC-ASY-03, TC-ASY-03b, TC-LO-01, TC-LO-01b | **NOT RUN** |
+| SRS-ALM-06 | LEADS_OFF (MEDIUM, technical) shall be raised after 0.5 s of front-end saturation; ECG rhythm alarms shall be inhibited while the ECG is invalid and the detector shall re-learn its thresholds after reconnection. | TC-ASY-03, TC-ASY-03b, TC-LO-01, TC-LO-01b, TC-RT-04, TC-RT-04b, TC-RT-04c | **PASS** |
 | SRS-ALM-07 | SpO2 shall be declared invalid (no numeric, no SpO2 limit alarms) when the perfusion index is below the minimum, and LOW_PERF (LOW, technical) shall be raised within 10 s. | TC-PERF-01, TC-PERF-01b | **PASS** |
 | SRS-ALM-08 | The annunciation output shall always reflect the highest priority among the active alarms (HIGH > MEDIUM > LOW). | TC-ALM-01 | **PASS** |
 | SRS-ALM-09 | HIGH-priority physiological alarms shall latch until acknowledged; acknowledgement shall not dismiss an alarm whose condition is still present; a recurring condition shall be re-annunciated. | TC-ALM-02, TC-ALM-03, TC-ALM-04 | **PASS** |
 | SRS-ALM-10 | No alarm shall be raised on normal sinus rhythm (50-139 bpm, SpO2 93-99 %) with nominal noise. | TC-FA-01 | **PASS** |
 | SRS-SPO-01 | SpO2 shall be estimated within +/-2 % (absolute) over 70-100 %. | TC-SPO-01 | **PASS** |
-| SRS-RT-01 | Alarm-system latency: the annunciation output shall be driven no later than 10 ms after the nominal release instant of the sample that makes the alarm condition true (hard deadline), including under CPU, memory and I/O overload from non-critical software. |  | **NOT RUN** |
-| SRS-RT-02 | Safety-related threads shall run under fixed-priority preemptive scheduling with the alarm manager at the highest priority; every mutex shared with a lower-priority thread shall use priority inheritance. | TC-INSP-01 | **NOT RUN** |
+| SRS-RT-01 | Alarm-system latency: the annunciation output shall be driven no later than 10 ms after the nominal release instant of the sample that makes the alarm condition true (hard deadline), including under CPU, memory and I/O overload from non-critical software. | TC-RT-01, TC-RT-01b | **FAIL** |
+| SRS-RT-02 | Safety-related threads shall run under fixed-priority preemptive scheduling with the alarm manager at the highest priority; every mutex shared with a lower-priority thread shall use priority inheritance. | TC-INSP-01, TC-RT-01, TC-RT-01b | **FAIL** |
 | SRS-RT-03 | The real-time phase shall perform no dynamic memory allocation and no file-system I/O, and process memory shall be locked in RAM. | TC-INSP-01 | **PASS** |
-| SRS-RT-04 | Acquisition release jitter shall not exceed 1 ms. |  | **NOT RUN** |
-| SRS-WDG-01 | A stall of the acquisition or processing thread longer than 100 ms shall raise the HIGH-priority technical alarm SYS_STALL within 200 ms of the start of the stall, independently of the stalled thread. |  | **NOT RUN** |
+| SRS-RT-04 | Acquisition release jitter shall not exceed 1 ms. | TC-RT-02 | **FAIL** |
+| SRS-WDG-01 | A stall of the acquisition or processing thread longer than 100 ms shall raise the HIGH-priority technical alarm SYS_STALL within 200 ms of the start of the stall, independently of the stalled thread. | TC-WDG-01, TC-WDG-01b | **PASS** |
 
 ## 4. Verification results (as executed)
 
@@ -309,6 +309,15 @@ Verification summary: **27 PASS, 0 FAIL** out of 27 executed checks.
 | TC-ALM-02 | Latching: high-priority physiological alarm persists, non-latching clears | errors | 0 | == 0 | **PASS** |
 | TC-ALM-03 | Acknowledge: releases ended alarms only; ongoing conditions cannot be dismissed | errors | 0 | == 0 | **PASS** |
 | TC-ALM-04 | Re-annunciation of a recurring condition after release | errors | 0 | == 0 | **PASS** |
+| TC-RT-01 | Alarm latency, proposed configuration under overload (7161 alarms, 3 runs): maximum | L_max_ms | 3.7299 | <= 10 | **PASS** |
+| TC-RT-01b | Pipeline latency of every sample (release to end of processing), proposed configuration under overload (148500 samples): samples above 10 ms | late_samples | 1 | == 0 | **FAIL** |
+| TC-RT-02 | Acquisition release jitter, proposed configuration under overload (148500 samples): maximum | J_max_ms | 8.7194 | <= 1 | **FAIL** |
+| TC-RT-03 | Samples or alarm events lost, proposed configuration, all probe runs | lost | 0 | == 0 | **PASS** |
+| TC-WDG-01 | Runaway processing thread injected under overload (5 runs): undetected stalls | undetected | 0 | == 0 | **PASS** |
+| TC-WDG-01b | Runaway processing thread: maximum time from stall start to SYS_STALL annunciation | t_max_ms | 118.001 | <= 200 | **PASS** |
+| TC-RT-04 | Clinical scenario in real time, proposed configuration (3 runs): runs with missing, extra or repeated alarms | bad_runs | 0 | == 0 | **PASS** |
+| TC-RT-04b | Clinical scenario in real time: smallest margin to the time-to-alarm limits | margin_s | 0.006 | >= 0 | **PASS** |
+| TC-RT-04c | Clinical scenario in real time: maximum alarm-system latency | L_max_ms | 0.1644 | <= 10 | **PASS** |
 | TC-INSP-01 | Automated inspection: heap, stdio or sleep calls inside real-time thread bodies; PI on all shared mutexes; memory locking | violations | 0 | == 0 | **PASS** |
 
 ## 5. Traceability matrix
