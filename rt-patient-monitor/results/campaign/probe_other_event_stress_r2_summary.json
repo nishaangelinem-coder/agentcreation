@@ -1,0 +1,1 @@
+{"policy":"other","alarm_path":"event","poll_ms":5,"scenario":"probe","duration_s":100.0,"seed":2,"cpu":1,"mlock":0,"deadline_ms":10.0,"samples":50000,"sample_drops":0,"sample_q_high_water":8,"alarm_ev_drops":0,"alarm_fires":2404,"deadline_misses":4,"latency_max_us":10724.9,"wcet_alarm_ns":25702,"mean_alarm_ns":1167,"stall_at_s":-1.0}

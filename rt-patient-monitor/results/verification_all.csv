@@ -1,0 +1,28 @@
+test_id,description,metric,value,limit,verdict
+TC-ECG-01,"QRS sensitivity, 40-180 bpm, R 0.55-4.4 mV (96 records, 3.2 h)",Se_pct,99.874,>= 99.5,PASS
+TC-ECG-01b,"QRS positive predictivity, same records",PPV_pct,100.0,>= 99.5,PASS
+TC-ECG-02,"Heart-rate error (4-beat mean) vs programmed rate, worst case",err_pct,4.6572,<= 10,PASS
+TC-ASY-01,Asystole: missed alarms in 180 episodes,missed,0.0,== 0,PASS
+TC-ASY-01b,Asystole: max time-to-alarm from last R wave,t_max_s,4.132,<= 4.5,PASS
+TC-ASY-01c,Asystole: min time-to-alarm (no premature alarm),t_min_s,4.088,>= 4,PASS
+TC-ASY-02,Asystole with 0.05 mV rms noise: missed/interrupted alarms in 20 episodes,missed,0.0,== 0,PASS
+TC-ASY-03,Asystole present at lead reconnection: missed alarms in 20 episodes,missed,0.0,== 0,PASS
+TC-ASY-03b,Asystole present at lead reconnection: max time-to-alarm,t_max_s,6.798,<= 10,PASS
+TC-TAC-01,Tachycardia (75 to 160/180/220 bpm): missed alarms in 60 episodes,missed,0.0,== 0,PASS
+TC-TAC-01b,Tachycardia: max time-to-alarm from rate change,t_max_s,2.402,<= 10,PASS
+TC-BRA-01,Bradycardia (75 to 30/35 bpm): missed alarms in 40 episodes,missed,0.0,== 0,PASS
+TC-BRA-01b,Bradycardia: max time-to-alarm from rate change,t_max_s,7.64,<= 10,PASS
+TC-SPO-01,"SpO2 estimate error, 70-100 %, 50-150 bpm",err_max_pct,0.6839,<= 2,PASS
+TC-SPO-02,Desaturation alarms: missed or wrong-level alarms in 40 episodes,errors,0.0,== 0,PASS
+TC-SPO-02b,DESAT (97 to 80 %): max time-to-alarm,t_max_s,6.98,<= 10,PASS
+TC-SPO-02c,SPO2_LOW (97 to 88 %): max time-to-alarm,t_max_s,12.22,<= 15,PASS
+TC-LO-01,"Leads-off: missed alarms, secondary false alarms or failed recovery (20 episodes)",errors,0.0,== 0,PASS
+TC-LO-01b,Leads-off: deviation from 0.5 s persistence time,dev_s,0.002,<= 0.004,PASS
+TC-PERF-01,Low-perfusion alarm on pulse loss: errors in 10 episodes,errors,0.0,== 0,PASS
+TC-PERF-01b,Low-perfusion alarm: max time-to-alarm,t_max_s,8.27,<= 10,PASS
+TC-FA-01,"False alarms on 4 h of normal rhythm (50-139 bpm, 93-99 %)",false_alarms,0.0,== 0,PASS
+TC-ALM-01,Priority arbitration: highest active priority drives the output,errors,0.0,== 0,PASS
+TC-ALM-02,"Latching: high-priority physiological alarm persists, non-latching clears",errors,0.0,== 0,PASS
+TC-ALM-03,Acknowledge: releases ended alarms only; ongoing conditions cannot be dismissed,errors,0.0,== 0,PASS
+TC-ALM-04,Re-annunciation of a recurring condition after release,errors,0.0,== 0,PASS
+TC-INSP-01,"Automated inspection: heap, stdio or sleep calls inside real-time thread bodies; PI on all shared mutexes; memory locking",violations,0.0000,== 0,PASS

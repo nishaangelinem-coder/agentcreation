@@ -1,0 +1,3 @@
+alarm,event,k,t_s,latency_us,out_prio
+SYS_STALL,fire,4061,8.120103,110036.5,3
+SYS_STALL,clear,4211,8.420087,-1.0,0

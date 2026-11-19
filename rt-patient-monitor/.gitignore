@@ -1,0 +1,10 @@
+build/
+results/campaign/*_samples.csv
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.spl
+paper/*.fls
+paper/*.fdb_latexmk

@@ -1,0 +1,4 @@
+test_id,description,metric,value,limit,verdict
+TC-RT-01,"Alarm latency, proposed configuration under overload (2378 alarms, 1 runs): maximum",L_max_ms,3.7299,<= 10,PASS
+TC-RT-02,"Acquisition release jitter, proposed configuration under overload (49500 samples): maximum",J_max_ms,8.5557,<= 1,FAIL
+TC-RT-03,"Samples or alarm events lost, proposed configuration, all probe runs",lost,0.0000,== 0,PASS

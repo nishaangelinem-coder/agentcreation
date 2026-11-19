@@ -1,0 +1,211 @@
+\documentclass[preprint,3p,10pt]{elsarticle}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,booktabs,graphicx,tabularx,array,xcolor,url,microtype,pifont}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,calc}
+\usepackage[colorlinks=true,allcolors=blue!50!black]{hyperref}
+\newcommand{\checkmarkx}{\ding{51}}
+\renewcommand{\checkmark}{\ding{51}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\makeatletter\newcommand{\rawinput}[1]{\@@input #1 }\makeatother
+\input{tables/numbers.tex}
+\input{tables/tab_trace.tex}
+\journal{(journal to be selected)}
+
+\begin{document}
+\begin{frontmatter}
+\title{Bounded-latency alarm annunciation in a POSIX real-time patient-monitor simulator: design, hazard-traceable verification, and an empirical comparison of scheduling and alarm-path architectures}
+
+\author[vcet]{M.~Nisha Angeline\corref{cor}}
+\cortext[cor]{Corresponding author.}
+\address[vcet]{Department of Electronics and Communication Engineering, Velalar College of Engineering and Technology, Thindal, Erode, Tamil Nadu, India}
+
+\begin{abstract}
+\textbf{Background and objective.} A physiological alarm is useful only if it is annunciated in time, yet the contribution of software scheduling to alarm delay is rarely specified, measured or traced to a hazard analysis in openly available monitor software. We present an open, portable patient-monitor simulator in which the alarm-system latency is a verified requirement rather than an observed property.
+\textbf{Methods.} The simulator acquires synthetic ECG (500\,Hz) and dual-wavelength photoplethysmogram (100\,Hz) signals, detects QRS complexes, estimates SpO$_2$ and raises eight prioritised alarm conditions. It is written against the POSIX real-time interfaces (fixed-priority threads, priority-inheritance mutexes, absolute-time periodic release, locked memory) so that the same source builds for QNX Neutrino and Linux. A hazard log with \NHaz{} hazards is linked to \NReq{} software requirements and \NVerTotal{} automated checks, and is regenerated from executed test results. In a $2\times2\times2$ experiment we compared fixed-priority (FP) against time-sharing (TS) scheduling and an event-driven against a polled alarm path, with and without CPU, memory and I/O overload, using a probe method that timestamps every alarm from the nominal release of the triggering sample to the annunciation output. Measurements were made on a general-purpose Linux kernel in a virtual machine; no QNX measurements are reported.
+\textbf{Results.} Under overload, the FP event-driven design had a median alarm latency of \NFpEvStrMed\,\textmu s and a maximum of \NFpEvStrMaxMs\,ms over \NFpEvStrN{} alarms, with \NFpEvStrMiss{} violations of the 10\,ms deadline (95\,\% upper confidence bound on the violation probability \NFpEvStrUB\,\%). The TS event-driven design reached \NTsEvStrMaxMs\,ms and violated the deadline in \NTsEvStrMiss{} of \NTsEvStrN{} alarms (\NTsEvStrMissPct\,\%). Off-target, all detection requirements were met on synthetic signals (asystole time-to-alarm 4.09--4.13\,s over 180 episodes; no false alarm in 4\,h of normal rhythm). \NVerPass{} of \NVerTotal{} checks passed; the failing check(s) (\NFailList) expose platform latency that the application cannot control.
+\textbf{Conclusions.} Scheduling policy, not processing cost, dominates alarm-system latency under overload, and an application-level response-time bound accounts for only a small part of the worst observed latency on a virtualised general-purpose kernel. The simulator, its hazard log and the measurement harness are released to support reproduction on real-time operating systems.
+\end{abstract}
+
+\begin{keyword}
+patient monitoring \sep alarm system \sep real-time operating system \sep POSIX \sep QNX \sep fixed-priority scheduling \sep IEC 62304 \sep hazard analysis \sep electrocardiogram \sep pulse oximetry
+\end{keyword}
+\end{frontmatter}
+
+\section{Introduction}
+Physiological monitors exist to draw attention to a deteriorating patient. The clinical literature on monitor alarms has concentrated, with good reason, on their excess: in one intensive-care study 2.6 million alarms were recorded in 31 days and 88.8\,\% of the annotated arrhythmia alarms were false positives \cite{drew2014}, and the resulting alarm fatigue is a recognised patient-safety problem \cite{cvach2012,clifford2015}. The opposite failure, a true alarm that is produced late or not at all because of the software that carries it, receives less attention but belongs to a well-documented class of defects. Software faults are a leading cause of medical-device recalls \cite{ronquillo2017,alemzadeh2013}, and timing-dependent faults are among the hardest to find by testing, as the Therac-25 accidents showed \cite{leveson1993}.
+
+Alarm timing has two parts. The first is algorithmic: an asystole alarm cannot be raised before the defined pause has elapsed, and a rate alarm needs several beats. The second is the delay added by the computing platform between the moment the data that satisfy the alarm condition are available and the moment the annunciator is driven. IEC~60601-1-8 treats both as alarm-system delays that the manufacturer must determine and disclose \cite{iec6060118}. The platform part is normally small, but on a monitor that also renders waveforms, logs trends, communicates over a network and, increasingly, runs machine-learning inference, it is small only if the software architecture makes it so. Whether it is \emph{bounded} is a property of the scheduler, the synchronisation protocol and the memory policy, and it has to be argued and tested like any other safety requirement \cite{lee2012,hatcliff2014}.
+
+Open research artefacts for medical-device software have focused on other aspects. The generic infusion pump and the pacemaker challenge support formal modelling and verification of control logic \cite{arney2007,kim2011,jiang2012}; OpenICE addresses interoperability \cite{arney2018}; PhysioNet supplies signals and algorithms \cite{goldberger2000,moody2001}. The real-time systems literature provides the scheduling theory \cite{liu1973,joseph1986,audsley1993,sha1990} and careful latency studies of operating systems \cite{cerqueira2013,bristot2020,reghenzani2019,adam2021}, but those studies measure a synthetic wake-up, not the path from a physiological sample to an alarm. We are not aware of an openly available monitor implementation in which the alarm latency is specified as a requirement, linked to a hazard analysis, analysed, and measured end to end under adversarial load.
+
+This paper contributes:
+\begin{enumerate}
+\item a patient-monitor simulator (ECG and SpO$_2$ acquisition, QRS detection, eight alarm conditions with priorities and latching) written against POSIX real-time interfaces so that one code base targets QNX Neutrino and Linux;
+\item a definition of alarm-system latency that separates algorithmic from platform delay, with a probe method that measures it for every alarm without external instrumentation, and an application-level response-time bound;
+\item a hazard log in the style of ISO~14971 and IEC~62304 whose links from hazard to risk control, requirement and test are machine-checked, and whose status is regenerated from executed tests, including tests that fail;
+\item a controlled comparison of fixed-priority versus time-sharing scheduling and of event-driven versus polled alarm paths, with and without overload, on a general-purpose kernel.
+\end{enumerate}
+
+We state the main limitation at the outset. All measurements were taken on a stock Linux kernel running in a virtual machine. They characterise the application architecture and show what such a platform cannot guarantee; they do not characterise QNX or any other real-time operating system, on which the software has been designed to run but has not yet been measured.
+
+\section{Background and related work}
+\subsection{Alarm systems and the standards that shape them}
+IEC~60601-1-8 defines alarm conditions, three priorities (high, medium, low) with distinct visual and auditory signals, latching and non-latching alarm signals, and the notions of alarm condition delay and alarm signal generation delay \cite{iec6060118}. Particular standards add device-specific requirements: IEC~60601-2-27 for electrocardiographic monitors, including the amplitude range over which QRS complexes must be detected and the time to alarm for rate limits and cardiac standstill \cite{iec60601227}, and ISO~80601-2-61 for pulse oximeters \cite{iso80601261,jubran2015}. IEC~62304 governs the software life cycle and assigns a safety class (A, B or C) according to the severity of harm to which a software failure can contribute; it requires risk control measures implemented in software to be captured as requirements and verified, and the chain from hazardous situation through software item and cause to risk control measure and its verification to be documented \cite{iec62304}. ISO~14971 supplies the risk-management process \cite{iso14971}. Studies of industrial practice report that this traceability is costly to maintain and often incomplete \cite{regan2013}.
+
+\subsection{Real-time scheduling}
+Under fixed-priority pre-emptive scheduling the worst-case response time of a task is the fixed point of a recurrence over the execution times of all higher-priority tasks plus a blocking term \cite{joseph1986,audsley1993,buttazzo2011}. Shared resources protected by ordinary mutexes can make the blocking term unbounded (priority inversion); the priority-inheritance protocol bounds it by the length of one critical section per lower-priority task \cite{sha1990}. These results assume that the operating system itself adds a bounded delay between an event and the dispatch of the highest-priority ready thread.
+
+That assumption is what distinguishes operating systems. QNX Neutrino is a microkernel in which drivers, file systems and protocol stacks are user processes that communicate by synchronous message passing, and kernel operations are short and pre-emptible \cite{hildebrand1992}; it implements the POSIX real-time interfaces \cite{posix2017} and is widely used in certified medical and automotive products. Mainline Linux offers the same interfaces (\texttt{SCHED\_FIFO}, priority-inheritance futexes, \texttt{mlockall}, \texttt{clock\_nanosleep}) but, without the \texttt{PREEMPT\_RT} configuration, contains non-pre-emptible sections of unbounded length; with it, scheduling latencies in the tens to low hundreds of microseconds are reported on embedded hardware \cite{reghenzani2019,adam2021}, although I/O-bound background load remains a known source of long tails \cite{cerqueira2013} and sound bounds require analysis of kernel behaviour rather than black-box measurement \cite{bristot2020}. Published comparisons place commercial real-time operating systems, QNX among them, ahead of \texttt{PREEMPT\_RT} in worst-case latency \cite{fayyad2013}.
+
+\subsection{Signal processing for ECG and pulse oximetry}
+The Pan--Tompkins algorithm (band-pass filtering, differentiation, squaring, moving-window integration and adaptive dual thresholds) remains the reference real-time QRS detector \cite{pan1985}. Synthetic ECG with controllable morphology and rate can be generated from a sum of Gaussian waves placed around each beat \cite{mcsharry2003}. Pulse oximeters estimate arterial oxygen saturation from the ratio of the pulsatile-to-static absorbance at red and infrared wavelengths, and lose validity at low perfusion \cite{jubran2015}.
+
+\section{System design}
+\subsection{Requirements and latency definition}
+The simulator implements \NReq{} software requirements (the complete list is part of the released hazard log). Those that matter for timing are:
+\begin{itemize}
+\item \textbf{SRS-RT-01} The annunciation output shall be driven no later than $D=10$\,ms after the nominal release instant of the sample that makes an alarm condition true, including under CPU, memory and I/O overload from non-critical software.
+\item \textbf{SRS-RT-04} The release jitter of the acquisition task shall not exceed 1\,ms (half a sampling period).
+\item \textbf{SRS-WDG-01} A stall of acquisition or processing longer than 100\,ms shall raise a high-priority technical alarm within 200\,ms.
+\item \textbf{SRS-ALM-01} Asystole shall be annunciated between 4.0\,s and 4.5\,s after the last QRS complex.
+\end{itemize}
+The 10\,ms budget was fixed before any measurement. It is five sampling periods and 0.25\,\% of the shortest algorithmic delay in the system (the 4\,s asystole criterion), so that platform delay is negligible in the disclosed alarm-condition delay if the budget is met.
+
+Let sample $k$ have nominal release instant $r_k=t_0+kT$ with $T=2$\,ms. For an alarm occurrence let $k^\ast$ be the first sample whose processing makes the alarm condition true and $t_{\mathrm{fire}}$ the instant at which the alarm manager has written to the annunciator. We define
+\begin{equation}
+L \;=\; t_{\mathrm{fire}} - r_{k^\ast}, \qquad\text{and the algorithmic delay}\qquad A \;=\; r_{k^\ast}-t_{\mathrm{onset}},
+\end{equation}
+where $t_{\mathrm{onset}}$ is the physiological onset (for asystole, the last R wave). $A$ is a deterministic function of the signal and the algorithm, and is verified off-target at full speed. $L$ depends only on the platform and the software architecture, and includes release jitter, queueing, the execution of acquisition and processing for sample $k^\ast$, and the dispatch and execution of the alarm manager. Referring $L$ to the \emph{nominal} release instant rather than to the instant the acquisition thread actually ran makes a late acquisition count against the budget.
+
+\subsection{Architecture}
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[font=\footnotesize, node distance=6mm and 9mm,
+  th/.style={draw, rounded corners=2pt, minimum height=11mm, minimum width=27mm, align=center, fill=blue!6},
+  nrt/.style={th, fill=gray!12, dashed}, q/.style={draw, minimum height=5mm, minimum width=13mm, fill=white, font=\scriptsize},
+  ar/.style={-{Stealth[length=2mm]}, semithick}]
+\node[th] (acq) {\textbf{T\textsubscript{ACQ}} prio 70\\500\,Hz periodic\\ECG + PPG source};
+\node[q, right=of acq] (q1) {queue};
+\node[th, right=of q1] (proc) {\textbf{T\textsubscript{PROC}} prio 60\\QRS, SpO$_2$,\\alarm conditions};
+\node[q, right=of proc] (q2) {queue};
+\node[th, right=of q2, fill=red!8] (alm) {\textbf{T\textsubscript{ALARM}} prio 80\\priority, latching,\\annunciation};
+\node[th, below=9mm of q1, fill=orange!10] (wdg) {\textbf{T\textsubscript{WDG}} prio 75\\20\,ms periodic\\heartbeat check};
+\node[nrt, below=13mm of q2] (ui) {\textbf{T\textsubscript{UI}} time-sharing\\display, operator};
+\node[right=7mm of alm, align=left, font=\scriptsize] (out) {audio/\\visual};
+\draw[ar] (acq) -- (q1); \draw[ar] (q1) -- (proc); \draw[ar] (proc) -- (q2); \draw[ar] (q2) -- (alm); \draw[ar] (alm) -- (out);
+\draw[ar, dashed] (acq.south) |- (wdg.west) node[pos=0.75, above, font=\scriptsize] {heartbeat};
+\draw[ar, dashed] (proc.south west) -- (wdg.north east);
+\draw[ar] (wdg.south) -- ++(0,-9mm) -| node[pos=0.25, below, font=\scriptsize] {SYS\_STALL} ($(alm.south)+(2mm,0)$);
+\draw[ar] (proc.south east) -- node[right, font=\scriptsize, align=left] {snapshot\\(PI mutex)} (ui.north west);
+\draw[ar, dashed] (ui.east) -| node[pos=0.3, below, font=\scriptsize] {acknowledge} ($(alm.south)-(4mm,0)$);
+\end{tikzpicture}
+\caption{Thread architecture. Shaded solid boxes are fixed-priority real-time threads (larger number = higher priority); the display thread runs in the time-sharing class. Queues are bounded, their mutexes use priority inheritance (PI), and sending never blocks. In the polled variant the second queue is replaced by a condition table that T\textsubscript{ALARM} reads every 5\,ms.}
+\label{fig:arch}
+\end{figure}
+
+Fig.~\ref{fig:arch} shows the five threads. Priorities follow criticality along the alarm path rather than rate alone: the alarm manager is highest so that an alarm event is never delayed by the code that produced it or by subsequent samples; the watchdog sits above the two threads it supervises so that a runaway processing thread cannot starve it; acquisition is above processing so that sampling instants are not disturbed by data-dependent processing time. The display thread is deliberately outside the real-time class. It shares one data structure with the processing thread (the waveform snapshot), which is the classic setting for priority inversion and is protected by a priority-inheritance mutex \cite{sha1990}.
+
+Four design rules implement SRS-RT-02 and SRS-RT-03: (i) every buffer and log is allocated before the real-time phase and the process is locked in memory; (ii) real-time threads make no file-system or standard-I/O calls, and results are written after the run; (iii) periodic threads sleep to absolute deadlines on the monotonic clock, so that lateness does not accumulate; (iv) all persistence timers (asystole, desaturation, leads-off) count samples, not clock readings, so that scheduling jitter cannot change an alarm decision. Rules (i) and (ii) are checked automatically by an inspection script on every build of the hazard log.
+
+\paragraph{Alarm path variants} In the \emph{event-driven} path the processing thread sends a message for every change of an alarm condition and the alarm manager blocks in a receive call; the hand-over costs one context switch. In the \emph{polled} path, representative of super-loop designs, the processing thread records changes in a shared table and the alarm manager wakes every $T_{\mathrm p}=5$\,ms to read it; a condition that sets and clears between two polls is still annunciated because set events are sticky.
+
+\subsection{Signal source}
+The source replaces the analogue front end and is executed inside the acquisition thread at each release, in place of an ADC read. Each beat is a sum of five Gaussian waves (P, Q, R, S, T) positioned relative to the R instant, in the manner of the morphology used in \cite{mcsharry2003}; P and T positions scale with the square root of the RR interval. RR intervals have 2\,\% beat-to-beat variability. Baseline wander (0.25\,Hz, 0.05\,mV), mains interference (50\,Hz, 0.02\,mV) and Gaussian noise (0.02\,mV rms by default) are added. The photoplethysmogram has unit DC level and a pulsatile component of 2\,\% with a systolic peak and dicrotic wave; the red channel is scaled by the ratio $R=(110-\mathrm{SpO_2})/25$, the textbook linear calibration. A scenario script switches among normal rhythm at a given rate and saturation, asystole (pulse amplitude decays with a 0.5\,s time constant) and leads-off (front-end saturation at $+5$\,mV). The source also records ground truth (R instants, segment boundaries).
+
+\subsection{ECG processing and rhythm alarms}
+The detector follows Pan and Tompkins \cite{pan1985} at 500\,Hz: 5--15\,Hz band-pass (two second-order Butterworth sections), five-point derivative, squaring, 150\,ms moving-window integration, local-maximum search with an 80\,ms confirmation interval, signal and noise level estimates with the threshold at the noise level plus one quarter of their difference, a 200\,ms refractory period, T-wave discrimination within 360\,ms, and search-back at half threshold after 1.66 mean RR intervals. Heart rate is the mean of the last four RR intervals. Three departures from the textbook algorithm are risk control measures identified in the hazard analysis (Section~\ref{sec:hazard}):
+\begin{itemize}
+\item an \emph{absolute threshold floor} equivalent to a QRS of about 0.2\,mV, so that after a pause the adaptive threshold cannot decay into the noise and turn noise peaks into beats (hazard H-01);
+\item \emph{exclusion of the T-wave window from search-back}, without which the T wave of the last beat before a pause was accepted as a beat and delayed the asystole alarm by about 0.5\,s, a defect found by the verification suite during development;
+\item \emph{saturation handling}: while the input is at the rail the last valid value is held, detection is blanked for 300\,ms after recovery and thresholds are re-learnt over 2\,s, so that a reconnection transient neither produces a beat nor inflates the threshold (hazard H-07).
+\end{itemize}
+Asystole is declared when no QRS has been accepted for 4.0\,s while the ECG is valid; tachycardia and bradycardia when the four-beat rate is above 150 or below 40\,bpm, with 10 and 5\,bpm hysteresis; leads-off after 0.5\,s of saturation.
+
+\subsection{SpO$_2$ processing}
+For each wavelength the DC level is a 3\,s moving average and the AC level the root mean square of the residual over 3\,s; $\mathrm{SpO_2}=110-25R$ with $R$ the ratio of the normalised AC levels. Running sums are recomputed exactly every 3\,s to prevent drift. If the infrared perfusion index is below 0.15\,\% the value is declared invalid, limit alarms are suppressed and, after 3\,s, the low-priority technical alarm \texttt{LOW\_PERF} is raised: without this gate the ratio of two noise levels tends to one and the monitor would display a plausible 85\,\% for a pulseless patient (hazard H-09). \texttt{DESAT} (high priority) requires $\mathrm{SpO_2}<85$\,\% for 5\,s and \texttt{SPO2\_LOW} (medium) $<90$\,\% for 10\,s.
+
+\subsection{Alarm manager and watchdog}
+The alarm manager is a pure state machine, separate from all operating-system calls so that it can be unit-tested off-target. Each condition has a fixed priority and latching attribute (Table~\ref{tab:clinical}); high-priority physiological alarms latch until acknowledged, an acknowledgement cannot dismiss a condition that is still present, and the annunciation output always equals the highest priority among active alarms. A scripted operator acknowledges latched alarms 3\,s after their condition ends. The watchdog compares heartbeat counters of the acquisition and processing threads every 20\,ms and raises \texttt{SYS\_STALL} after five consecutive checks without progress. A further technical alarm, \texttt{DATA\_LOSS}, is raised if the sample queue overflows.
+
+\subsection{Portability to QNX Neutrino}
+The implementation is about 1\,000 lines of C11 (excluding tests) and uses only interfaces specified by POSIX.1 \cite{posix2017}: \texttt{pthread} scheduling attributes, \texttt{PTHREAD\_PRIO\_INHERIT}, \texttt{clock\_nanosleep} with \texttt{TIMER\_ABSTIME}, \texttt{CLOCK\_THREAD\_CPUTIME\_ID} and \texttt{mlockall}. The single non-portable operation, binding threads to a processor core, is isolated behind a conditional that selects the QNX run-mask call. A cross-build target for the QNX compiler driver is provided. \emph{We have not compiled or run the code on QNX}; the port path is a design property and an invitation to replication, not a result of this paper.
+
+\section{Application-level response-time bound}
+\label{sec:rta}
+Consider the event-driven path on one core. Let $C_{\mathrm{acq}}$, $C_{\mathrm{proc}}$, $C_{\mathrm{alm}}$ and $C_{\mathrm{wdg}}$ be the worst-case execution times of one job of each thread, $T_{\mathrm{wdg}}=20$\,ms, and $B$ the longest critical section of the display thread on the shared snapshot (the only lower-priority resource user, executed at most once per blocking under priority inheritance). When sample $k^\ast$ is released with no backlog, the alarm is annunciated after the acquisition job, the processing job and one alarm job, possibly pre-empted by the watchdog. The fixed-priority response-time recurrence \cite{joseph1986,audsley1993} gives
+\begin{equation}
+R_{\mathrm{app}} = B + C_{\mathrm{acq}} + C_{\mathrm{proc}} + m\,C_{\mathrm{alm}} + \left\lceil \frac{R_{\mathrm{app}}}{T_{\mathrm{wdg}}} \right\rceil C_{\mathrm{wdg}},
+\label{eq:rta}
+\end{equation}
+where $m\ge 1$ is the number of alarm conditions that change on the same sample. The alarm latency then satisfies
+\begin{equation}
+L \;\le\; \Lambda + R_{\mathrm{app}} \quad\text{(event-driven)}, \qquad L \;\le\; \Lambda + R_{\mathrm{app}} + T_{\mathrm p} \quad\text{(polled)},
+\label{eq:bound}
+\end{equation}
+where $\Lambda$ collects everything the application cannot control: timer and interrupt latency, non-pre-emptible kernel sections, and, on a virtual machine, intervals in which the hypervisor does not run the virtual processor. If $R_{\mathrm{app}}<T$ no backlog forms, which justifies the single-sample analysis. On an operating system that guarantees a bound on $\Lambda$, Eq.~\eqref{eq:bound} is a guarantee; elsewhere it separates the part of a measured latency that the architecture explains from the part that it does not. We use it in the second sense, with execution times taken as the maxima observed with the per-thread CPU-time clock, which are measurements and not safe upper bounds.
+
+\section{Hazard log and traceable verification}
+\label{sec:hazard}
+\begin{table}[p]
+\caption{Hazard log (condensed). $R_0$ and $R_1$ are the risk indices (severity\,$\times$\,probability of harm, each rated 1--5) before and after the risk control measures; $\ge 12$ is rated unacceptable, 6--10 tolerable, $\le 5$ acceptable. Requirement and test identifiers omit their \texttt{SRS-} and \texttt{TC-} prefixes. Status is computed from executed tests: \checkmark\ = every linked test passed, \textbf{open} = at least one linked test failed on the evaluation platform. Ratings are illustrative engineering judgements for a simulator, not a clinical risk assessment.}
+\label{tab:hazard}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\textwidth}{@{}l L{0.27\textwidth} c X L{0.085\textwidth} L{0.085\textwidth} c c@{}}
+\toprule
+ID & Hazard: software cause & $R_0$ & Risk control measures & Req. & Tests & $R_1$ & Status\\
+\midrule
+\rawinput{tables/tab_hazard.tex}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+The hazard analysis was carried out top-down from two harms (delayed or absent response to a life-threatening condition; desensitisation of staff by false alarms) and bottom-up from the software items. It produced \NHaz{} hazards (Table~\ref{tab:hazard}). Following IEC~62304, the probability that a software fault occurs is taken as one, and the probability rating expresses the likelihood that the hazardous situation leads to harm. The alarm path (acquisition, processing, alarm manager, watchdog) is treated as software safety class~C and the display thread as class~B, segregated from the alarm path by scheduling class and priority.
+
+Each hazard is linked to its risk control measures, each measure to one or more requirements, and each requirement to automated tests. The links are data: a script reads the hazard table, the requirement table and the result files written by the test programs, and regenerates the hazard log with a status for every hazard. A requirement whose planned test has no executed result is reported as not run, and a hazard is reported as verified only if every linked test passed in the current results. The report therefore cannot claim more than was executed, and a failing test propagates to the hazards it supports. There are \NTraceLinks{} hazard--requirement--test links.
+
+Tests are of three kinds. \emph{Off-target tests} run the signal source through the same processing and alarm code as the real-time build, at full speed and deterministically, over several hundred episodes with varied seed, rate, amplitude and noise; they verify detection performance, time to alarm, absence of false alarms and alarm-manager logic. \emph{Run-time tests} are evaluated from the measurement campaign of Section~\ref{sec:method} and verify the timing requirements. One \emph{inspection} is automated: a script confirms that the bodies of the real-time threads contain no heap, standard-I/O or sleep calls, that all shared mutexes are created with priority inheritance, and that memory locking is enabled.
+
+The table is deliberately candid about what the controls do not cover: ventricular fibrillation is not classified, a failure of the alarm-manager thread itself needs an external hardware watchdog, and the leads-off and low-perfusion alarms are not escalated when they coincide.
+
+\section{Experimental method}
+\label{sec:method}
+\subsection{Platform}
+Experiments ran on a four-processor x86-64 virtual machine (KVM-based lightweight virtual machine on an Intel Xeon host) with Linux 6.18, configured with dynamic pre-emption but \emph{without} \texttt{PREEMPT\_RT}, GCC 13.3 at \texttt{-O2}. The monitor's five threads were bound to one virtual processor in every configuration so that the uniprocessor analysis of Section~\ref{sec:rta} applies and configurations differ only in the factors under study. The host is shared and outside our control, and light unrelated activity (compilation, analysis scripts) ran on another virtual processor during parts of the campaign. This platform was chosen because it was available, not because it is suitable for a medical device; it is a harsh but informative test of the architecture.
+
+\subsection{Factors}
+Three two-level factors were crossed:
+\begin{itemize}
+\item \emph{Scheduling}: FP = \texttt{SCHED\_FIFO} at the priorities of Fig.~\ref{fig:arch}, priority-inheritance mutexes and locked memory; TS = the default time-sharing class for all threads, ordinary mutexes, no memory locking. Both use the same absolute-time periodic release.
+\item \emph{Alarm path}: event-driven or polled at 5\,ms.
+\item \emph{Load}: none, or an interference generator with eight CPU-bound threads (twice the number of processors), two threads that repeatedly allocate, touch and free 48\,MB, and one thread that writes and synchronises 16\,MB files, all unpinned in the time-sharing class.
+\end{itemize}
+Each of the eight combinations was run three times for 100\,s, blocked by repetition.
+
+\subsection{Latency probe}
+Clinical alarms are too rare to characterise a latency distribution. In probe runs the source therefore injects four-sample saturation bursts separated by gaps drawn uniformly from 8 to 24 samples, and the leads-off persistence is shortened to three samples. Each burst travels the complete path (acquisition, queue, filtering and detection, condition evaluation, alarm event, alarm manager, annunciator write) and yields one latency $L$, about 2\,400 per run at random phase relative to all periodic activity. The annunciator is a one-byte write to a character device. In addition, the release jitter (actual minus nominal start of each acquisition job), the pipeline latency (completion of processing minus nominal release) and the CPU time of each job were recorded for all 50\,000 samples per run in pre-allocated memory; the first second of each run was discarded.
+
+\subsection{Fault injection and clinical scenario}
+To test the watchdog, a busy loop of 400\,ms was injected into the processing thread at five different phases relative to the watchdog period, under overload, for FP and TS scheduling. To confirm that the off-target results hold in real time, a 210\,s clinical scenario (normal rhythm, 10\,s asystole, tachycardia at 180\,bpm, bradycardia at 32\,bpm, desaturation to 80\,\%, 10\,s leads-off, separated by normal rhythm) was run once without load and twice under overload with FP scheduling, and once under overload with TS scheduling.
+
+\subsection{Statistics}
+Latency distributions are heavy-tailed, so we report quantiles and maxima rather than means and standard deviations, compare configurations with the two-sided Mann--Whitney test and Cliff's $\delta$ as effect size, and, where no deadline violation was observed in $n$ alarms, give the one-sided 95\,\% Clopper--Pearson upper bound on the violation probability (approximately $3/n$). A measured maximum is a lower bound on the worst case; we do not treat it as a guarantee.
+
+\input{results.tex}
+
+\section*{Declaration of competing interest}
+The author declares no competing interests.
+
+\section*{Funding}
+This research received no specific grant from any funding agency.
+
+\section*{Data and code availability}
+The complete source code, hazard log, requirement tables, measurement scripts, raw measurement files and the scripts that generate every table and figure in this paper are available in the project repository (URL to be inserted at submission).
+
+\section*{Declaration of generative AI and AI-assisted technologies}
+During the preparation of this work the author used an AI coding assistant (Claude, Anthropic) to draft software, run the experiments and analysis, and draft the manuscript text. The author reviewed and edited the content as needed and takes full responsibility for the content of the publication. \emph{(To be revised by the author to reflect the final division of work, in line with the target journal's policy.)}
+
+\bibliographystyle{elsarticle-num}
+\bibliography{refs}
+\end{document}

@@ -1,0 +1,22 @@
+id,requirement,verification
+SRS-ACQ-01,"ECG shall be acquired at 500 Hz and PPG at 100 Hz by a periodic task released on an absolute time base (no cumulative drift).",TC-RT-02
+SRS-ACQ-02,"No acquired sample shall be lost between acquisition and processing; any loss shall raise the HIGH-priority technical alarm DATA_LOSS.",TC-RT-03
+SRS-ECG-01,"QRS detection sensitivity and positive predictivity shall each be >= 99.5 % for R-wave amplitudes 0.5-4.4 mV and heart rates 40-180 bpm on the reference signal set.",TC-ECG-01|TC-ECG-01b
+SRS-ECG-02,"Displayed heart rate shall be within +/-10 % of the true rate.",TC-ECG-02
+SRS-ECG-03,"The QRS detection threshold shall have an absolute floor so that signals below 0.15 mV (noise, isoelectric line) are never counted as beats.",TC-ASY-02|TC-ASY-03
+SRS-ALM-01,"ASYSTOLE (HIGH) shall be raised when no QRS is detected for 4.0 s; time to alarm from the last QRS shall be >= 4.0 s and <= 4.5 s.",TC-ASY-01|TC-ASY-01b|TC-ASY-01c|TC-RT-04
+SRS-ALM-02,"TACHY (HIGH) shall be raised when the 4-beat mean heart rate exceeds 150 bpm, within 10 s of the rate change.",TC-TAC-01|TC-TAC-01b|TC-RT-04
+SRS-ALM-03,"BRADY (HIGH) shall be raised when the 4-beat mean heart rate falls below 40 bpm, within 10 s of the rate change.",TC-BRA-01|TC-BRA-01b|TC-RT-04
+SRS-ALM-04,"DESAT (HIGH) shall be raised when SpO2 < 85 % persists for 5 s, within 10 s of a step desaturation.",TC-SPO-02|TC-SPO-02b|TC-RT-04
+SRS-ALM-05,"SPO2_LOW (MEDIUM) shall be raised when SpO2 < 90 % persists for 10 s, within 15 s of a step change.",TC-SPO-02|TC-SPO-02c
+SRS-ALM-06,"LEADS_OFF (MEDIUM, technical) shall be raised after 0.5 s of front-end saturation; ECG rhythm alarms shall be inhibited while the ECG is invalid and the detector shall re-learn its thresholds after reconnection.",TC-LO-01|TC-LO-01b|TC-ASY-03|TC-ASY-03b|TC-RT-04
+SRS-ALM-07,"SpO2 shall be declared invalid (no numeric, no SpO2 limit alarms) when the perfusion index is below the minimum, and LOW_PERF (LOW, technical) shall be raised within 10 s.",TC-PERF-01|TC-PERF-01b
+SRS-ALM-08,"The annunciation output shall always reflect the highest priority among the active alarms (HIGH > MEDIUM > LOW).",TC-ALM-01
+SRS-ALM-09,"HIGH-priority physiological alarms shall latch until acknowledged; acknowledgement shall not dismiss an alarm whose condition is still present; a recurring condition shall be re-annunciated.",TC-ALM-02|TC-ALM-03|TC-ALM-04
+SRS-ALM-10,"No alarm shall be raised on normal sinus rhythm (50-139 bpm, SpO2 93-99 %) with nominal noise.",TC-FA-01
+SRS-SPO-01,"SpO2 shall be estimated within +/-2 % (absolute) over 70-100 %.",TC-SPO-01
+SRS-RT-01,"Alarm-system latency: the annunciation output shall be driven no later than 10 ms after the nominal release instant of the sample that makes the alarm condition true (hard deadline), including under CPU, memory and I/O overload from non-critical software.",TC-RT-01
+SRS-RT-02,"Safety-related threads shall run under fixed-priority preemptive scheduling with the alarm manager at the highest priority; every mutex shared with a lower-priority thread shall use priority inheritance.",TC-RT-01|TC-INSP-01
+SRS-RT-03,"The real-time phase shall perform no dynamic memory allocation and no file-system I/O, and process memory shall be locked in RAM.",TC-INSP-01
+SRS-RT-04,"Acquisition release jitter shall not exceed 1 ms.",TC-RT-02
+SRS-WDG-01,"A stall of the acquisition or processing thread longer than 100 ms shall raise the HIGH-priority technical alarm SYS_STALL within 200 ms of the start of the stall, independently of the stalled thread.",TC-WDG-01

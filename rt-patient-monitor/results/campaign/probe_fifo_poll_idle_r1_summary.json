@@ -1,0 +1,1 @@
+{"policy":"fifo","alarm_path":"poll","poll_ms":5,"scenario":"probe","duration_s":100.0,"seed":1,"cpu":1,"mlock":1,"deadline_ms":10.0,"samples":50000,"sample_drops":0,"sample_q_high_water":2,"alarm_ev_drops":0,"alarm_fires":2378,"deadline_misses":0,"latency_max_us":6042.3,"wcet_alarm_ns":41531,"mean_alarm_ns":955,"stall_at_s":-1.0}
